@@ -1,5 +1,5 @@
 export class ManageSchedulesService {
-	static async isEmpty() {
-		return true;
+	static async getSchedules() {
+		return [];
 	}
 }

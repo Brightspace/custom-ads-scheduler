@@ -4,25 +4,32 @@ function sleep(ms) {
 
 export class ManageSchedulesDemoService {
 	static async getSchedules() {
-		await sleep(2000);
-		const schedules = [
-			{
-				name: 'A',
-				type: 'Differential',
-				frequency: 'Daily',
-				startDate: '09/01/2020',
-				endDate: '12/31/2020',
-				enabled: true
-			},
-			{
-				name: 'B',
-				type: 'Full',
-				frequency: 'Weekly',
-				startDate: '09/01/2020',
-				endDate: '12/31/2020',
-				enabled: false
-			},
-		];
+		if (window.shouldWait) {
+			await sleep(2000);
+		}
+		let schedules;
+		if (window.shouldBeEmpty) {
+			schedules = [];
+		} else {
+			schedules = [
+				{
+					name: 'A',
+					type: 'Differential',
+					frequency: 'Daily',
+					startDate: '09/01/2020',
+					endDate: '12/31/2020',
+					enabled: true
+				},
+				{
+					name: 'B',
+					type: 'Full',
+					frequency: 'Weekly',
+					startDate: '09/01/2020',
+					endDate: '12/31/2020',
+					enabled: false
+				},
+			];
+		}
 		return schedules;
 	}
 }

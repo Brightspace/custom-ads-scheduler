@@ -19,22 +19,13 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 
 	static get properties() {
 		return {
-			associations: {
-				type: Array
-			},
-			roles: {
-				type: Array
-			},
-			departments: {
+			schedules: {
 				type: Array
 			},
 			manageSchedulesService: {
 				type: Object
 			},
 			isLoading: {
-				type: Boolean
-			},
-			permissionError: {
 				type: Boolean
 			}
 		};
@@ -103,7 +94,6 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 		this.schedules = Array();
 
 		this.isLoading = true;
-		this.permissionError = false;
 	}
 
 	async connectedCallback() {
@@ -127,7 +117,7 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 		}
 	}
 
-	_renderEmptyTable() {
+	_renderEmptyIllustration() {
 		return html`
 			<div class="message--empty-table">
 				<nothing-here-illustration>
@@ -242,7 +232,7 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 			return html`
 				<div class='empty-table-wrapper'>
 					${ baseTemplate }
-					${ this._renderEmptyTable() }
+					${ this._renderEmptyIllustration() }
 					<d2l-button
 						primary
 						class="get-started-button"
