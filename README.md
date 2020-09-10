@@ -1,41 +1,13 @@
 # d2l-custom-ads-scheduler
 
-[![NPM version](https://img.shields.io/npm/v/@brightspace-ui/custom-ads-scheduler.svg)](https://www.npmjs.org/package/@brightspace-ui/custom-ads-scheduler)
-[![Dependabot badge](https://flat.badgen.net/dependabot/BrightspaceUI/custom-ads-scheduler?icon=dependabot)](https://app.dependabot.com/)
-[![Build status](https://travis-ci.com/@brightspace-ui/custom-ads-scheduler.svg?branch=master)](https://travis-ci.com/@brightspace-ui/custom-ads-scheduler)
-
-
-
-## Installation
-
-To install from NPM:
-
-```shell
-npm install @brightspace-ui/custom-ads-scheduler
-```
-
 ## Usage
 
 ```html
 <script type="module">
-    import '@brightspace-ui/custom-ads-scheduler/custom-ads-scheduler.js';
+    import '@brightspace/custom-ads-scheduler/src/components/d2l-manage-schedules.js';
 </script>
-<d2l-custom-ads-scheduler>My element</d2l-custom-ads-scheduler>
+<d2l-manage-schedules></d2l-custom-ads-scheduler>
 ```
-
-**Properties:**
-
-| Property | Type | Description |
-|--|--|--|
-| | | |
-
-**Accessibility:**
-
-To make your usage of `d2l-custom-ads-scheduler` accessible, use the following properties when applicable:
-
-| Attribute | Description |
-|--|--|
-| | |
 
 ## Developing, Testing and Contributing
 
@@ -93,8 +65,6 @@ npm run test:diff -- -g some-pattern
 # update visual-diff goldens
 npm run test:diff:golden
 ```
-
-Golden snapshots in source control must be updated by Travis CI. To trigger an update, press the "Regenerate Goldens" button in the pull request `visual-difference` test run.
 
 ## Versioning, Releasing & Deploying
 
