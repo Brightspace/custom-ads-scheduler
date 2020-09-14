@@ -6,7 +6,7 @@
 <script type="module">
     import '@brightspace/custom-ads-scheduler/src/components/d2l-manage-schedules.js';
 </script>
-<d2l-manage-schedules></d2l-custom-ads-scheduler>
+<d2l-manage-schedules></d2l-manage-schedules>
 ```
 
 ## Developing, Testing and Contributing
