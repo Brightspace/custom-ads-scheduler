@@ -1,12 +1,12 @@
 {
-  "name": "<%= packageName %>",
-  "description": "<%= description %>",
-  "repository": "https://github.com/<%= githubOrg %>/<%= shortName %>.git",
-  <%= publishInfo %>,
+  "name": "@brightspace/custom-ads-scheduler",
+  "description": "",
+  "repository": "https://github.com/Brightspace/custom-ads-scheduler.git",
+  "private": true,
   "scripts": {
     "lint": "npm run lint:eslint && npm run lint:lit",
     "lint:eslint": "eslint . --ext .js,.html",
-    "lint:lit": "lit-analyzer <%= shortName %>.js demo test",
+    "lint:lit": "lit-analyzer custom-ads-scheduler.js demo test",
     "start": "es-dev-server --app-index demo/index.html --node-resolve --dedupe --open --watch",
     "test": "npm run lint && npm run test:headless && npm run test:diff",
     "test:diff": "mocha ./**/*.visual-diff.js -t 40000",
@@ -33,7 +33,8 @@
     "frau-ci": "^1",
     "karma-sauce-launcher": "^2",
     "lit-analyzer": "^1",
-    "puppeteer": "^4"
+    "puppeteer": "^4",
+    "sinon": "^9.0.2"
   },
   "dependencies": {
     "@brightspace-ui/core": "^1",
