@@ -256,7 +256,7 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 					class="add-new-button"
 					icon="tier1:plus-large-thick"
 					text="${ this.localize('actionNew') }"
-					@click=${ this._handleNewSchedule }>
+					@click=${ this._handleNew }>
 				</d2l-button-subtle>
 				${ this._renderTable() }
 			`;
