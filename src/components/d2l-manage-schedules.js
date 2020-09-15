@@ -197,23 +197,27 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 	_handleEdit(event) {
 		const schedule = this._getScheduleByRowId(parseInt(event.target.getAttribute('row-id')));
 		console.log('Edit: ', schedule);
+		window.location.href = "/d2l/custom/adsScheduler/editSchedule"
 		// Edit schedule
 	}
 
 	_handleNew(event) {
 		const schedule = this._getScheduleByRowId(parseInt(event.target.getAttribute('row-id')));
 		console.log('New: ', schedule);
+		window.location.href = "/d2l/custom/adsScheduler/editSchedule"
 		// New schedule
 	}
 
 	_handleViewLog(event) {
 		const schedule = this._getScheduleByRowId(parseInt(event.target.getAttribute('row-id')));
 		console.log('Log: ', schedule);
+		window.location.href = "/d2l/custom/adsScheduler/viewLog"
 		// Go to log page
 	}
 
 	_handleEnableDisable(event) {
 		const schedule = this._getScheduleByRowId(parseInt(event.target.getAttribute('row-id')));
+		schedule.enabled = !schedule.enabled;
 		console.log('Enalbe/disable: ', schedule);
 		// Enable or disable as necessary
 	}
