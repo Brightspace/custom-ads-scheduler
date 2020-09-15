@@ -28,7 +28,7 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 			isLoading: {
 				type: Boolean
 			},
-			temp_shouldHaveSchdules: {
+			tempShouldHaveSchedules: {
 				type: Boolean
 			}
 		};
@@ -104,7 +104,7 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 
 		this.isLoading = true;
 
-		const schedules = await this.manageSchedulesService.getSchedules(this.temp_shouldHaveSchdules);
+		const schedules = await this.manageSchedulesService.getSchedules(this.tempShouldHaveSchedules);
 		this._mapSchedulesArray(schedules);
 
 		this.isLoading = false;

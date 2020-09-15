@@ -3,12 +3,12 @@ function sleep(ms) {
 }
 
 export class ManageSchedulesDemoService {
-	static async getSchedules(temp_shouldHaveSchdules) {
+	static async getSchedules(tempShouldHaveSchdules) {
 		if (window.shouldWait) {
 			await sleep(2000);
 		}
 		let schedules;
-		if (window.shouldBeEmpty || !temp_shouldHaveSchdules) {
+		if (window.shouldBeEmpty || !tempShouldHaveSchdules) {
 			schedules = [];
 		} else {
 			schedules = [
