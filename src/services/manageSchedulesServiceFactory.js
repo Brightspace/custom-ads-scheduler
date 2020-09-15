@@ -3,9 +3,9 @@ import { ManageSchedulesService } from './manageSchedulesService';
 
 export class ManageSchedulesServiceFactory {
 	static getManageSchedulesService() {
-		if (window.demo) {
+		//if (window.demo) {
 			return ManageSchedulesDemoService;
-		}
-		return ManageSchedulesService;
+		//}
+		//return ManageSchedulesService;
 	}
 }
