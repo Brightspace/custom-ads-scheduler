@@ -218,6 +218,7 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 	_handleEnableDisable(event) {
 		const schedule = this._getScheduleByRowId(parseInt(event.target.getAttribute('row-id')));
 		schedule.enabled = !schedule.enabled;
+		this.requestUpdate();
 		console.log('Enalbe/disable: ', schedule);
 		// Enable or disable as necessary
 	}
