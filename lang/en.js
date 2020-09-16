@@ -14,5 +14,8 @@ export default {
 	'scheduleDates': 'Schedule Dates',
 	'status': 'Status',
 	'enabled': 'Enabled',
-	'disabled': 'Disabled'
+	'disabled': 'Disabled',
+	'logs.desc': 'TODO: This will describe the table of logs below, for schedule with ID: {scheduleId}.',
+	'logs.executionDate': 'Report Execution Date',
+	'logs.completionStatus': 'Completion Status'
 };

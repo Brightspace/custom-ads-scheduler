@@ -15,7 +15,7 @@ import { getLocalizeResources } from '../localization.js';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 import { ManageSchedulesServiceFactory } from '../services/manageSchedulesServiceFactory';
 
-class ManagerSchedules extends LocalizeMixin(LitElement) {
+class ManageSchedules extends LocalizeMixin(LitElement) {
 
 	static get properties() {
 		return {
@@ -270,4 +270,4 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 		`;
 	}
 }
-customElements.define('d2l-manage-schedules', ManagerSchedules);
+customElements.define('d2l-manage-schedules', ManageSchedules);

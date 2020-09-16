@@ -21,8 +21,13 @@ describe('d2l-manage-schedules', () => {
 
 	after(async() => await browser.close());
 
-	it('passes visual-diff comparison', async function() {
-		const rect = await visualDiff.getRect(page, '#default');
+	it('manage schedules passes visual-diff comparison', async function() {
+		const rect = await visualDiff.getRect(page, '#manage-schedules');
+		await visualDiff.screenshotAndCompare(page, this.test.fullTitle(), { clip: rect });
+	});
+
+	it('schedule logs passes visual-diff comparison', async function() {
+		const rect = await visualDiff.getRect(page, '#schedule-logs');
 		await visualDiff.screenshotAndCompare(page, this.test.fullTitle(), { clip: rect });
 	});
 

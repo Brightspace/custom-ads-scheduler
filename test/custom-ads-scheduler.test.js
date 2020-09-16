@@ -1,10 +1,15 @@
 import '../src/components/d2l-manage-schedules.js';
+import '../src/components/d2l-schedule-logs.js';
 import { expect, fixture, fixtureCleanup, html } from '@open-wc/testing';
 import { ManageSchedulesServiceFactory } from '../src/services/manageSchedulesServiceFactory';
 import { ManageSchedulesTestService } from './utilities/manageSchedulesTestService';
 import { newRandomSchedule } from './utilities/scheduleGenerator';
 import { runConstructor } from '@brightspace-ui/core/tools/constructor-test-helper.js';
+import { ScheduleLogsServiceFactory } from '../src/services/scheduleLogsServiceFactory';
+import { ScheduleLogsTestService } from './utilities/scheduleLogsTestService';
 import sinon from '../node_modules/sinon/pkg/sinon-esm.js';
+
+// Manage Schedules
 
 const defaultFixture = html`
 <d2l-manage-schedules></d2l-manage-schedules>
@@ -105,4 +110,58 @@ function setupLongLoad() {
 		}
 	};
 	getManageSchedulesServiceStub.returns(new ManageSchedulesTestService(patches));
+}
+
+// Schedule Logs
+
+const scheduleLogsFixture = html`
+<d2l-schedule-logs></d2l-schedule-logs>
+`;
+let scheduleLogsServiceFactoryStub;
+
+describe('d2l-schedules-log', () => {
+
+	describe('accessibility', () => {
+		it('should pass all axe tests', async() => {
+			const el = await fixture(scheduleLogsFixture);
+			await expect(el).to.be.accessible();
+		});
+	});
+
+	describe('constructor', () => {
+		it('should construct', () => {
+			runConstructor('d2l-schedule-logs');
+		});
+	});
+
+	describe('serialize schedule logs', () => {
+		beforeEach(() => {
+			scheduleLogsServiceFactoryStub = sinon.stub(ScheduleLogsServiceFactory, 'getScheduleLogsService');
+			scheduleLogsServiceFactoryStub.returns(new ScheduleLogsTestService());
+		});
+
+		afterEach(() => {
+			scheduleLogsServiceFactoryStub.restore();
+			fixtureCleanup();
+		});
+
+		// TODO: Unit tests for the logs table
+
+		it('should display the loading spinner when loading', async() => {
+			setupLongScheduleLogsLoad();
+			const el = await fixture(scheduleLogsFixture);
+
+			const loadingSpinner = el.shadowRoot.querySelector('d2l-loading-spinner');
+			expect(loadingSpinner).to.not.be.null;
+		});
+	});
+});
+
+function setupLongScheduleLogsLoad() {
+	const patches = {
+		getLogs: async() => {
+			return new Promise(resolve => setTimeout(resolve, 5000));
+		}
+	};
+	scheduleLogsServiceFactoryStub.returns(new ScheduleLogsTestService(patches));
 }
