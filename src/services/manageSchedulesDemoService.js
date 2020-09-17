@@ -18,7 +18,8 @@ export class ManageSchedulesDemoService {
 					frequency: 'Daily',
 					startDate: '09/01/2020',
 					endDate: '12/31/2020',
-					enabled: true
+					enabled: true,
+					scheduleId: 1
 				},
 				{
 					name: 'B',
@@ -26,7 +27,8 @@ export class ManageSchedulesDemoService {
 					frequency: 'Weekly',
 					startDate: '09/01/2020',
 					endDate: '12/31/2020',
-					enabled: false
+					enabled: false,
+					scheduleId: 2
 				},
 			];
 		}
