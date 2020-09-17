@@ -14,7 +14,7 @@ export async function getLocalizeResources(langs) {
 			};
 		}
 	}
-	translations = await import('./lang/en.js');
+	translations = await import('../lang/en.js');
 	return {
 		language: 'en',
 		resources: translations.default
