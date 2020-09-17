@@ -1,6 +1,13 @@
 export class ScheduleLogsService {
-	static async getLogs(/*scheduleId*/) {
-		// TODO: Query LMS for logs associated with provided scheduleId
+
+	// TODO: Hook this up to the backend, once it exists
+	// In the meantime, only the Demo service will be provided by the factory
+
+	static async getLogs() {
 		return [];
+	}
+
+	static async getNumLogs() {
+		return 0;
 	}
 }
