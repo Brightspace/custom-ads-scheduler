@@ -7,7 +7,7 @@ import { runConstructor } from '@brightspace-ui/core/tools/constructor-test-help
 import sinon from '../node_modules/sinon/pkg/sinon-esm.js';
 
 const defaultFixture = html`
-<d2l-manage-schedules></d2l-manage-schedules>
+<d2l-manage-schedules tempShouldHaveSchedules></d2l-manage-schedules>
 `;
 
 let getManageSchedulesServiceStub;
