@@ -1,5 +1,7 @@
 # d2l-custom-ads-scheduler
 
+[![Build][CI Badge]][CI Workflows]
+
 ## Usage
 
 ```html
@@ -71,3 +73,6 @@ npm run test:diff:golden
 All version changes should obey [semantic versioning](https://semver.org/) rules.
 
 Include either `[increment major]`, `[increment minor]` or `[increment patch]` in your merge commit message to automatically increment the `package.json` version and create a tag.
+
+[CI Badge]: https://github.com/Brightspace/custom-ads-scheduler/workflows/build/badge.svg?branch=master
+[CI Workflows]: https://github.com/Brightspace/custom-ads-scheduler/actions?query=workflow%3Abuild+branch%3Amaster
