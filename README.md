@@ -1,5 +1,7 @@
 # d2l-custom-ads-scheduler
 
+[![Build][CI Badge]][CI Workflows]
+
 ## Usage
 
 ```html
