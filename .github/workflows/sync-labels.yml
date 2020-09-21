@@ -6,10 +6,6 @@ on:
     paths:
       - .github/workflows/sync-labels.yml
       - .github/labels.yml
-  pull_request:
-    paths:
-      - .github/workflows/sync-labels.yml
-      - .github/labels.yml
 jobs:
   sync-labels:
     name: sync-labels
