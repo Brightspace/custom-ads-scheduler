@@ -110,57 +110,46 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 		this.isLoading = false;
 	}
 
+	render() {
+		return html`
+			${ this.isLoading ? this._renderSpinner() : this._renderResults() }
+		`;
+	}
+
+	_getScheduleById(scheduleId) {
+		return this.schedules.find(schedule => schedule.scheduleId === scheduleId);
+	}
+
+	_handleEdit(event) {
+		const schedule = this._getScheduleById(parseInt(event.target.getAttribute('schedule-id')));
+		window.location.href = `/d2l/custom/ads/scheduler/schedule/edit/${schedule.scheduleId}`;
+		// Edit schedule
+	}
+
+	_handleEnableDisable(event) {
+		const schedule = this._getScheduleById(parseInt(event.target.getAttribute('schedule-id')));
+		schedule.enabled = !schedule.enabled;
+		this.requestUpdate();
+		// Enable or disable as necessary
+	}
+
+	_handleNew(event) {
+		const schedule = this._getScheduleById(parseInt(event.target.getAttribute('schedule-id')));
+		window.location.href = '/d2l/custom/ads/scheduler/schedule/add';
+		schedule.scheduleId;	// Needed to satisfy the no-unused-vars linter policy.
+		// New schedule
+	}
+
+	_handleViewLog(event) {
+		const schedule = this._getScheduleById(parseInt(event.target.getAttribute('schedule-id')));
+		window.location.href = `/d2l/custom/ads/scheduler/logs/view/${schedule.scheduleId}`;
+		// Go to log page
+	}
+
 	_mapSchedulesArray(schedulesArray) {
 		if (schedulesArray) {
 			this.schedules = schedulesArray;
 		}
-	}
-
-	_renderEmptyIllustration() {
-		return html`
-			<div class="message--empty-table">
-				<nothing-here-illustration>
-				</nothing-here-illustration>
-				<h1 class="d2l-heading-2 nothing-title">
-					${ this.localize('schedulerNothingTitle') }
-				</h1>
-				<div class="d2l-body-standard">
-					${ this.localize('schedulerNothingMessage') }
-				</div>
-			</div>
-		`;
-	}
-
-	_renderTable() {
-		return html`
-			<table>
-				<thead>
-					<th>${ this.localize('scheduleName') }</th>
-					<th>${ this.localize('type') }</th>
-					<th>${ this.localize('frequency') }</th>
-					<th>${ this.localize('scheduleDates') }</th>
-					<th>${ this.localize('status') }</th>
-				</thead>
-				<tbody>
-					${ this.schedules.map(schedule => this._renderScheduleRow(schedule)) }
-				</tbody>
-			</table>
-		`;
-	}
-
-	_renderScheduleRow(schedule) {
-		return html`
-			<tr>
-				<td>
-					${ schedule.name }
-					${ this._renderActionChevron(schedule) }
-				</td>
-				<td>${ schedule.type }</td>
-				<td>${ schedule.frequency }</td>
-				<td>${ schedule.startDate } - ${ schedule.endDate }</td>
-				<td>${ schedule.enabled ? this.localize('enabled') : this.localize('disabled') }</td>
-			</tr>
-		`;
 	}
 
 	_renderActionChevron(schedule) {
@@ -190,37 +179,19 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 		`;
 	}
 
-	_handleEdit(event) {
-		const schedule = this._getScheduleById(parseInt(event.target.getAttribute('schedule-id')));
-		console.log('Edit: ', schedule);
-		window.location.href = `/d2l/custom/ads/scheduler/schedule/edit/${schedule.scheduleId}`;
-		// Edit schedule
-	}
-
-	_handleNew(event) {
-		const schedule = this._getScheduleById(parseInt(event.target.getAttribute('schedule-id')));
-		console.log('New: ', schedule);
-		window.location.href = '/d2l/custom/ads/scheduler/schedule/add';
-		// New schedule
-	}
-
-	_handleViewLog(event) {
-		const schedule = this._getScheduleById(parseInt(event.target.getAttribute('schedule-id')));
-		console.log('Log: ', schedule);
-		window.location.href = `/d2l/custom/ads/scheduler/logs/view/${schedule.scheduleId}`;
-		// Go to log page
-	}
-
-	_handleEnableDisable(event) {
-		const schedule = this._getScheduleById(parseInt(event.target.getAttribute('schedule-id')));
-		schedule.enabled = !schedule.enabled;
-		this.requestUpdate();
-		console.log('Enalbe/disable: ', schedule);
-		// Enable or disable as necessary
-	}
-
-	_getScheduleById(scheduleId) {
-		return this.schedules.find(schedule => schedule.scheduleId === scheduleId);
+	_renderEmptyIllustration() {
+		return html`
+			<div class="message--empty-table">
+				<nothing-here-illustration>
+				</nothing-here-illustration>
+				<h1 class="d2l-heading-2 nothing-title">
+					${ this.localize('schedulerNothingTitle') }
+				</h1>
+				<div class="d2l-body-standard">
+					${ this.localize('schedulerNothingMessage') }
+				</div>
+			</div>
+		`;
 	}
 
 	_renderResults() {
@@ -259,6 +230,21 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 		}
 	}
 
+	_renderScheduleRow(schedule) {
+		return html`
+			<tr>
+				<td>
+					${ schedule.name }
+					${ this._renderActionChevron(schedule) }
+				</td>
+				<td>${ schedule.type }</td>
+				<td>${ schedule.frequency }</td>
+				<td>${ schedule.startDate } - ${ schedule.endDate }</td>
+				<td>${ schedule.enabled ? this.localize('enabled') : this.localize('disabled') }</td>
+			</tr>
+		`;
+	}
+
 	_renderSpinner() {
 		return html`
 			<d2l-loading-spinner
@@ -268,10 +254,22 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 		`;
 	}
 
-	render() {
+	_renderTable() {
 		return html`
-			${ this.isLoading ? this._renderSpinner() : this._renderResults() }
+			<table>
+				<thead>
+					<th>${ this.localize('scheduleName') }</th>
+					<th>${ this.localize('type') }</th>
+					<th>${ this.localize('frequency') }</th>
+					<th>${ this.localize('scheduleDates') }</th>
+					<th>${ this.localize('status') }</th>
+				</thead>
+				<tbody>
+					${ this.schedules.map(schedule => this._renderScheduleRow(schedule)) }
+				</tbody>
+			</table>
 		`;
 	}
+
 }
 customElements.define('d2l-manage-schedules', ManagerSchedules);
