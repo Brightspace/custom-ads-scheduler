@@ -6,61 +6,73 @@ export class ScheduleLogsDemoService {
 
 	static allLogs = [
 		{
+			ScheduleId: 1,
 			RunDate: new Date(2020, 9, 11, 1, 2, 3),
 			EndDate: new Date(2020, 9, 15, 1, 4, 17),
 			StatusName: 'Completed'
 		},
 		{
+			ScheduleId: 2,
 			RunDate: new Date(2020, 9, 10, 2, 2, 16),
 			EndDate: new Date(2020, 9, 17, 2, 18, 29),
 			StatusName: 'Failed'
 		},
 		{
+			ScheduleId: 3,
 			RunDate: new Date(2020, 9, 12, 11, 15, 0),
 			EndDate: new Date(2020, 9, 1, 11, 30, 29),
 			StatusName: 'Failed'
 		},
 		{
+			ScheduleId: 4,
 			RunDate: new Date(2020, 9, 30, 1, 2, 3),
 			EndDate: new Date(2020, 9, 15, 1, 4, 17),
 			StatusName: 'Completed'
 		},
 		{
+			ScheduleId: 5,
 			RunDate: new Date(2020, 9, 5, 2, 2, 16),
 			EndDate: new Date(2020, 9, 17, 2, 18, 29),
 			StatusName: 'Failed'
 		},
 		{
+			ScheduleId: 6,
 			RunDate: new Date(2020, 9, 7, 11, 15, 0),
 			EndDate: new Date(2020, 9, 1, 11, 30, 29),
 			StatusName: 'Failed'
 		},
 		{
+			ScheduleId: 7,
 			RunDate: new Date(2020, 9, 8, 1, 2, 3),
 			EndDate: new Date(2020, 9, 15, 1, 4, 17),
 			StatusName: 'Completed'
 		},
 		{
+			ScheduleId: 8,
 			RunDate: new Date(2020, 9, 11, 2, 2, 16),
 			EndDate: new Date(2020, 9, 17, 2, 18, 29),
 			StatusName: 'Failed'
 		},
 		{
+			ScheduleId: 9,
 			RunDate: new Date(2020, 9, 26, 11, 15, 0),
 			EndDate: new Date(2020, 9, 1, 11, 30, 29),
 			StatusName: 'Failed'
 		},
 		{
+			ScheduleId: 10,
 			RunDate: new Date(2020, 9, 30, 1, 2, 3),
 			EndDate: new Date(2020, 9, 15, 1, 4, 17),
 			StatusName: 'Completed'
 		},
 		{
+			ScheduleId: 11,
 			RunDate: new Date(2020, 9, 3, 2, 2, 16),
 			EndDate: new Date(2020, 9, 17, 2, 18, 29),
 			StatusName: 'Failed'
 		},
 		{
+			ScheduleId: 12,
 			RunDate: new Date(2020, 9, 6, 11, 15, 0),
 			EndDate: new Date(2020, 9, 1, 11, 30, 29),
 			StatusName: 'Failed'

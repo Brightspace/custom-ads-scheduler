@@ -105,7 +105,7 @@ class ScheduleLogs extends LocalizeMixin(LitElement) {
 		this.logs = Array();
 		this.page = 1;
 		this.maxPage = 1;
-		this.pageCount = 5;
+		this.pageCount = 10;
 
 		this.scheduleLogsService = ScheduleLogsServiceFactory.getScheduleLogsService();
 
@@ -150,7 +150,9 @@ class ScheduleLogs extends LocalizeMixin(LitElement) {
 
 	_mapLogsArray(logsArray) {
 		if (logsArray) {
-			this.logs = logsArray;
+
+			// Enforce our page size on the client side as well, just in case
+			this.logs = logsArray.slice(0, this.pageCount);
 		}
 	}
 
@@ -248,7 +250,7 @@ class ScheduleLogs extends LocalizeMixin(LitElement) {
 				page-number="${ this.page }"
 				max-page-number="${ this.maxPage }"
 				show-item-count-select
-				item-count-options="[5, 10, 25, 50]"
+				item-count-options="[10, 25, 50]"
 				selected-count-option="${ this.pageCount }"
 				@pagination-page-change="${ this._handlePageChange }"
 				@pagination-item-counter-change="${ this._handleItemsPerPageChange }"></d2l-labs-pagination>
