@@ -12,7 +12,7 @@ import sinon from '../node_modules/sinon/pkg/sinon-esm.js';
 // Manage Schedules
 
 const defaultFixture = html`
-<d2l-manage-schedules></d2l-manage-schedules>
+<d2l-manage-schedules tempShouldHaveSchedules></d2l-manage-schedules>
 `;
 
 let getManageSchedulesServiceStub;

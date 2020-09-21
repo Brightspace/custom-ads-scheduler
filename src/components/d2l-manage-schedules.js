@@ -27,6 +27,9 @@ class ManageSchedules extends LocalizeMixin(LitElement) {
 			},
 			isLoading: {
 				type: Boolean
+			},
+			tempShouldHaveSchedules: {
+				type: Boolean
 			}
 		};
 	}
@@ -101,19 +104,15 @@ class ManageSchedules extends LocalizeMixin(LitElement) {
 
 		this.isLoading = true;
 
-		const schedules = await this.manageSchedulesService.getSchedules();
+		const schedules = await this.manageSchedulesService.getSchedules(this.tempShouldHaveSchedules);
 		this._mapSchedulesArray(schedules);
 
 		this.isLoading = false;
 	}
 
 	_mapSchedulesArray(schedulesArray) {
-		let i = 0;
 		if (schedulesArray) {
-			schedulesArray.map(schedule => schedule.rowId = i++);
 			this.schedules = schedulesArray;
-		} else {
-			this.schedules = Array();
 		}
 	}
 
@@ -167,21 +166,21 @@ class ManageSchedules extends LocalizeMixin(LitElement) {
 	_renderActionChevron(schedule) {
 		return html`
 			<d2l-dropdown>
-				<d2l-button-icon icon="tier2:chevron-down" class="d2l-dropdown-opener"></d2l-button-icon>
+				<d2l-button-icon icon="tier2:chevron-down" class="d2l-dropdown-opener" aria-label="Open dropdown for ${schedule.name}"></d2l-button-icon>
 				<d2l-dropdown-menu>
 					<d2l-menu>
 						<d2l-menu-item
-							row-id="${ schedule.rowId }"
+							schedule-id="${ schedule.scheduleId }"
 							text="${  this.localize('actionEdit') }"
 							@click="${ this._handleEdit }">
 						</d2l-menu-item>
 						<d2l-menu-item
-							row-id="${ schedule.rowId }"
+							schedule-id="${ schedule.scheduleId }"
 							text="${  this.localize('actionViewLog')}"
 							@click="${ this._handleViewLog }">
 						</d2l-menu-item>
 						<d2l-menu-item
-							row-id="${ schedule.rowId }"
+							schedule-id="${ schedule.scheduleId }"
 							text="${ schedule.enabled ? this.localize('actionDisable') : this.localize('actionEnable') }"
 							@click="${ this._handleEnableDisable }">
 						</d2l-menu-item>
@@ -192,31 +191,36 @@ class ManageSchedules extends LocalizeMixin(LitElement) {
 	}
 
 	_handleEdit(event) {
-		const schedule = this._getScheduleByRowId(parseInt(event.target.getAttribute('row-id')));
+		const schedule = this._getScheduleById(parseInt(event.target.getAttribute('schedule-id')));
 		console.log('Edit: ', schedule);
+		window.location.href = `/d2l/custom/ads/scheduler/schedule/edit/${schedule.scheduleId}`;
 		// Edit schedule
 	}
 
 	_handleNew(event) {
-		const schedule = this._getScheduleByRowId(parseInt(event.target.getAttribute('row-id')));
+		const schedule = this._getScheduleById(parseInt(event.target.getAttribute('schedule-id')));
 		console.log('New: ', schedule);
+		window.location.href = '/d2l/custom/ads/scheduler/schedule/add';
 		// New schedule
 	}
 
 	_handleViewLog(event) {
-		const schedule = this._getScheduleByRowId(parseInt(event.target.getAttribute('row-id')));
+		const schedule = this._getScheduleById(parseInt(event.target.getAttribute('schedule-id')));
 		console.log('Log: ', schedule);
+		window.location.href = `/d2l/custom/ads/scheduler/logs/view/${schedule.scheduleId}`;
 		// Go to log page
 	}
 
 	_handleEnableDisable(event) {
-		const schedule = this._getScheduleByRowId(parseInt(event.target.getAttribute('row-id')));
+		const schedule = this._getScheduleById(parseInt(event.target.getAttribute('schedule-id')));
+		schedule.enabled = !schedule.enabled;
+		this.requestUpdate();
 		console.log('Enalbe/disable: ', schedule);
 		// Enable or disable as necessary
 	}
 
-	_getScheduleByRowId(rowId) {
-		return this.schedules.find(schedule => schedule.rowId === rowId);
+	_getScheduleById(scheduleId) {
+		return this.schedules.find(schedule => schedule.scheduleId === scheduleId);
 	}
 
 	_renderResults() {
@@ -248,7 +252,7 @@ class ManageSchedules extends LocalizeMixin(LitElement) {
 					class="add-new-button"
 					icon="tier1:plus-large-thick"
 					text="${ this.localize('actionNew') }"
-					@click=${ this._handleNewSchedule }>
+					@click=${ this._handleNew }>
 				</d2l-button-subtle>
 				${ this._renderTable() }
 			`;

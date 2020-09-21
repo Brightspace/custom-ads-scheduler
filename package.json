@@ -1,8 +1,15 @@
 {
-  "name": "@brightspace/custom-ads-scheduler",
-  "description": "",
+  "name": "d2l-custom-ads-scheduler",
+  "description": "Custom Advanced Dataset Scheduler",
   "repository": "https://github.com/Brightspace/custom-ads-scheduler.git",
-  "private": true,
+  "version": "1.1.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "src/**",
+    "lang/**"
+  ],
   "scripts": {
     "lint": "npm run lint:eslint && npm run lint:lit",
     "lint:eslint": "eslint . --ext .js,.html",
@@ -37,7 +44,8 @@
     "sinon": "^9.0.2"
   },
   "dependencies": {
-    "@brightspace-ui-labs/pagination": "0.0.8",
+    "@brightspace-ui-labs/pagination": "^0.0.8",
+    "@brightspace-ui-labs/wizard": "^1.0.0",
     "@brightspace-ui/core": "^1",
     "@brightspace-ui/intl": "^3.0.11",
     "@webcomponents/webcomponentsjs": "^2",
