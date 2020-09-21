@@ -1,0 +1,25 @@
+name: sync-labels
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - .github/workflows/sync-labels.yml
+      - .github/labels.yml
+  pull_request:
+    paths:
+      - .github/workflows/sync-labels.yml
+      - .github/labels.yml
+jobs:
+  sync-labels:
+    name: sync-labels
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: Brightspace/third-party-actions@actions/checkout
+      - name: Sync labels
+        uses: Brightspace/third-party-actions@micnncim/action-label-syncer
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          manifest: .github/labels.yml
