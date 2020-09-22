@@ -40,7 +40,7 @@
     "frau-ci": "^1",
     "karma-sauce-launcher": "^4",
     "lit-analyzer": "^1",
-    "puppeteer": "^4",
+    "puppeteer": "^5",
     "sinon": "^9.0.2"
   },
   "dependencies": {
