@@ -62,15 +62,18 @@ class WizardManager extends LocalizeMixin(LitElement) {
 		`;
 	}
 
-	_renderSpinner() {
-		return html`
-			<d2l-loading-spinner
-				class="spinner"
-				size=100>
-			</d2l-loading-spinner>
-		`;
+	_handleDone() {
+		// save data then redirect to manage
+		window.location.href = '/d2l/custom/ads/scheduler/manage';
 	}
-
+	_handleNext() {
+		const wizard = this.shadowRoot.getElementById('wizard');
+		wizard.next();
+	}
+	_handleRestart() {
+		const wizard = this.shadowRoot.getElementById('wizard');
+		wizard.restart();
+	}
 	_renderPage() {
 		return html`
 			<d2l-labs-wizard id="wizard" class="wizard" @stepper-restart="${ this._handleRestart }">
@@ -89,19 +92,13 @@ class WizardManager extends LocalizeMixin(LitElement) {
 		`;
 	}
 
-	_handleNext() {
-		const wizard = this.shadowRoot.getElementById('wizard');
-		wizard.next();
-	}
-
-	_handleDone() {
-		// save data then redirect to manage
-		window.location.href = '/d2l/custom/ads/scheduler/manage';
-	}
-
-	_handleRestart() {
-		const wizard = this.shadowRoot.getElementById('wizard');
-		wizard.restart();
+	_renderSpinner() {
+		return html`
+			<d2l-loading-spinner
+				class="spinner"
+				size=100>
+			</d2l-loading-spinner>
+		`;
 	}
 
 }
