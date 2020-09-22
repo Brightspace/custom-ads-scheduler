@@ -39,7 +39,7 @@ class WizardManager extends LocalizeMixin(LitElement) {
 
 		this.manageSchedulesService = ManageSchedulesServiceFactory.getManageSchedulesService();
 
-		this.schedule = { 'a': 'asd' };
+		this.schedule = {};
 
 		this.isLoading = true;
 	}
