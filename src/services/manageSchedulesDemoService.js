@@ -29,17 +29,16 @@ export class ManageSchedulesDemoService {
 		if (window.shouldWait) {
 			await sleep(2000);
 		}
-		let schedules;
 		if (window.shouldBeEmpty || !tempShouldHaveSchdules) {
 			return [];
 		}
-		return schedules;
+		return this.schedules;
 	}
 
 	static async getSchedule(scheduleId) {
 		if (window.shouldWait) {
 			await sleep(2000);
 		}
-		return schedules.find(schedule => schedule.scheduleId = scheduleId);
+		return this.schedules.find(schedule => schedule.scheduleId = scheduleId);
 	}
 }
