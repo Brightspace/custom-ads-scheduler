@@ -175,7 +175,7 @@ class ScheduleLogs extends LocalizeMixin(LitElement) {
 	}
 
 	_handleReturnToManageSchedules() {
-		window.location.href = '/d2l/custom/ads/scheduler/manageSchedules';
+		window.location.href = '/d2l/custom/ads/scheduler/manage';
 	}
 
 	// Rendering
