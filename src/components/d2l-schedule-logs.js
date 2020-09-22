@@ -156,22 +156,22 @@ class ScheduleLogs extends LocalizeMixin(LitElement) {
 		}
 	}
 
-	_handlePageChange(event) {
+	async _handlePageChange(event) {
 		this.page = event.detail.page;
-		this._queryLogs();
+		await this._queryLogs();
 	}
 
-	_handleItemsPerPageChange(event) {
+	async _handleItemsPerPageChange(event) {
 
 		// Update the page count and total # of logs
 		this.pageCount = event.detail.itemCount;
-		this._queryNumLogs();
+		await this._queryNumLogs();
 
 		// If the number of total logs and the new page size no longer support the current page, adjust it
 		this.page = Math.min(this.page, this.maxPage);
 
 		// Re-query the page of logs with new pagination values
-		this._queryLogs();
+		await this._queryLogs();
 	}
 
 	_handleReturnToManageSchedules() {
