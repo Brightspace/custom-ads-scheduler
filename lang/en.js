@@ -14,5 +14,9 @@ export default {
 	'scheduleDates': 'Schedule Dates',
 	'status': 'Status',
 	'enabled': 'Enabled',
-	'disabled': 'Disabled'
+	'disabled': 'Disabled',
+	'add.SelectDataSet': 'Select Your Advanced Data Set',
+	'add.ConfigureSchedule': 'Configure Your Schedule',
+	'add.DeliveryMethod': 'Choose Your Delivery Method',
+	'add.Done': 'Done'
 };
