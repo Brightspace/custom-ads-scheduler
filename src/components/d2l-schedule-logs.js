@@ -68,6 +68,10 @@ class ScheduleLogs extends LocalizeMixin(LitElement) {
 				position: relative;
 			}
 
+			.dimmed {
+				opacity: 0.6;
+			}
+
 			.query-spinner {
 				position: absolute;
 				left: 0px;
@@ -125,13 +129,6 @@ class ScheduleLogs extends LocalizeMixin(LitElement) {
 
 		this.requestUpdate();
 		this.paginationElement = this.shadowRoot.getElementById('log-pagination');
-		this.paginationElement?.addEventListener('pagination-page-change', this._handlePageChange);
-		this.paginationElement?.addEventListener('pagination-item-counter-change', this._handleItemsPerPageChange);
-	}
-
-	async disconnectedCallback() {
-		this.paginationElement?.removeEventListener('pagination-page-change', this._handlePageChange);
-		this.paginationElement?.removeEventListener('pagination-item-counter-change', this._handleItemsPerPageChange);
 	}
 
 	async _queryNumLogs() {
@@ -218,7 +215,7 @@ class ScheduleLogs extends LocalizeMixin(LitElement) {
 
 	_renderTable() {
 		return html`
-			<div class="table-wrapper">
+			<div class="table-wrapper ${ this.isQuerying ? 'dimmed' : '' }">
 				<table>
 					<thead>
 						<th>${ this.localize('logs.runDate') }</th>
@@ -229,7 +226,7 @@ class ScheduleLogs extends LocalizeMixin(LitElement) {
 						${ this.logs.map(log => this._renderLog(log)) }
 					</tbody>
 				</table>
-				${this.isQuerying ? this._renderQuerySpinner() : ''}
+				${ this.isQuerying ? this._renderQuerySpinner() : '' }
 			</div>
 		`;
 	}
