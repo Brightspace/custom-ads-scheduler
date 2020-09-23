@@ -87,7 +87,6 @@ export class ScheduleLogsDemoService {
 		if (window.shouldBeEmpty) {
 			return [];
 		} else {
-			console.debug(`Perform a query for logs belonging to ${scheduleId}`);
 
 			// Mock query logic that will be in the LMS
 			// Probably overkill for a demo, but it is compelling to see working pagination!

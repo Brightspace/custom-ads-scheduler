@@ -131,31 +131,14 @@ class ScheduleLogs extends LocalizeMixin(LitElement) {
 		this.paginationElement = this.shadowRoot.getElementById('log-pagination');
 	}
 
-	async _queryNumLogs() {
-		const numLogs = await this.scheduleLogsService.getNumLogs(this.scheduleId);
-		this.maxPage = Math.ceil(numLogs / this.pageCount);
+	render() {
+		return html`
+			${ this.isLoading ? this._renderSpinner() : this._renderLogs() }
+		`;
 	}
 
-	async _queryLogs() {
-		this.isQuerying = true;
-
-		const logs = await this.scheduleLogsService.getLogs(this.scheduleId, this.page, this.pageCount);
-		this._mapLogsArray(logs);
-
-		this.isQuerying = false;
-	}
-
-	_mapLogsArray(logsArray) {
-		if (logsArray) {
-
-			// Enforce our page size on the client side as well, just in case
-			this.logs = logsArray.slice(0, this.pageCount);
-		}
-	}
-
-	async _handlePageChange(event) {
-		this.page = event.detail.page;
-		await this._queryLogs();
+	_formatDateTime(dateTime) {
+		return formatDateTime(dateTime, { format: 'short' });
 	}
 
 	async _handleItemsPerPageChange(event) {
@@ -171,24 +154,50 @@ class ScheduleLogs extends LocalizeMixin(LitElement) {
 		await this._queryLogs();
 	}
 
+	async _handlePageChange(event) {
+		this.page = event.detail.page;
+		await this._queryLogs();
+	}
+
 	_handleReturnToManageSchedules() {
 		window.location.href = '/d2l/custom/ads/scheduler/manage';
 	}
 
-	// Rendering
+	_mapLogsArray(logsArray) {
+		if (logsArray) {
 
-	render() {
-		return html`
-			${ this.isLoading ? this._renderSpinner() : this._renderLogs() }
-		`;
+			// Enforce our page size on the client side as well, just in case
+			this.logs = logsArray.slice(0, this.pageCount);
+		}
 	}
 
-	_renderSpinner() {
+	async _queryLogs() {
+		this.isQuerying = true;
+
+		const logs = await this.scheduleLogsService.getLogs(this.scheduleId, this.page, this.pageCount);
+		this._mapLogsArray(logs);
+
+		this.isQuerying = false;
+	}
+
+	async _queryNumLogs() {
+		const numLogs = await this.scheduleLogsService.getNumLogs(this.scheduleId);
+		this.maxPage = Math.ceil(numLogs / this.pageCount);
+	}
+
+	_renderLog(log) {
 		return html`
-			<d2l-loading-spinner
-				class="spinner"
-				size=100>
-			</d2l-loading-spinner>
+			<tr>
+				<td>
+					${ this._formatDateTime(log.RunDate) }
+				</td>
+				<td>
+					${ this._formatDateTime(log.EndDate) }
+				</td>
+				<td>
+					${ log.StatusName }
+				</td>
+			</tr>
 		`;
 	}
 
@@ -213,6 +222,38 @@ class ScheduleLogs extends LocalizeMixin(LitElement) {
 		`;
 	}
 
+	_renderPagination() {
+		return html`
+			<d2l-labs-pagination
+				id="log-pagination"
+				page-number="${ this.page }"
+				max-page-number="${ this.maxPage }"
+				show-item-count-select
+				item-count-options="[10, 25, 50]"
+				selected-count-option="${ this.pageCount }"
+				@pagination-page-change="${ this._handlePageChange }"
+				@pagination-item-counter-change="${ this._handleItemsPerPageChange }"></d2l-labs-pagination>
+		`;
+	}
+
+	_renderQuerySpinner() {
+		return html`
+			<d2l-loading-spinner
+				class="query-spinner"
+				size=100>
+			</d2l-loading-spinner>
+		`;
+	}
+
+	_renderSpinner() {
+		return html`
+			<d2l-loading-spinner
+				class="spinner"
+				size=100>
+			</d2l-loading-spinner>
+		`;
+	}
+
 	_renderTable() {
 		return html`
 			<div class="table-wrapper ${ this.isQuerying ? 'dimmed' : '' }">
@@ -231,48 +272,6 @@ class ScheduleLogs extends LocalizeMixin(LitElement) {
 		`;
 	}
 
-	_renderQuerySpinner() {
-		return html`
-			<d2l-loading-spinner
-				class="query-spinner"
-				size=100>
-			</d2l-loading-spinner>
-		`;
-	}
-
-	_renderPagination() {
-		return html`
-			<d2l-labs-pagination
-				id="log-pagination"
-				page-number="${ this.page }"
-				max-page-number="${ this.maxPage }"
-				show-item-count-select
-				item-count-options="[10, 25, 50]"
-				selected-count-option="${ this.pageCount }"
-				@pagination-page-change="${ this._handlePageChange }"
-				@pagination-item-counter-change="${ this._handleItemsPerPageChange }"></d2l-labs-pagination>
-		`;
-	}
-
-	_formatDateTime(dateTime) {
-		return formatDateTime(dateTime, { format: 'short' });
-	}
-
-	_renderLog(log) {
-		return html`
-			<tr>
-				<td>
-					${ this._formatDateTime(log.RunDate) }
-				</td>
-				<td>
-					${ this._formatDateTime(log.EndDate) }
-				</td>
-				<td>
-					${ log.StatusName }
-				</td>
-			</tr>
-		`;
-	}
 }
 
 customElements.define('d2l-schedule-logs', ScheduleLogs);
