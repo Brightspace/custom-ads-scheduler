@@ -128,7 +128,6 @@ class ScheduleLogs extends LocalizeMixin(LitElement) {
 		this.isLoading = false;
 
 		this.requestUpdate();
-		this.paginationElement = this.shadowRoot.getElementById('log-pagination');
 	}
 
 	render() {
