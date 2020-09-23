@@ -18,5 +18,10 @@ export default {
 	'add.SelectDataSet': 'Select Your Advanced Data Set',
 	'add.ConfigureSchedule': 'Configure Your Schedule',
 	'add.DeliveryMethod': 'Choose Your Delivery Method',
-	'add.Done': 'Done'
+	'add.Done': 'Done',
+	'logs.desc': 'Schedule Logs allow you to view a history of all of the dates the schedule has run, and if the schedule ran successfully or not on each date.',
+	'logs.runDate': 'Run Date',
+	'logs.completionDate': 'Completion Date',
+	'logs.completionStatus': 'Completion Status',
+	'logs.manageSchedules': 'Back to Scheduler'
 };
