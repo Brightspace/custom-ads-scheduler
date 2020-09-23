@@ -25,6 +25,13 @@ export class ManageSchedulesDemoService {
 		},
 	];
 
+	static async getSchedule(scheduleId) {
+		if (window.shouldWait) {
+			await sleep(2000);
+		}
+		return this.schedules.find(schedule => schedule.scheduleId = scheduleId);
+	}
+
 	static async getSchedules(tempShouldHaveSchdules) {
 		if (window.shouldWait) {
 			await sleep(2000);
@@ -33,12 +40,5 @@ export class ManageSchedulesDemoService {
 			return [];
 		}
 		return this.schedules;
-	}
-
-	static async getSchedule(scheduleId) {
-		if (window.shouldWait) {
-			await sleep(2000);
-		}
-		return this.schedules.find(schedule => schedule.scheduleId = scheduleId);
 	}
 }
