@@ -6,6 +6,7 @@
 		<script type="module">
 			import '@brightspace-ui/core/components/demo/demo-page.js';
 			import '../src/components/d2l-manage-schedules.js';
+			import '../src/components/d2l-schedule-logs.js';
 		</script>
 		<script>
 			window.demo = true;
@@ -18,10 +19,17 @@
 	</head>
 	<body>
 		<d2l-demo-page page-title="d2l-custom-ads-scheduler">
+
 			<h2>d2l-custom-ads-scheduler</h2>
 			<d2l-demo-snippet>
 				<d2l-manage-schedules tempShouldHaveSchedules></d2l-manage-schedules>
 			</d2l-demo-snippet>
+
+			<h2>d2l-schedule-logs</h2>
+			<d2l-demo-snippet>
+				<d2l-schedule-logs schedule-id="123"></d2l-schedule-logs>
+			</d2l-demo-snippet>
+
 		</d2l-demo-page>
 	</body>
 </html>
