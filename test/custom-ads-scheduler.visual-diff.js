@@ -10,8 +10,8 @@ describe('d2l-manage-schedules', () => {
 	before(async() => {
 		browser = await puppeteer.launch();
 		page = await visualDiff.createPage(browser);
-		await page.setViewport({width: 800, height: 1000, deviceScaleFactor: 2});
-		await page.goto(`${visualDiff.getBaseUrl()}/test/custom-ads-scheduler.visual-diff.html`, {waitUntil: ['networkidle0', 'load']});
+		await page.setViewport({ width: 800, height: 1000, deviceScaleFactor: 2 });
+		await page.goto(`${visualDiff.getBaseUrl()}/test/custom-ads-scheduler.visual-diff.html`, { waitUntil: ['networkidle0', 'load'] });
 		await page.bringToFront();
 	});
 
