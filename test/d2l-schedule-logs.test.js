@@ -1,4 +1,3 @@
-import '../src/components/d2l-manage-schedules.js';
 import '../src/components/d2l-schedule-logs.js';
 import { expect, fixture, fixtureCleanup, html } from '@open-wc/testing';
 import { newRandomLog } from './utilities/logGenerator';
