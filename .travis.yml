@@ -1,0 +1,23 @@
+language: node_js
+node_js: node
+addons:
+  chrome: stable
+script:
+- npm run lint
+- |
+  if [ $TRAVIS_PULL_REQUEST != false ] && [ $TRAVIS_SECURE_ENV_VARS == true ]; then
+    echo "Pull request with secure environment variables, running Sauce tests...";
+    npm run test:sauce || travis_terminate 1;
+  else
+    echo "Not a pull request and/or no secure environment variables, running headless tests...";
+    npm run test:headless || travis_terminate 1;
+  fi
+after_success:
+- frauci-update-version -d=skip && export TRAVIS_TAG=$(frauci-get-version)
+env:
+  global:
+  - REPO_NAME=custom-ads-scheduler
+  - OWNER_NAME=Brightspace
+  - SAUCE_USERNAME: Desire2Learn
+  # SAUCE_ACCESS_KEY
+  - secure: qjK9sHvxsV9NdfhPsFw4BI98JynJazF+OLs+0NZPUXiQxulvyNpuEvtXTUnPhyilhIyIaRVG5L0l7dc4uBd/ml0q2u3znZ2o3KXzr2ZxDlKqqwBjUiI8fdIomOwU6qsy/RfUXU8JnQcVNFcNJVQaLeJ7ZdyyJ4pjB0GZS2Yw/xPbWK8l70GRVnpp7yPC9NkFoNRIvMj0bQBCZcYNBNct0ruPsKhMCDQiQYYJJa7j2lBrPgzve9Tl67tEj+LIiWxN6SD7nO7mktgpOVA4lOuK9KKkZ4ryg8/6QQFuRaOSlwBHEpUZkZcTvu3uLn1n5YyO4ZCvM1ZuVgCwWg/T2Eemeu+8b0L3uzjp2ebrFUGLF938CIyYJ6j3fy6AxHnMdZKtWBKx2C3ffsPZaKuHHja1TRvnTR0SUc9UEl3MUR60ENjQb+sVrk0R0HNIsEDTsWTwnW/pJF7ANtLDXPR+4lqs/aQ1LCP2dptMCmtB82Zj3wLmyvW5WrYH/g5LcNDo/qW1TbaezXHKqrlmjyv4tkNPbS3NZEITo8vqKGlKUOK3p6DleBd8/kS+QUHcbYSxTWjVlGyIrQFm5D2SyRxDwg3z9Cy6f5FTjB6gliWzWjxuoskxBD0CCy+TVVQ56GCLP5mCsYErpnY6K1btXjFNQlV8ATzMXQFxXciFALusTl5fYNI=
