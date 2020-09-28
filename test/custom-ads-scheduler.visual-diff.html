@@ -6,6 +6,7 @@
 			import '@brightspace-ui/core/components/typography/typography.js';
 			import '../src/components/d2l-manage-schedules.js';
 			import '../src/components/d2l-schedule-logs.js';
+			import '../src/components/d2l-wizard-manager.js';
 		</script>
 		<script>
 			window.demo = true;
@@ -21,6 +22,9 @@
 		<div class="visual-diff">
 			<d2l-manage-schedules id="manage-schedules" tempShouldHaveSchedules></d2l-manage-schedules>
 			<d2l-schedule-logs id="schedule-logs" schedule-id="123"></d2l-schedule-logs>
+			<div id="wizard-manager">
+				<d2l-wizard-manager></d2l-wizard-manager>
+			</div>
 		</div>
 	</body>
 </html>
