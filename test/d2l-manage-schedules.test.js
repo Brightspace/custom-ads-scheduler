@@ -5,9 +5,10 @@ import { ManageSchedulesTestService } from './utilities/manageSchedulesTestServi
 import { newRandomSchedule } from './utilities/scheduleGenerator';
 import { runConstructor } from '@brightspace-ui/core/tools/constructor-test-helper.js';
 import sinon from '../node_modules/sinon/pkg/sinon-esm.js';
+import translations from '../lang/en';
 
 const defaultFixture = html`
-<d2l-manage-schedules tempShouldHaveSchedules></d2l-manage-schedules>
+<d2l-manage-schedules></d2l-manage-schedules>
 `;
 
 let getManageSchedulesServiceStub;
@@ -45,13 +46,14 @@ describe('d2l-manage-schedules', () => {
 		});
 
 		it('should have all schedules in table', async() => {
-			setupTestData([
+			const randomSchedules = [
 				newRandomSchedule(),
 				newRandomSchedule(),
 				newRandomSchedule()
-			]);
+			];
 
-			const el = await fixture(defaultFixture);
+			const el = await setFixtureSchedules(defaultFixture, randomSchedules);
+
 			const rows = el.shadowRoot.querySelectorAll('tbody > tr');
 			expect(rows.length).to.equal(3);
 		});
@@ -59,50 +61,37 @@ describe('d2l-manage-schedules', () => {
 		it('binds correct values in table', async() => {
 			const testSchedule = {
 				name: 'A',
-				type: 'Differential',
-				frequency: 'Daily',
+				typeId: 1,
+				frequencyId: 1,
 				startDate: '09/01/2020',
 				endDate: '12/31/2020',
-				enabled: true
+				isEnabled: true
 			};
 
-			setupTestData([testSchedule]);
+			const el = await setFixtureSchedules(defaultFixture, [testSchedule]);
 
-			const el = await fixture(defaultFixture);
 			const rows = el.shadowRoot.querySelectorAll('tbody > tr');
 			expect(rows.length).to.equal(1);
 			const rowData = rows[0].querySelectorAll('td');
 			expect(rowData[0].innerText).to.contain(testSchedule.name);
-			expect(rowData[1].innerText).to.contain(testSchedule.type);
-			expect(rowData[2].innerText).to.contain(testSchedule.frequency);
-			expect(rowData[3].innerText).to.contain(`${testSchedule.startDate} - ${testSchedule.endDate}`);
-			expect(rowData[4].innerText).to.contain(testSchedule.enabled ? 'Enabled' : 'Disabled');
-		});
-
-		it('should display the loading spinner when loading', async() => {
-			setupLongLoad();
-			const el = await fixture(defaultFixture);
-
-			const loadingSpinner = el.shadowRoot.querySelector('d2l-loading-spinner');
-			expect(loadingSpinner).to.not.be.null;
+			expect(rowData[1].innerText).to.contain(translations[`schedule.type${testSchedule.typeId}`]);
+			expect(rowData[2].innerText).to.contain(translations[`schedule.frequency${testSchedule.frequencyId}`]);
+			expect(rowData[3].innerText).to.contain('9/1/2020 12:00 AM - 12/31/2020 12:00 AM');
+			expect(rowData[4].innerText).to.contain(testSchedule.isEnabled ? 'Enabled' : 'Disabled');
 		});
 	});
 
 });
 
-function setupTestData(schedules) {
-	const patches = {};
-	if (schedules && Array.isArray(schedules)) {
-		patches['getSchedules'] = async() => schedules;
-	}
-	getManageSchedulesServiceStub.returns(new ManageSchedulesTestService(patches));
+async function setFixtureSchedules(givenFixture, schedules) {
+	const el = await fixture(givenFixture);
+	el.schedules = schedules;
+
+	await timeout(10);
+
+	return el;
 }
 
-function setupLongLoad() {
-	const patches = {
-		getSchedules: async() => {
-			return new Promise(resolve => setTimeout(resolve, 5000));
-		}
-	};
-	getManageSchedulesServiceStub.returns(new ManageSchedulesTestService(patches));
+function timeout(duration) {
+	return new Promise(resolve => setTimeout(resolve, duration));
 }
