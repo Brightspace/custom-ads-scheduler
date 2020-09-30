@@ -33,8 +33,6 @@ describe('d2l-wizard-manager', () => {
 	});
 
 	describe('step contents', () => {
-		beforeEach(() => {
-		});
 
 		afterEach(() => {
 			fixtureCleanup();
