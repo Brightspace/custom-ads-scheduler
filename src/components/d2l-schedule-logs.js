@@ -207,6 +207,7 @@ class ScheduleLogs extends LocalizeMixin(LitElement) {
 				${ this.localize('logs.desc', { scheduleId:`${this.scheduleId}` }) }
 			</div>
 			<d2l-button
+				id="back-to-manage"
 				primary
 				class="manage-schedules-button"
 				@click=${ this._handleReturnToManageSchedules }>

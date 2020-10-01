@@ -155,20 +155,28 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 	_renderActionChevron(schedule) {
 		return html`
 			<d2l-dropdown>
-				<d2l-button-icon icon="tier2:chevron-down" class="d2l-dropdown-opener" aria-label="Open dropdown for ${schedule.name}"></d2l-button-icon>
+				<d2l-button-icon
+					id="dropdown-${schedule.scheduleId}"
+					icon="tier2:chevron-down"
+					class="d2l-dropdown-opener"
+					aria-label="Open dropdown for ${schedule.name}">
+				</d2l-button-icon>
 				<d2l-dropdown-menu>
 					<d2l-menu>
 						<d2l-menu-item
+							id="dropdown-edit-${schedule.scheduleId}"
 							schedule-id="${ schedule.scheduleId }"
 							text="${  this.localize('actionEdit') }"
 							@click="${ this._handleEdit }">
 						</d2l-menu-item>
 						<d2l-menu-item
+							id="dropdown-log-${schedule.scheduleId}"
 							schedule-id="${ schedule.scheduleId }"
 							text="${  this.localize('actionViewLog')}"
 							@click="${ this._handleViewLog }">
 						</d2l-menu-item>
 						<d2l-menu-item
+							id="dropdown-enable-${schedule.scheduleId}"
 							schedule-id="${ schedule.scheduleId }"
 							text="${ schedule.enabled ? this.localize('actionDisable') : this.localize('actionEnable') }"
 							@click="${ this._handleEnableDisable }">
@@ -209,6 +217,7 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 					${ baseTemplate }
 					${ this._renderEmptyIllustration() }
 					<d2l-button
+						id="get-started"
 						primary
 						class="get-started-button"
 						@click=${ this._handleNew }>
@@ -220,6 +229,7 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 			return html`
 				${ baseTemplate }
 				<d2l-button-subtle
+					id="add-new"
 					class="add-new-button"
 					icon="tier1:plus-large-thick"
 					text="${ this.localize('actionNew') }"
