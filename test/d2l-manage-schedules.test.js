@@ -1,5 +1,6 @@
 import '../src/components/d2l-manage-schedules.js';
 import { expect, fixture, fixtureCleanup, html } from '@open-wc/testing';
+import { frequencies, frequenciesEnum, types, typesEnum } from '../src/constants';
 import { ManageSchedulesServiceFactory } from '../src/services/manageSchedulesServiceFactory';
 import { ManageSchedulesTestService } from './utilities/manageSchedulesTestService';
 import { newRandomSchedule } from './utilities/scheduleGenerator';
@@ -61,8 +62,8 @@ describe('d2l-manage-schedules', () => {
 		it('binds correct values in table', async() => {
 			const testSchedule = {
 				name: 'A',
-				typeId: 1,
-				frequencyId: 1,
+				typeId: typesEnum.full,
+				frequencyId: frequenciesEnum.weekly,
 				startDate: '09/01/2020',
 				endDate: '12/31/2020',
 				isEnabled: true
@@ -74,8 +75,8 @@ describe('d2l-manage-schedules', () => {
 			expect(rows.length).to.equal(1);
 			const rowData = rows[0].querySelectorAll('td');
 			expect(rowData[0].innerText).to.contain(testSchedule.name);
-			expect(rowData[1].innerText).to.contain(translations[`schedule.type${testSchedule.typeId}`]);
-			expect(rowData[2].innerText).to.contain(translations[`schedule.frequency${testSchedule.frequencyId}`]);
+			expect(rowData[1].innerText).to.contain(translations[`schedule.type.${types[testSchedule.typeId]}`]);
+			expect(rowData[2].innerText).to.contain(translations[`schedule.frequency.${frequencies[testSchedule.frequencyId]}`]);
 			expect(rowData[3].innerText).to.contain('9/1/2020 12:00 AM - 12/31/2020 12:00 AM');
 			expect(rowData[4].innerText).to.contain(testSchedule.isEnabled ? 'Enabled' : 'Disabled');
 		});

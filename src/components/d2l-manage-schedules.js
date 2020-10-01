@@ -9,6 +9,7 @@ import '@brightspace-ui/core/components/menu/menu-item';
 import './nothing-here-illustration';
 import { bodyStandardStyles, heading2Styles } from '@brightspace-ui/core/components/typography/styles.js';
 import { css, html, LitElement } from 'lit-element/lit-element';
+import { frequencies, types } from '../constants';
 import { d2lTableStyles } from '../styles/d2lTableStyles';
 import { formatDateTime } from '@brightspace-ui/intl/lib/dateTime';
 import { getLocalizeResources } from '../localization.js';
@@ -211,8 +212,8 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 					${ schedule.name }
 					${ this._renderActionChevron(schedule) }
 				</td>
-				<td>${ this.localize(`schedule.type${schedule.typeId}`) }</td>
-				<td>${ this.localize(`schedule.frequency${schedule.frequencyId}`) }</td>
+				<td>${ this.localize(`schedule.type.${types[schedule.typeId]}`) }</td>
+				<td>${ this.localize(`schedule.frequency.${frequencies[schedule.frequencyId]}`) }</td>
 				<td>${ this._formatDateTime(new Date(schedule.startDate)) } - ${ this._formatDateTime(new Date(schedule.endDate)) }</td>
 				<td>${ schedule.isEnabled ? this.localize('enabled') : this.localize('disabled') }</td>
 			</tr>

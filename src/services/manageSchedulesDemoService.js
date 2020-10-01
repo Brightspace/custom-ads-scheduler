@@ -1,3 +1,5 @@
+import { frequenciesEnum, typesEnum } from '../constants';
+
 function sleep(ms) {
 	return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -7,8 +9,8 @@ export class ManageSchedulesDemoService {
 	static schedules = [
 		{
 			name: 'A',
-			type: 2,
-			frequency: 4,
+			type: typesEnum.diff,
+			frequency: frequenciesEnum.mins15,
 			startDate: '09/01/2020',
 			endDate: '12/31/2020',
 			isEnabled: true,
@@ -16,8 +18,8 @@ export class ManageSchedulesDemoService {
 		},
 		{
 			name: 'B',
-			typeId: 1,
-			frequencyId: 1,
+			typeId: typesEnum.full,
+			frequencyId: frequenciesEnum.weekly,
 			startDate: '09/01/2020',
 			endDate: '12/31/2020',
 			isEnabled: false,
