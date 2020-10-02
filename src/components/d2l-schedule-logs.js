@@ -8,6 +8,7 @@ import { formatDateTime } from '@brightspace-ui/intl/lib/dateTime';
 import { getLocalizeResources } from '../localization.js';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 import { ScheduleLogsServiceFactory } from '../services/scheduleLogsServiceFactory';
+import { statuses } from '../constants';
 
 class ScheduleLogs extends LocalizeMixin(LitElement) {
 
@@ -140,6 +141,10 @@ class ScheduleLogs extends LocalizeMixin(LitElement) {
 		return formatDateTime(dateTime, { format: 'short' });
 	}
 
+	_parseStatus(statusId) {
+		return statuses[statusId] || "";
+	}
+
 	async _handleItemsPerPageChange(event) {
 
 		// Update the page count and total # of logs
@@ -194,7 +199,7 @@ class ScheduleLogs extends LocalizeMixin(LitElement) {
 					${ this._formatDateTime(log.EndDate) }
 				</td>
 				<td>
-					${ log.StatusName }
+					${ this._parseStatus(log.StatusId) }
 				</td>
 			</tr>
 		`;

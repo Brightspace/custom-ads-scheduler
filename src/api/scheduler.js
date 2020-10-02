@@ -15,12 +15,12 @@ export class Scheduler {
 	// Helper Methods
 
 	static _get(url) {
-		let options = _options("GET");
+		let options = this._options("GET");
 		return fetch(url, options).then(r => r.json());
 	}
 
 	static _post(url, body) {
-		let options = _options("POST");
+		let options = this._options("POST");
 		options.body = body;
 		return fetch(url, options).then(r => r.json());
 	}

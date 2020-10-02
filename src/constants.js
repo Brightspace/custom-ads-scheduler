@@ -10,6 +10,13 @@ export const frequencies = {
 	4: '15mins'
 };
 
+export const statuses = {
+	1: 'Queued',
+	2: 'Processing',
+	3: 'Completed',
+	4: 'Failed'
+};
+
 export const typesEnum = {
 	full: 1,
 	diff: 2
