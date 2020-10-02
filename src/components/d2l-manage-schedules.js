@@ -6,11 +6,12 @@ import '@brightspace-ui/core/components/dropdown/dropdown-menu';
 import '@brightspace-ui/core/components/icons/icon';
 import '@brightspace-ui/core/components/menu/menu';
 import '@brightspace-ui/core/components/menu/menu-item';
-import '@brightspace-ui/core/components/loading-spinner/loading-spinner.js';
 import './nothing-here-illustration';
 import { bodyStandardStyles, heading2Styles } from '@brightspace-ui/core/components/typography/styles.js';
 import { css, html, LitElement } from 'lit-element/lit-element';
+import { frequencies, types } from '../constants';
 import { d2lTableStyles } from '../styles/d2lTableStyles';
+import { formatDateTime } from '@brightspace-ui/intl/lib/dateTime';
 import { getLocalizeResources } from '../localization.js';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 import { ManageSchedulesServiceFactory } from '../services/manageSchedulesServiceFactory';
@@ -24,12 +25,6 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 			},
 			manageSchedulesService: {
 				type: Object
-			},
-			isLoading: {
-				type: Boolean
-			},
-			tempShouldHaveSchedules: {
-				type: Boolean
 			}
 		};
 	}
@@ -95,25 +90,16 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 		this.manageSchedulesService = ManageSchedulesServiceFactory.getManageSchedulesService();
 
 		this.schedules = Array();
-
-		this.isLoading = true;
-	}
-
-	async connectedCallback() {
-		super.connectedCallback();
-
-		this.isLoading = true;
-
-		const schedules = await this.manageSchedulesService.getSchedules(this.tempShouldHaveSchedules);
-		this._mapSchedulesArray(schedules);
-
-		this.isLoading = false;
 	}
 
 	render() {
 		return html`
-			${ this.isLoading ? this._renderSpinner() : this._renderResults() }
+			${ this._renderResults() }
 		`;
+	}
+
+	_formatDateTime(dateTime) {
+		return formatDateTime(dateTime, { format: 'short' });
 	}
 
 	_getScheduleById(scheduleId) {
@@ -123,33 +109,22 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 	_handleEdit(event) {
 		const schedule = this._getScheduleById(parseInt(event.target.getAttribute('schedule-id')));
 		window.location.href = `/d2l/custom/ads/scheduler/schedule/edit/${schedule.scheduleId}`;
-		// Edit schedule
 	}
 
 	_handleEnableDisable(event) {
 		const schedule = this._getScheduleById(parseInt(event.target.getAttribute('schedule-id')));
-		schedule.enabled = !schedule.enabled;
+		schedule.isEnabled = !schedule.isEnabled;
 		this.requestUpdate();
 		// Enable or disable as necessary
 	}
 
-	_handleNew(event) {
-		const schedule = this._getScheduleById(parseInt(event.target.getAttribute('schedule-id')));
+	_handleNew() {
 		window.location.href = '/d2l/custom/ads/scheduler/schedule/add';
-		schedule.scheduleId;	// Needed to satisfy the no-unused-vars linter policy.
-		// New schedule
 	}
 
 	_handleViewLog(event) {
 		const schedule = this._getScheduleById(parseInt(event.target.getAttribute('schedule-id')));
 		window.location.href = `/d2l/custom/ads/scheduler/logs/view/${schedule.scheduleId}`;
-		// Go to log page
-	}
-
-	_mapSchedulesArray(schedulesArray) {
-		if (schedulesArray) {
-			this.schedules = schedulesArray;
-		}
 	}
 
 	_renderActionChevron(schedule) {
@@ -178,7 +153,7 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 						<d2l-menu-item
 							id="dropdown-enable-${schedule.scheduleId}"
 							schedule-id="${ schedule.scheduleId }"
-							text="${ schedule.enabled ? this.localize('actionDisable') : this.localize('actionEnable') }"
+							text="${ schedule.isEnabled ? this.localize('actionDisable') : this.localize('actionEnable') }"
 							@click="${ this._handleEnableDisable }">
 						</d2l-menu-item>
 					</d2l-menu>
@@ -247,20 +222,11 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 					${ schedule.name }
 					${ this._renderActionChevron(schedule) }
 				</td>
-				<td>${ schedule.type }</td>
-				<td>${ schedule.frequency }</td>
-				<td>${ schedule.startDate } - ${ schedule.endDate }</td>
-				<td>${ schedule.enabled ? this.localize('enabled') : this.localize('disabled') }</td>
+				<td>${ this.localize(`schedule.type.${types[schedule.typeId]}`) }</td>
+				<td>${ this.localize(`schedule.frequency.${frequencies[schedule.frequencyId]}`) }</td>
+				<td>${ this._formatDateTime(new Date(schedule.startDate)) } - ${ this._formatDateTime(new Date(schedule.endDate)) }</td>
+				<td>${ schedule.isEnabled ? this.localize('enabled') : this.localize('disabled') }</td>
 			</tr>
-		`;
-	}
-
-	_renderSpinner() {
-		return html`
-			<d2l-loading-spinner
-				class="spinner"
-				size=100>
-			</d2l-loading-spinner>
 		`;
 	}
 

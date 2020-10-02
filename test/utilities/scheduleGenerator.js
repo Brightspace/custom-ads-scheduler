@@ -4,11 +4,11 @@ export function newRandomSchedule() {
 
 	const newSchedule = {};
 	newSchedule.name = randomASCIIString();
-	newSchedule.type = randomASCIIString();
-	newSchedule.frequency = randomASCIIString();
+	newSchedule.typeId = randomInt(2) + 1;
+	newSchedule.frequencyId = randomInt(4) + 1;
 	newSchedule.startDate = randomASCIIString();
 	newSchedule.endDate = randomASCIIString();
-	newSchedule.enabled = randomInt(2) === 0;
+	newSchedule.isEnabled = randomInt(2);
 
 	return newSchedule;
 }
