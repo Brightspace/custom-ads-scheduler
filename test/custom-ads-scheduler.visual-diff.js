@@ -36,4 +36,26 @@ describe('d2l-manage-schedules', () => {
 		await visualDiff.screenshotAndCompare(page, this.test.fullTitle(), { clip: rect });
 	});
 
+	it('wizard passes visual-diff comparison', async function() {
+		const rect = await visualDiff.getRect(page, '#wizard-manager');
+		await visualDiff.screenshotAndCompare(page, this.test.fullTitle(), { clip: rect });
+	});
+
+	it('wizard passes visual-diff comparison, step 2', async function() {
+		await page.$eval('#wizard-manager', (page) => {
+			const wizard = page.children[0].shadowRoot.getElementById('wizard');
+			wizard.next();
+		});
+		const rect = await visualDiff.getRect(page, '#wizard-manager');
+		await visualDiff.screenshotAndCompare(page, this.test.fullTitle(), { clip: rect });
+	});
+
+	it('wizard passes visual-diff comparison, step 3', async function() {
+		await page.$eval('#wizard-manager', (page) => {
+			const wizard = page.children[0].shadowRoot.getElementById('wizard');
+			wizard.next();
+		});
+		const rect = await visualDiff.getRect(page, '#wizard-manager');
+		await visualDiff.screenshotAndCompare(page, this.test.fullTitle(), { clip: rect });
+	});
 });

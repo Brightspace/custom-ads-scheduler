@@ -6,6 +6,7 @@
 			import '@brightspace-ui/core/components/typography/typography.js';
 			import '../src/components/d2l-manage-schedules.js';
 			import '../src/components/d2l-schedule-logs.js';
+			import '../src/components/d2l-wizard-manager.js';
 		</script>
 		<script>
 			window.demo = true;
@@ -24,6 +25,9 @@
 								  schedules='[{"name":"Schedule1","typeId":"1","frequencyId":"1","startDate":"2020-01-02","endDate":"2020-02-05","isEnabled":1,"scheduleId":1},{"name":"Schedule 2","typeId":"2","frequencyId":"4","startDate":"2020-02-02","endDate":"2020-11-22","isEnabled":0,"scheduleId":2}]'>
 			</d2l-manage-schedules>
 			<d2l-schedule-logs id="schedule-logs" schedule-id="123"></d2l-schedule-logs>
+			<div id="wizard-manager">
+				<d2l-wizard-manager></d2l-wizard-manager>
+			</div>
 		</div>
 	</body>
 </html>
