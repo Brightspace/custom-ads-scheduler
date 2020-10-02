@@ -52,10 +52,10 @@ describe('d2l-schedules-log', () => {
 
 		it('binds correct values in logs table', async() => {
 			const testLog = {
-				ScheduleId: 1,
-				RunDate: new Date(2020, 9, 11, 1, 2, 3),
-				EndDate: new Date(2020, 9, 15, 1, 4, 17),
-				StatusName: 'Completed'
+				scheduleId: 1,
+				runDate: new Date(2020, 9, 11, 1, 2, 3),
+				endDate: new Date(2020, 9, 15, 1, 4, 17),
+				statusId: 3
 			};
 
 			setupLogsTestData([testLog]);

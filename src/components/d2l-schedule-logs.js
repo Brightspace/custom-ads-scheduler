@@ -138,7 +138,7 @@ class ScheduleLogs extends LocalizeMixin(LitElement) {
 	}
 
 	_formatDateTime(dateTime) {
-		return formatDateTime(dateTime, { format: 'short' });
+		return formatDateTime(new Date(dateTime), { format: 'short' });
 	}
 
 	_parseStatus(statusId) {
@@ -193,13 +193,13 @@ class ScheduleLogs extends LocalizeMixin(LitElement) {
 		return html`
 			<tr>
 				<td>
-					${ this._formatDateTime(log.RunDate) }
+					${ this._formatDateTime(log.runDate) }
 				</td>
 				<td>
-					${ this._formatDateTime(log.EndDate) }
+					${ this._formatDateTime(log.endDate) }
 				</td>
 				<td>
-					${ this._parseStatus(log.StatusId) }
+					${ this._parseStatus(log.statusId) }
 				</td>
 			</tr>
 		`;

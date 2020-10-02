@@ -6,76 +6,76 @@ export class ScheduleLogsDemoService {
 
 	static allLogs = [
 		{
-			ScheduleId: 1,
-			RunDate: new Date(2020, 9, 11, 1, 2, 3),
-			EndDate: new Date(2020, 9, 15, 1, 4, 17),
-			StatusId: 4
+			scheduleId: 1,
+			runDate: '2020-09-01T00:00:00',
+			endDate: '2020-09-01T00:00:00',
+			statusId: 4
 		},
 		{
-			ScheduleId: 2,
-			RunDate: new Date(2020, 9, 10, 2, 2, 16),
-			EndDate: new Date(2020, 9, 17, 2, 18, 29),
-			StatusId: 3
+			scheduleId: 2,
+			runDate: '2020-09-02T00:00:00',
+			endDate: '2020-09-02T00:00:00',
+			statusId: 3
 		},
 		{
-			ScheduleId: 3,
-			RunDate: new Date(2020, 9, 12, 11, 15, 0),
-			EndDate: new Date(2020, 9, 1, 11, 30, 29),
-			StatusId: 3
+			scheduleId: 3,
+			runDate: '2020-09-04T00:00:00',
+			endDate: '2020-09-04T00:00:00',
+			statusId: 3
 		},
 		{
-			ScheduleId: 4,
-			RunDate: new Date(2020, 9, 30, 1, 2, 3),
-			EndDate: new Date(2020, 9, 15, 1, 4, 17),
-			StatusId: 2
+			scheduleId: 4,
+			runDate: '2020-09-03T00:00:00',
+			endDate: '2020-09-03T00:00:00',
+			statusId: 2
 		},
 		{
-			ScheduleId: 5,
-			RunDate: new Date(2020, 9, 5, 2, 2, 16),
-			EndDate: new Date(2020, 9, 17, 2, 18, 29),
-			StatusId: 3
+			scheduleId: 5,
+			runDate: '2020-09-06T00:00:00',
+			endDate: '2020-09-06T00:00:00',
+			statusId: 3
 		},
 		{
-			ScheduleId: 6,
-			RunDate: new Date(2020, 9, 7, 11, 15, 0),
-			EndDate: new Date(2020, 9, 1, 11, 30, 29),
-			StatusId: 3
+			scheduleId: 6,
+			runDate: '2020-09-05T00:00:00',
+			endDate: '2020-09-05T00:00:00',
+			statusId: 3
 		},
 		{
-			ScheduleId: 7,
-			RunDate: new Date(2020, 9, 8, 1, 2, 3),
-			EndDate: new Date(2020, 9, 15, 1, 4, 17),
-			StatusId: 1
+			scheduleId: 7,
+			runDate: '2020-09-07T00:00:00',
+			endDate: '2020-09-07T00:00:00',
+			statusId: 1
 		},
 		{
-			ScheduleId: 8,
-			RunDate: new Date(2020, 9, 11, 2, 2, 16),
-			EndDate: new Date(2020, 9, 17, 2, 18, 29),
-			StatusId: 3
+			scheduleId: 8,
+			runDate: '2020-09-09T00:00:00',
+			endDate: '2020-09-09T00:00:00',
+			statusId: 3
 		},
 		{
-			ScheduleId: 9,
-			RunDate: new Date(2020, 9, 26, 11, 15, 0),
-			EndDate: new Date(2020, 9, 1, 11, 30, 29),
-			StatusId: 3
+			scheduleId: 9,
+			runDate: '2020-09-08T00:00:00',
+			endDate: '2020-09-08T00:00:00',
+			statusId: 3
 		},
 		{
-			ScheduleId: 10,
-			RunDate: new Date(2020, 9, 30, 1, 2, 3),
-			EndDate: new Date(2020, 9, 15, 1, 4, 17),
-			StatusId: 4
+			scheduleId: 10,
+			runDate: '2020-09-11T00:00:00',
+			endDate: '2020-09-11T00:00:00',
+			statusId: 4
 		},
 		{
-			ScheduleId: 11,
-			RunDate: new Date(2020, 9, 3, 2, 2, 16),
-			EndDate: new Date(2020, 9, 17, 2, 18, 29),
-			StatusId: 3
+			scheduleId: 11,
+			runDate: '2020-09-12T00:00:00',
+			endDate: '2020-09-12T00:00:00',
+			statusId: 3
 		},
 		{
-			ScheduleId: 12,
-			RunDate: new Date(2020, 9, 6, 11, 15, 0),
-			EndDate: new Date(2020, 9, 1, 11, 30, 29),
-			StatusId: 3
+			scheduleId: 12,
+			runDate: '2020-09-13T00:00:00',
+			endDate: '2020-09-13T00:00:00',
+			statusId: 3
 		}
 	];
 
@@ -98,9 +98,9 @@ export class ScheduleLogsDemoService {
 			// Determine end index & return sorted query result
 			const endIndex = Math.min(startIndex + pageSize, this.allLogs.length);
 			return this.allLogs.sort((a, b) => {
-				if (a.RunDate < b.RunDate)
+				if (a.runDate < b.runDate)
 					return 1;
-				else if (b.RunDate < a.RunDate)
+				else if (b.runDate < a.runDate)
 					return -1;
 				else
 					return 0;
