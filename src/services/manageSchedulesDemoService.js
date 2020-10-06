@@ -14,7 +14,8 @@ export class ManageSchedulesDemoService {
 			startDate: '09/01/2020',
 			endDate: '12/31/2020',
 			isEnabled: true,
-			scheduleId: 1
+			scheduleId: 1,
+			dataSetId: 'FEDCBA'
 		},
 		{
 			name: 'B',
@@ -23,7 +24,8 @@ export class ManageSchedulesDemoService {
 			startDate: '09/01/2020',
 			endDate: '12/31/2020',
 			isEnabled: false,
-			scheduleId: 2
+			scheduleId: 2,
+			dataSetId: 'ABCDEF'
 		},
 	];
 
