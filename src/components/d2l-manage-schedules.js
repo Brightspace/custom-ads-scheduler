@@ -116,12 +116,11 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 		const schedule = this._getScheduleById(parseInt(event.target.getAttribute('schedule-id')));
 
 		const response = await this.manageSchedulesService.setEnable(schedule.scheduleId, !schedule.isEnabled);
-		console.log(response);
 		if (response.status === 200) {
 			schedule.isEnabled = !schedule.isEnabled;
 			this.requestUpdate();
 		} else {
-			this.shadowRoot.getElementById("error").setAttribute('open', '');
+			this.shadowRoot.getElementById('error').setAttribute('open', '');
 		}
 	}
 

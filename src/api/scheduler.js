@@ -23,12 +23,6 @@ export class Scheduler {
 		return fetch(url, options).then(r => r.json());
 	}
 
-	static _put(url, body) {
-		let options = this._options("PUT");
-		options.body = body;
-		return fetch(url, options);
-	}
-
 	static _options(method) {
 		return {
 			credentials: 'include',
@@ -44,6 +38,12 @@ export class Scheduler {
 		const options = this._options('POST');
 		options.body = body;
 		return fetch(url, options).then(r => r.json());
+	}
+
+	static _put(url, body) {
+		const options = this._options('PUT');
+		options.body = body;
+		return fetch(url, options);
 	}
 
 }
