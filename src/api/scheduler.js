@@ -1,4 +1,4 @@
-import { Routes } from "./routes";
+import { Routes } from './routes';
 
 export class Scheduler {
 
@@ -19,13 +19,7 @@ export class Scheduler {
 	// Helper Methods
 
 	static _get(url) {
-		let options = this._options("GET");
-		return fetch(url, options).then(r => r.json());
-	}
-
-	static _post(url, body) {
-		let options = this._options("POST");
-		options.body = body;
+		const options = this._options('GET');
 		return fetch(url, options).then(r => r.json());
 	}
 
@@ -44,6 +38,12 @@ export class Scheduler {
 			method: method,
 			mode: 'cors',
 		};
+	}
+
+	static _post(url, body) {
+		const options = this._options('POST');
+		options.body = body;
+		return fetch(url, options).then(r => r.json());
 	}
 
 }

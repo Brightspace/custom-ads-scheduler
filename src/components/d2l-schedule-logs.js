@@ -141,10 +141,6 @@ class ScheduleLogs extends LocalizeMixin(LitElement) {
 		return formatDateTime(new Date(dateTime), { format: 'short' });
 	}
 
-	_parseStatus(statusId) {
-		return statuses[statusId] || "";
-	}
-
 	async _handleItemsPerPageChange(event) {
 
 		// Update the page count and total # of logs
@@ -173,6 +169,10 @@ class ScheduleLogs extends LocalizeMixin(LitElement) {
 			// Enforce our page size on the client side as well, just in case
 			this.logs = logsArray.slice(0, this.pageCount);
 		}
+	}
+
+	_parseStatus(statusId) {
+		return statuses[statusId] || '';
 	}
 
 	async _queryLogs() {
