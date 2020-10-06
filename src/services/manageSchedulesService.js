@@ -1,5 +1,7 @@
+import { Scheduler } from "../api/scheduler";
+
 export class ManageSchedulesService {
-	static async getSchedules() {
-		return [];
+	static async setEnable(scheduleId, isEnabled) {
+		return await Scheduler.setEnable(scheduleId, isEnabled);
 	}
 }
