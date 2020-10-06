@@ -6,13 +6,13 @@ export function newRandomLog() {
 	const scheduleId = Math.round(Math.random() * Math.max);
 	const startDate = randomDate(twentyTwenty, twentyTwentyOne, 0, 23);
 	const endDate = randomDate(startDate, twentyTwentyOne, 0, 23);
-	const status = Math.round(Math.random()) ? 'Completed' : 'Failed';
+	const status = Math.round(Math.random()) ? 2 : 3;
 
 	return {
-		ScheduleId: scheduleId,
-		RunDate: startDate,
-		EndDate: endDate,
-		StatusName: status
+		scheduleId: scheduleId,
+		runDate: startDate,
+		endDate: endDate,
+		statusId: status
 	};
 }
 

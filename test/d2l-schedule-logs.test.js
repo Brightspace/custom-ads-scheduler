@@ -52,10 +52,10 @@ describe('d2l-schedules-log', () => {
 
 		it('binds correct values in logs table', async() => {
 			const testLog = {
-				ScheduleId: 1,
-				RunDate: new Date(2020, 9, 11, 1, 2, 3),
-				EndDate: new Date(2020, 9, 15, 1, 4, 17),
-				StatusName: 'Completed'
+				scheduleId: 1,
+				runDate: new Date(2020, 9, 11, 1, 2, 3),
+				endDate: new Date(2020, 9, 15, 1, 4, 17),
+				statusId: 3
 			};
 
 			setupLogsTestData([testLog]);
@@ -64,9 +64,9 @@ describe('d2l-schedules-log', () => {
 			const rows = el.shadowRoot.querySelectorAll('tbody > tr');
 			expect(rows.length).to.equal(1);
 			const rowData = rows[0].querySelectorAll('td');
-			expect(rowData[0].innerText).to.contain('10/11/2020 1:02 AM'); // intl converted DateTime
-			expect(rowData[1].innerText).to.contain('10/15/2020 1:04 AM'); // intl converted DateTime
-			expect(rowData[2].innerText).to.contain(testLog.StatusName);
+			expect(rowData[0].innerText).to.equal('10/11/2020 1:02 AM'); // intl converted DateTime
+			expect(rowData[1].innerText).to.equal('10/15/2020 1:04 AM'); // intl converted DateTime
+			expect(rowData[2].innerText).to.equal('Completed');
 		});
 
 		it('should only display the page size number of logs', async() => {

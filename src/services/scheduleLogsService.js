@@ -1,13 +1,14 @@
+import { Scheduler } from '../api/scheduler';
+
 export class ScheduleLogsService {
 
-	// TODO: Hook this up to the backend, once it exists
-	// In the meantime, only the Demo service will be provided by the factory
-
-	static async getLogs() {
-		return [];
+	static async getLogs(scheduleId, page, count) {
+		const logs = await Scheduler.getLogs(scheduleId, page, count);
+		return logs;
 	}
 
-	static async getNumLogs() {
-		return 0;
+	static async getNumLogs(scheduleId) {
+		const numLogs = await Scheduler.getNumLogs(scheduleId);
+		return numLogs;
 	}
 }
