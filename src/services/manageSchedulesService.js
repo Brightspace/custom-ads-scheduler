@@ -1,5 +1,8 @@
 export class ManageSchedulesService {
-	static async getSchedules() {
-		return [];
+
+	static async getSchedule(/* scheduleId */) {
+		// TODO: Hook up to Syeda's schedule API
+		return {};
 	}
+
 }

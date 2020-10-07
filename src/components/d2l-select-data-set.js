@@ -94,7 +94,7 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 
 	_renderAdvancedDataSetOption(option) {
 		return html`
-			<option value=${ option.dataSetId } .selected="${ option.dataSetId === this.dataSet }">${ option.name }</option>
+			<option value=${ option.DataSetId } .selected="${ option.DataSetId === this.dataSet }">${ option.Name }</option>
 		`;
 	}
 
