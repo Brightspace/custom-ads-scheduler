@@ -1,3 +1,4 @@
+import '@brightspace-ui/core/components/alert/alert-toast';
 import '@brightspace-ui/core/components/button/button';
 import '@brightspace-ui/core/components/button/button-subtle';
 import '@brightspace-ui/core/components/dropdown/dropdown';
@@ -111,11 +112,16 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 		window.location.href = `/d2l/custom/ads/scheduler/schedule/edit/${schedule.scheduleId}`;
 	}
 
-	_handleEnableDisable(event) {
+	async _handleEnableDisable(event) {
 		const schedule = this._getScheduleById(parseInt(event.target.getAttribute('schedule-id')));
-		schedule.isEnabled = !schedule.isEnabled;
-		this.requestUpdate();
-		// Enable or disable as necessary
+
+		const response = await this.manageSchedulesService.setEnable(schedule.scheduleId, !schedule.isEnabled);
+		if (response.status === 200) {
+			schedule.isEnabled = !schedule.isEnabled;
+			this.requestUpdate();
+		} else {
+			this.shadowRoot.getElementById('error').setAttribute('open', '');
+		}
 	}
 
 	_handleNew() {
@@ -184,6 +190,9 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 			<div class="description-text d2l-body-standard">
 				${ this.localize('schedulerDesc') }
 			</div>
+			<d2l-alert-toast id="error" type="critical">
+				${ this.localize('statusToggleFailed') }
+			</d2l-alert-toast>
 		`;
 
 		if (isEmpty) {

@@ -16,6 +16,10 @@ export class Scheduler {
 		return this._get(Routes.NumScheduleLogs(scheduleId));
 	}
 
+	static setEnable(scheduleId, isEnabled) {
+		return this._put(Routes.SetEnable(scheduleId, isEnabled));
+	}
+
 	// Helper Methods
 
 	static _get(url) {
@@ -38,6 +42,12 @@ export class Scheduler {
 		const options = this._options('POST');
 		options.body = body;
 		return fetch(url, options).then(r => r.json());
+	}
+
+	static _put(url, body) {
+		const options = this._options('PUT');
+		options.body = body;
+		return fetch(url, options);
 	}
 
 }
