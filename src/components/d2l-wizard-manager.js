@@ -91,7 +91,7 @@ class WizardManager extends LocalizeMixin(LitElement) {
 		wizard.restart();
 	}
 
-	_handleStepOneCommitChanges(event) {
+	_handleSelectDataSetCommitChanges(event) {
 		const commit = event.detail;
 		window.console.log('Step One Commit', commit);
 	}
@@ -101,7 +101,7 @@ class WizardManager extends LocalizeMixin(LitElement) {
 			<d2l-labs-wizard id="wizard" class="wizard" @stepper-restart="${ this._handleRestart }">
 				<d2l-labs-step title="${ this.localize('add.SelectDataSet')}" hide-restart-button="true" @stepper-next="${this._handleNext}">
 					<d2l-select-data-set 
-						@commit-changes="${ this._handleStepOneCommitChanges }"
+						@commit-changes="${ this._handleSelectDataSetCommitChanges }"
 						schedule-name="${ ifDefined(this._scheduleName) }"
 						data-set-options="${ this._dataSetOptions }"
 						data-set="${ ifDefined(this._dataSetId) }">
