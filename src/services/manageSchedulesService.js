@@ -2,9 +2,8 @@ import { Scheduler } from '../api/scheduler';
 
 export class ManageSchedulesService {
 
-	static async getSchedule(/* scheduleId */) {
-		// TODO: Hook up to Syeda's schedule API
-		return {};
+	static async getSchedule(scheduleId) {
+		return await Scheduler.getSchedule(scheduleId);
 	}
 
 	static async setEnable(scheduleId, isEnabled) {
