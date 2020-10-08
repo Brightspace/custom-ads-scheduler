@@ -19,6 +19,9 @@ class WizardManager extends LocalizeMixin(LitElement) {
 			},
 			schedule: {
 				type: Object
+			},
+			isLoading: {
+				type: Boolean
 			}
 		};
 	}
