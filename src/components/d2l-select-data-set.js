@@ -22,9 +22,6 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 			dataSet: {
 				type: String,
 				attribute: 'data-set'
-			},
-			isLoading: {
-				type: Boolean
 			}
 		};
 	}
@@ -55,8 +52,6 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 
 	constructor() {
 		super();
-
-		this.isLoading = true;
 
 		this.scheduleName = null;
 		this.dataSetOptions = [];
