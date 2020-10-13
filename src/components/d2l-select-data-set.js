@@ -79,7 +79,7 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 		return html`
 			<div class="sds-input-wrapper">
 				<label for="advanced-data-set" class="d2l-input-label">${ this.localize('step1.ads.label') }</label>
-				<select id="advanced-data-set" class="d2l-input-select" @change="${ this._setSelectedDataSet }">
+				<select id="advanced-data-set" class="d2l-input-select" @change="${ this._selectedDataSetChanged }">
 					<option disabled selected value="">${ this.localize('step1.ads.placeholder') }</option>
 					${ this.dataSetOptions.map(option => this._renderAdvancedDataSetOption(option)) }
 				</select>
@@ -123,7 +123,7 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 		this._commitChanges();
 	}
 
-	_setSelectedDataSet(event) {
+	_selectedDataSetChanged(event) {
 		this.dataSet = event.target.value;
 		this._commitChanges();
 	}
