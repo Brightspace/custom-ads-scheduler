@@ -99,6 +99,10 @@ class WizardManager extends LocalizeMixin(LitElement) {
 		window.console.log('Step One Commit', commit);
 	}
 
+	get _orgUnitId() {
+		return this.schedule?.orgId || undefined
+	}
+
 	_renderPage() {
 		return html`
 			<d2l-labs-wizard id="wizard" class="wizard" @stepper-restart="${ this._handleRestart }">
@@ -107,7 +111,8 @@ class WizardManager extends LocalizeMixin(LitElement) {
 						@commit-changes="${ this._handleSelectDataSetCommitChanges }"
 						schedule-name="${ ifDefined(this._scheduleName) }"
 						data-set-options="${ this._dataSetOptions }"
-						data-set="${ ifDefined(this._dataSetId) }">
+						data-set="${ ifDefined(this._dataSetId)}"
+						org-unit-id="${ ifDefined(this._orgUnitId)}">
 					</d2l-select-data-set>
 				</d2l-labs-step>
 
