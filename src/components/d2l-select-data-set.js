@@ -22,6 +22,10 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 			dataSet: {
 				type: String,
 				attribute: 'data-set'
+			},
+			orgUnitId: {
+				type: String,
+				attribute: 'org-unit-id'
 			}
 		};
 	}
@@ -56,6 +60,7 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 		this.scheduleName = null;
 		this.dataSetOptions = [];
 		this.dataSet = null;
+		this.orgUnitId = null;
 	}
 
 	render() {
@@ -69,7 +74,8 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 		const event = new CustomEvent('commit-changes', {
 			detail: {
 				scheduleName: this.scheduleName,
-				dataSet: this.dataSet
+				dataSet: this.dataSet,
+				orgUnitId: this.orgUnitId
 			}
 		});
 		this.dispatchEvent(event);
@@ -106,12 +112,25 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 		`;
 	}
 
+	_renderOrgUnitId() {
+		return html`
+			<div class="sds-input-wrapper">
+				<d2l-input-text
+					label="${ this.localize('step1.OrgUnitId.label')}"
+					placeholder="${ this.localize('step1.OrgUnitId.placeholder')}"
+					.value="${ this.orgUnitId}"
+					@change="${ this._scheduleOrgUnitId}">
+				</d2l-input-text>
+			</div>
+		`;
+	}
+
 	_renderStep() {
 		return html`
 			<div class="step">
 				${ this._renderScheduleName() }
 				${ this._renderAdvancedDataSet() }
-				<!-- TODO: Org Unit ID will go here -->
+				${ this._renderOrgUnitId() }
 				<!-- TODO: Select Roles will go here -->
 				<!-- TODO: Filters? -->
 			</div>
@@ -125,6 +144,11 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 
 	_selectedDataSetChanged(event) {
 		this.dataSet = event.target.value;
+		this._commitChanges();
+	}
+
+	_scheduleOrgUnitId(event) {
+		this.orgUnitId = event.target.value;
 		this._commitChanges();
 	}
 }
