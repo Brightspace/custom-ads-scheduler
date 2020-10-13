@@ -4,12 +4,20 @@ export class Scheduler {
 
 	// API Routes
 
+	static getDataSets() {
+		return this._get(Routes.DataSets());
+	}
+
 	static getLogs(scheduleId, page, count) {
 		return this._get(Routes.ScheduleLogs(scheduleId, page, count));
 	}
 
 	static getNumLogs(scheduleId) {
 		return this._get(Routes.NumScheduleLogs(scheduleId));
+	}
+
+	static getSchedule(scheduleId) {
+		return this._get(Routes.GetSchedule(scheduleId));
 	}
 
 	static setEnable(scheduleId, isEnabled) {

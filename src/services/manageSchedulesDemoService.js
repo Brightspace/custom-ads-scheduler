@@ -8,22 +8,24 @@ export class ManageSchedulesDemoService {
 
 	static schedules = [
 		{
-			name: 'A',
+			name: 'ADS Schedule A',
 			type: typesEnum.diff,
 			frequency: frequenciesEnum.mins15,
 			startDate: '09/01/2020',
 			endDate: '12/31/2020',
 			isEnabled: true,
-			scheduleId: 1
+			scheduleId: 1,
+			dataSetId: 'a0e3aca7-3bf2-4400-b831-9fdce98469b1'
 		},
 		{
-			name: 'B',
+			name: 'ADS Schedule B',
 			typeId: typesEnum.full,
 			frequencyId: frequenciesEnum.weekly,
 			startDate: '09/01/2020',
 			endDate: '12/31/2020',
 			isEnabled: false,
-			scheduleId: 2
+			scheduleId: 2,
+			dataSetId: 'a0e3aca7-3bf2-4400-b831-9fdce98469b2'
 		},
 	];
 
