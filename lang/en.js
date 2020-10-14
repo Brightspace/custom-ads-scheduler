@@ -35,8 +35,6 @@ export default {
 	'step1.scheduleName.label': 'Schedule Name *',
 	'step1.scheduleName.placeholder': 'Enter a name',
 	'step1.ads.label': 'Advanced Data Set *',
-	'step1.ads.placeholder': '-- Select an Advanced Data Set --',
-	'step1.OrgUnitId.label': 'Org Unit ID *',
-	'step1.OrgUnitId.placeholder': 'Enter an Org Unit ID'
+	'step1.ads.placeholder': '-- Select an Advanced Data Set --'
 
 };
