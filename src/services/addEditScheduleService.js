@@ -3,12 +3,12 @@ import { Scheduler } from '../api/scheduler';
 export class AddEditScheduleService {
 
 	static async getAdvancedDataSets() {
-		const dataSets = await Scheduler.getDataSets().catch(ex => {
-			window.console.log(ex.detail);
+		const result = await Scheduler.getDataSets();
+		if (result.status === 403) {
+			window.console.error(result.detail);
 			return [];
-		});
-
-		return dataSets.filter(ds => {
+		}
+		return result.filter(ds => {
 			return ds.Category && ds.Category === 'AdvancedDataSets';
 		});
 	}
