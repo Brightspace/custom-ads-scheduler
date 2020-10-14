@@ -68,8 +68,8 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 	_commitChanges() {
 		const event = new CustomEvent('commit-changes', {
 			detail: {
-				scheduleName: this.scheduleName,
-				dataSet: this.dataSet
+				name: this.scheduleName,
+				dataSetId: this.dataSet
 			}
 		});
 		this.dispatchEvent(event);

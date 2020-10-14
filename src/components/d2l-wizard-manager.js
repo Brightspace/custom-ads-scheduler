@@ -4,6 +4,7 @@ import './d2l-select-data-set';
 import './d2l-configure-schedule';
 import './d2l-delivery-method';
 import { css, html, LitElement } from 'lit-element/lit-element';
+import { frequenciesEnum, typesEnum } from '../constants';
 import { AddEditScheduleServiceFactory } from '../services/addEditScheduleServiceFactory';
 import { getLocalizeResources } from '../localization.js';
 import { ifDefined } from 'lit-html/directives/if-defined';
@@ -48,6 +49,17 @@ class WizardManager extends LocalizeMixin(LitElement) {
 		this.manageSchedulesService = ManageSchedulesServiceFactory.getManageSchedulesService();
 		this.addEditScheduleService = AddEditScheduleServiceFactory.getAddEditScheduleService();
 
+		// TODO: Determine whether we need to provide logical default values to the API
+		this.cachedSchedule = {
+			scheduleId: undefined,
+			name: null,
+			typeId: typesEnum.full,
+			frequencyId: frequenciesEnum.weekly,
+			startDate: null,
+			endDate: null,
+			isEnabled: true,
+			dataSetId: undefined
+		};
 		this.isLoading = true;
 	}
 
@@ -55,20 +67,16 @@ class WizardManager extends LocalizeMixin(LitElement) {
 		super.connectedCallback();
 
 		this.dataSetOptions = await this.addEditScheduleService.getAdvancedDataSets();
-
-		if (this.scheduleId) {
-			this.isLoading = true;
-
-			this.schedule = await this.manageSchedulesService.getSchedule(this.scheduleId);
-		}
-
-		this.isLoading = false;
+		this._getSchedule();
 	}
 
 	render() {
 		return html`
 			${ this.isLoading ? this._renderSpinner() : this._renderPage() }
 		`;
+	}
+	async _cacheCommit(commit) {
+		this._updateScheduleCache(commit);
 	}
 
 	get _dataSetId() {
@@ -79,17 +87,34 @@ class WizardManager extends LocalizeMixin(LitElement) {
 		return JSON.stringify(this.dataSetOptions);
 	}
 
-	_handleDone() {
-		// save data then redirect to manage
+	get _editing() {
+		return this.scheduleId !== undefined;
+	}
+
+	async _getSchedule() {
+		if (this._editing) {
+			this.isLoading = true;
+			this.schedule = await this.manageSchedulesService.getSchedule(this.scheduleId);
+			this._updateScheduleCache(this.schedule);
+		}
+		this.isLoading = false;
+	}
+
+	async _handleDone() {
+		await this._saveSchedule();
 		window.location.href = '/d2l/custom/ads/scheduler/manage';
 	}
 
-	_handleNext() {
+	async _handleNext() {
+
+		// TODO: This is for demo/testing purposes. In practice, we will only save at the end of step 3 (in _handleDone)
+		await this._saveSchedule();
+
 		const wizard = this.shadowRoot.getElementById('wizard');
 		wizard.next();
 	}
 
-	_handleRestart() {
+	async _handleRestart() {
 		const wizard = this.shadowRoot.getElementById('wizard');
 		wizard.restart();
 	}
@@ -97,6 +122,7 @@ class WizardManager extends LocalizeMixin(LitElement) {
 	_handleSelectDataSetCommitChanges(event) {
 		const commit = event.detail;
 		window.console.log('Step One Commit', commit);
+		this._cacheCommit(commit);
 	}
 
 	_renderPage() {
@@ -131,8 +157,23 @@ class WizardManager extends LocalizeMixin(LitElement) {
 		`;
 	}
 
+	async _saveSchedule() {
+		if (this._editing) {
+			await this.manageSchedulesService.editSchedule(this.scheduleId, this.cachedSchedule);
+		} else {
+			await this.manageSchedulesService.addSchedule(this.cachedSchedule);
+		}
+	}
+
 	get _scheduleName() {
 		return this.schedule?.name || undefined;
+	}
+
+	_updateScheduleCache(commit) {
+		const props = Object.keys(commit);
+		props.forEach(p => {
+			this.cachedSchedule[p] = commit[p];
+		});
 	}
 
 }

@@ -4,6 +4,14 @@ export class Scheduler {
 
 	// API Routes
 
+	static addSchedule(schedule) {
+		return this._post(Routes.NewSchedule(), schedule);
+	}
+
+	static editSchedule(scheduleId, schedule) {
+		return this._post(Routes.ExistingSchedule(scheduleId), schedule);
+	}
+
 	static getDataSets() {
 		return this._get(Routes.DataSets());
 	}
@@ -17,7 +25,7 @@ export class Scheduler {
 	}
 
 	static getSchedule(scheduleId) {
-		return this._get(Routes.GetSchedule(scheduleId));
+		return this._get(Routes.ExistingSchedule(scheduleId));
 	}
 
 	static setEnable(scheduleId, isEnabled) {
