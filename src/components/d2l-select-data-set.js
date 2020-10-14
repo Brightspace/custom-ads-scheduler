@@ -1,6 +1,4 @@
 import '@brightspace-ui/core/components/inputs/input-text.js';
-import '@brightspace-ui-labs/role-selector/role-item.js';
-import '@brightspace-ui-labs/role-selector/role-selector.js';
 import { css, html, LitElement } from 'lit-element/lit-element';
 import { getLocalizeResources } from '../localization.js';
 import { heading1Styles } from '@brightspace-ui/core/components/typography/styles.js';
@@ -28,14 +26,6 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 			orgUnitId: {
 				type: String,
 				attribute: 'org-unit-id'
-			},
-			roleItems: {
-				type: Array,
-				attribute: 'role-items'
-			},
-			rolesSelected: {
-				type: Array,
-				attribute: 'roles-selected'
 			}
 		};
 	}
@@ -71,8 +61,6 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 		this.dataSetOptions = [];
 		this.dataSet = null;
 		this.orgUnitId = null;
-		this.roleItems = [];
-		this.rolesSelected = [];
 	}
 
 	render() {
@@ -87,8 +75,7 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 			detail: {
 				scheduleName: this.scheduleName,
 				dataSet: this.dataSet,
-				orgUnitId: this.orgUnitId,
-				rolesSelected: this.rolesSelected
+				orgUnitId: this.orgUnitId
 			}
 		});
 		this.dispatchEvent(event);
@@ -132,23 +119,9 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 					label="${ this.localize('step1.OrgUnitId.label')}"
 					placeholder="${ this.localize('step1.OrgUnitId.placeholder')}"
 					.value="${ this.orgUnitId}"
-					@change="${ this._scheduleOrgUnitIdChanged}">
+					@change="${ this._scheduleOrgUnitId}">
 				</d2l-input-text>
 			</div>
-		`;
-	}
-
-	_renderSelectRoles() {
-		return html`
-			<d2l-labs-role-selector @d2l-labs-role-selected="${this._scheduleRolesChanged}">
-				${ this.roleItems.map(role => this._renderRoleItems(role)) }
-			</d2l-labs-role-selector>
-		`; 
-	}
-
-	_renderRoleItems(role) {
-		return html`
-			<d2l-labs-role-item item-id="${role.Identifier}" display-name="${role.DisplayName}"></d2l-labs-role-item>
 		`;
 	}
 
@@ -158,7 +131,7 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 				${ this._renderScheduleName() }
 				${ this._renderAdvancedDataSet() }
 				${ this._renderOrgUnitId() }
-				${ this._renderSelectRoles() }
+				<!-- TODO: Select Roles will go here -->
 				<!-- TODO: Filters? -->
 			</div>
 		`;
@@ -174,16 +147,10 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 		this._commitChanges();
 	}
 
-	_scheduleOrgUnitIdChanged(event) {
+	_scheduleOrgUnitId(event) {
 		this.orgUnitId = event.target.value;
 		this._commitChanges();
 	}
-
-	_scheduleRolesChanged(event) {
-		this.rolesSelected = event.detail.rolesSelected;
-		this._commitChanges();
-	}
-
 }
 
 customElements.define('d2l-select-data-set', SelectDataSet);

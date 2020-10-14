@@ -20,10 +20,6 @@ export class Scheduler {
 		return this._get(Routes.GetSchedule(scheduleId));
 	}
 
-	static getRoleItems() {
-		return this._get(Routes.RoleItems());
-	}
-
 	static setEnable(scheduleId, isEnabled) {
 		return this._put(Routes.SetEnable(scheduleId, isEnabled));
 	}

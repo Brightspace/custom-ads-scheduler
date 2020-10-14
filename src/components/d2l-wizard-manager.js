@@ -55,7 +55,6 @@ class WizardManager extends LocalizeMixin(LitElement) {
 		super.connectedCallback();
 
 		this.dataSetOptions = await this.addEditScheduleService.getAdvancedDataSets();
-		this.roleItems = await this.addEditScheduleService.getRoles();
 
 		if (this.scheduleId) {
 			this.isLoading = true;
@@ -104,10 +103,6 @@ class WizardManager extends LocalizeMixin(LitElement) {
 		return this.schedule?.orgId || undefined
 	}
 
-	get _roleItems() {
-		return JSON.stringify(this.roleItems);
-	}
-
 	_renderPage() {
 		return html`
 			<d2l-labs-wizard id="wizard" class="wizard" @stepper-restart="${ this._handleRestart }">
@@ -117,8 +112,7 @@ class WizardManager extends LocalizeMixin(LitElement) {
 						schedule-name="${ ifDefined(this._scheduleName) }"
 						data-set-options="${ this._dataSetOptions }"
 						data-set="${ ifDefined(this._dataSetId)}"
-						org-unit-id="${ ifDefined(this._orgUnitId)}"
-						role-items="${this._roleItems}">
+						org-unit-id="${ ifDefined(this._orgUnitId)}">
 					</d2l-select-data-set>
 				</d2l-labs-step>
 
