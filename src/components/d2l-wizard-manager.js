@@ -101,11 +101,7 @@ class WizardManager extends LocalizeMixin(LitElement) {
 	}
 
 	get _orgUnitId() {
-		return this.schedule?.orgId || undefined
-	}
-
-	get _roleItems() {
-		return JSON.stringify(this.roleItems);
+		return this.schedule?.orgId || undefined;
 	}
 
 	_renderPage() {
@@ -140,6 +136,10 @@ class WizardManager extends LocalizeMixin(LitElement) {
 				size=100>
 			</d2l-loading-spinner>
 		`;
+	}
+
+	get _roleItems() {
+		return JSON.stringify(this.roleItems);
 	}
 
 	get _scheduleName() {

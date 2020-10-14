@@ -16,12 +16,12 @@ export class Scheduler {
 		return this._get(Routes.NumScheduleLogs(scheduleId));
 	}
 
-	static getSchedule(scheduleId) {
-		return this._get(Routes.GetSchedule(scheduleId));
-	}
-
 	static getRoleItems() {
 		return this._get(Routes.RoleItems());
+	}
+
+	static getSchedule(scheduleId) {
+		return this._get(Routes.GetSchedule(scheduleId));
 	}
 
 	static setEnable(scheduleId, isEnabled) {

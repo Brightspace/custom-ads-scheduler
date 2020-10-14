@@ -112,19 +112,6 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 		`;
 	}
 
-	_renderScheduleName() {
-		return html`
-			<div class="sds-input-wrapper">
-				<d2l-input-text
-					label="${ this.localize('step1.scheduleName.label') }"
-					placeholder="${ this.localize('step1.scheduleName.placeholder') }"
-					.value="${ this.scheduleName }"
-					@change="${ this._scheduleNameChanged }">
-				</d2l-input-text>
-			</div>
-		`;
-	}
-
 	_renderOrgUnitId() {
 		return html`
 			<div class="sds-input-wrapper">
@@ -138,17 +125,30 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 		`;
 	}
 
+	_renderRoleItems(role) {
+		return html`
+			<d2l-labs-role-item item-id="${role.Identifier}" display-name="${role.DisplayName}"></d2l-labs-role-item>
+		`;
+	}
+
+	_renderScheduleName() {
+		return html`
+			<div class="sds-input-wrapper">
+				<d2l-input-text
+					label="${ this.localize('step1.scheduleName.label') }"
+					placeholder="${ this.localize('step1.scheduleName.placeholder') }"
+					.value="${ this.scheduleName }"
+					@change="${ this._scheduleNameChanged }">
+				</d2l-input-text>
+			</div>
+		`;
+	}
+
 	_renderSelectRoles() {
 		return html`
 			<d2l-labs-role-selector @d2l-labs-role-selected="${this._scheduleRolesChanged}">
 				${ this.roleItems.map(role => this._renderRoleItems(role)) }
 			</d2l-labs-role-selector>
-		`; 
-	}
-
-	_renderRoleItems(role) {
-		return html`
-			<d2l-labs-role-item item-id="${role.Identifier}" display-name="${role.DisplayName}"></d2l-labs-role-item>
 		`;
 	}
 
@@ -169,11 +169,6 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 		this._commitChanges();
 	}
 
-	_selectedDataSetChanged(event) {
-		this.dataSet = event.target.value;
-		this._commitChanges();
-	}
-
 	_scheduleOrgUnitIdChanged(event) {
 		this.orgUnitId = event.target.value;
 		this._commitChanges();
@@ -184,6 +179,10 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 		this._commitChanges();
 	}
 
+	_selectedDataSetChanged(event) {
+		this.dataSet = event.target.value;
+		this._commitChanges();
+	}
 }
 
 customElements.define('d2l-select-data-set', SelectDataSet);
