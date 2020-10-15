@@ -21,6 +21,10 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 
 	static get properties() {
 		return {
+			dataHubAccess: {
+				type: Boolean,
+				attribute: 'data-hub-access'
+			},
 			schedules: {
 				type: Array
 			},
@@ -91,6 +95,7 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 		this.manageSchedulesService = ManageSchedulesServiceFactory.getManageSchedulesService();
 
 		this.schedules = Array();
+		this.dataHubAccess = false;
 	}
 
 	render() {
@@ -144,12 +149,7 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 				</d2l-button-icon>
 				<d2l-dropdown-menu>
 					<d2l-menu>
-						<d2l-menu-item
-							id="dropdown-edit-${schedule.scheduleId}"
-							schedule-id="${ schedule.scheduleId }"
-							text="${  this.localize('actionEdit') }"
-							@click="${ this._handleEdit }">
-						</d2l-menu-item>
+						${ this._renderEditDropdownOption(schedule.scheduleId) }
 						<d2l-menu-item
 							id="dropdown-log-${schedule.scheduleId}"
 							schedule-id="${ schedule.scheduleId }"
@@ -166,6 +166,33 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 				</d2l-dropdown-menu>
 			</d2l-dropdown>
 		`;
+	}
+
+	_renderAddNewButton() {
+		if (this.dataHubAccess) {
+			return html`
+				<d2l-button-subtle
+					id="add-new"
+					class="add-new-button"
+					icon="tier1:plus-large-thick"
+					text="${ this.localize('actionNew') }"
+					@click=${ this._handleNew }>
+				</d2l-button-subtle>
+			`;
+		}
+	}
+
+	_renderEditDropdownOption(scheduleId) {
+		if (this.dataHubAccess) {
+			return html`
+				<d2l-menu-item
+					id="dropdown-edit-${scheduleId}"
+					schedule-id="${ scheduleId }"
+					text="${  this.localize('actionEdit') }"
+					@click="${ this._handleEdit }">
+				</d2l-menu-item>
+			`;
+		}
 	}
 
 	_renderEmptyIllustration() {
@@ -212,13 +239,7 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 		} else {
 			return html`
 				${ baseTemplate }
-				<d2l-button-subtle
-					id="add-new"
-					class="add-new-button"
-					icon="tier1:plus-large-thick"
-					text="${ this.localize('actionNew') }"
-					@click=${ this._handleNew }>
-				</d2l-button-subtle>
+				${ this._renderAddNewButton() }
 				${ this._renderTable() }
 			`;
 		}
