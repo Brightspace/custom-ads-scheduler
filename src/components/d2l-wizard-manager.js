@@ -49,24 +49,26 @@ class WizardManager extends LocalizeMixin(LitElement) {
 		this.manageSchedulesService = ManageSchedulesServiceFactory.getManageSchedulesService();
 		this.addEditScheduleService = AddEditScheduleServiceFactory.getAddEditScheduleService();
 
-		// TODO: Determine whether we need to provide logical default values to the API
+		// TODO: Determine whether we need to provide logical NON-default values to the API???
 		this.cachedSchedule = {
-			// scheduleId: undefined,
-			name: null,
+			name: '',
 			typeId: typesEnum.full,
-			frequencyId: frequenciesEnum.weekly,
-			startDate: null,
-			endDate: null,
-			isEnabled: true,
-			dataSetId: undefined,
-			orgId: null,
-			createdBy: null,
+			frequencyId: frequenciesEnum.daily,
+			startDate: '0001-01-01T00:00:01',
+			endDate: '0001-01-01T00:00:02',
+			isEnabled: false,
+			dataSetId: 'a0e3aca7-3bf2-4400-b831-9fdce98469b1',
+			orgId: 1,
+			createdBy: 1,
+			createdDate: '0001-01-01T00:00:01',
 			statusId: statusesEnum.queued,
-			preferredDay: null,
-			deliveryTypeId: null,
-			filePath: null,
+			preferredDay: 1,
+			preferredTime: '0001-01-01T00:00:01',
+			deliveryTypeId: 1,
+			filePath: '',
 			filters: []
 		};
+
 		this.isLoading = true;
 	}
 
