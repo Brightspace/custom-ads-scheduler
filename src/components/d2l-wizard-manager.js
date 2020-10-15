@@ -4,7 +4,7 @@ import './d2l-select-data-set';
 import './d2l-configure-schedule';
 import './d2l-delivery-method';
 import { css, html, LitElement } from 'lit-element/lit-element';
-import { frequenciesEnum, typesEnum, statusesEnum } from '../constants';
+import { frequenciesEnum, statusesEnum, typesEnum } from '../constants';
 import { AddEditScheduleServiceFactory } from '../services/addEditScheduleServiceFactory';
 import { getLocalizeResources } from '../localization.js';
 import { ifDefined } from 'lit-html/directives/if-defined';

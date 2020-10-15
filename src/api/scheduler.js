@@ -9,7 +9,7 @@ export class Scheduler {
 	}
 
 	static editSchedule(scheduleId, schedule) {
-		return this._post(Routes.ExistingSchedule(scheduleId), schedule);
+		return this._put(Routes.ExistingSchedule(scheduleId), schedule);
 	}
 
 	static getDataSets() {
