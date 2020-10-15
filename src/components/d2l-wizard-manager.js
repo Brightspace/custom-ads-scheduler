@@ -4,7 +4,7 @@ import './d2l-select-data-set';
 import './d2l-configure-schedule';
 import './d2l-delivery-method';
 import { css, html, LitElement } from 'lit-element/lit-element';
-import { frequenciesEnum, typesEnum } from '../constants';
+import { frequenciesEnum, typesEnum, statusesEnum } from '../constants';
 import { AddEditScheduleServiceFactory } from '../services/addEditScheduleServiceFactory';
 import { getLocalizeResources } from '../localization.js';
 import { ifDefined } from 'lit-html/directives/if-defined';
@@ -51,14 +51,21 @@ class WizardManager extends LocalizeMixin(LitElement) {
 
 		// TODO: Determine whether we need to provide logical default values to the API
 		this.cachedSchedule = {
-			scheduleId: undefined,
+			// scheduleId: undefined,
 			name: null,
 			typeId: typesEnum.full,
 			frequencyId: frequenciesEnum.weekly,
 			startDate: null,
 			endDate: null,
 			isEnabled: true,
-			dataSetId: undefined
+			dataSetId: undefined,
+			orgId: null,
+			createdBy: null,
+			statusId: statusesEnum.queued,
+			preferredDay: null,
+			deliveryTypeId: null,
+			filePath: null,
+			filters: []
 		};
 		this.isLoading = true;
 	}

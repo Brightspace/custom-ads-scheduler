@@ -28,3 +28,10 @@ export const frequenciesEnum = {
 	hourly: 3,
 	mins15: 4
 };
+
+export const statusesEnum = {
+	queued: 1,
+	processing: 2,
+	completed: 3,
+	failed: 4
+};
