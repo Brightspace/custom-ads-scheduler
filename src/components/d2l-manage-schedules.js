@@ -11,6 +11,7 @@ import './nothing-here-illustration';
 import { bodyStandardStyles, heading2Styles } from '@brightspace-ui/core/components/typography/styles.js';
 import { css, html, LitElement } from 'lit-element/lit-element';
 import { frequencies, types } from '../constants';
+import { classMap } from 'lit-html/directives/class-map.js';
 import { d2lTableStyles } from '../styles/d2lTableStyles';
 import { formatDateTime } from '@brightspace-ui/intl/lib/dateTime';
 import { getLocalizeResources } from '../localization.js';
@@ -56,6 +57,10 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 
 			.description-text {
 				margin-bottom: 0px;
+			}
+
+			.no-data-hub-access {
+				margin-bottom: 18px;
 			}
 
 			.message--empty-table {
@@ -214,7 +219,7 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 		const isEmpty = this.schedules.length === 0;
 
 		const baseTemplate = html`
-			<div class="description-text d2l-body-standard">
+			<div class="description-text d2l-body-standard ${classMap({ 'no-data-hub-access': !this.dataHubAccess })}">
 				${ this.localize('schedulerDesc') }
 			</div>
 			<d2l-alert-toast id="error" type="critical">
