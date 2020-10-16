@@ -11,6 +11,7 @@ import './nothing-here-illustration';
 import { bodyStandardStyles, heading2Styles } from '@brightspace-ui/core/components/typography/styles.js';
 import { css, html, LitElement } from 'lit-element/lit-element';
 import { frequencies, types } from '../constants';
+import { classMap } from 'lit-html/directives/class-map.js';
 import { d2lTableStyles } from '../styles/d2lTableStyles';
 import { formatDateTime } from '@brightspace-ui/intl/lib/dateTime';
 import { getLocalizeResources } from '../localization.js';
@@ -21,6 +22,10 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 
 	static get properties() {
 		return {
+			dataHubAccess: {
+				type: Boolean,
+				attribute: 'data-hub-access'
+			},
 			schedules: {
 				type: Array
 			},
@@ -52,6 +57,10 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 
 			.description-text {
 				margin-bottom: 0px;
+			}
+
+			.no-data-hub-access {
+				margin-bottom: 18px;
 			}
 
 			.message--empty-table {
@@ -91,6 +100,7 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 		this.manageSchedulesService = ManageSchedulesServiceFactory.getManageSchedulesService();
 
 		this.schedules = Array();
+		this.dataHubAccess = false;
 	}
 
 	render() {
@@ -144,12 +154,7 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 				</d2l-button-icon>
 				<d2l-dropdown-menu>
 					<d2l-menu>
-						<d2l-menu-item
-							id="dropdown-edit-${schedule.scheduleId}"
-							schedule-id="${ schedule.scheduleId }"
-							text="${  this.localize('actionEdit') }"
-							@click="${ this._handleEdit }">
-						</d2l-menu-item>
+						${ this._renderEditDropdownOption(schedule.scheduleId) }
 						<d2l-menu-item
 							id="dropdown-log-${schedule.scheduleId}"
 							schedule-id="${ schedule.scheduleId }"
@@ -166,6 +171,33 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 				</d2l-dropdown-menu>
 			</d2l-dropdown>
 		`;
+	}
+
+	_renderAddNewButton() {
+		if (this.dataHubAccess) {
+			return html`
+				<d2l-button-subtle
+					id="add-new"
+					class="add-new-button"
+					icon="tier1:plus-large-thick"
+					text="${ this.localize('actionNew') }"
+					@click=${ this._handleNew }>
+				</d2l-button-subtle>
+			`;
+		}
+	}
+
+	_renderEditDropdownOption(scheduleId) {
+		if (this.dataHubAccess) {
+			return html`
+				<d2l-menu-item
+					id="dropdown-edit-${scheduleId}"
+					schedule-id="${ scheduleId }"
+					text="${  this.localize('actionEdit') }"
+					@click="${ this._handleEdit }">
+				</d2l-menu-item>
+			`;
+		}
 	}
 
 	_renderEmptyIllustration() {
@@ -187,7 +219,7 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 		const isEmpty = this.schedules.length === 0;
 
 		const baseTemplate = html`
-			<div class="description-text d2l-body-standard">
+			<div class="description-text d2l-body-standard ${classMap({ 'no-data-hub-access': !this.dataHubAccess })}">
 				${ this.localize('schedulerDesc') }
 			</div>
 			<d2l-alert-toast id="error" type="critical">
@@ -212,13 +244,7 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 		} else {
 			return html`
 				${ baseTemplate }
-				<d2l-button-subtle
-					id="add-new"
-					class="add-new-button"
-					icon="tier1:plus-large-thick"
-					text="${ this.localize('actionNew') }"
-					@click=${ this._handleNew }>
-				</d2l-button-subtle>
+				${ this._renderAddNewButton() }
 				${ this._renderTable() }
 			`;
 		}
