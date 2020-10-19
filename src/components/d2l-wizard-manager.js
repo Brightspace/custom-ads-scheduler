@@ -49,7 +49,7 @@ class WizardManager extends LocalizeMixin(LitElement) {
 		this.manageSchedulesService = ManageSchedulesServiceFactory.getManageSchedulesService();
 		this.addEditScheduleService = AddEditScheduleServiceFactory.getAddEditScheduleService();
 
-		// TODO: Determine whether we need to provide logical NON-default values to the API???
+		// TODO: Remove these default values when the wizard is complete - we need these for now, in order to pass validation
 		const nowDateTime = new Date(Date.now()).toISOString();
 		this.cachedSchedule = {
 			name: '',
