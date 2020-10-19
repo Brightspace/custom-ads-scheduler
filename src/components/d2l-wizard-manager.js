@@ -50,20 +50,21 @@ class WizardManager extends LocalizeMixin(LitElement) {
 		this.addEditScheduleService = AddEditScheduleServiceFactory.getAddEditScheduleService();
 
 		// TODO: Determine whether we need to provide logical NON-default values to the API???
+		const nowDateTime = new Date(Date.now()).toISOString();
 		this.cachedSchedule = {
 			name: '',
 			typeId: typesEnum.full,
 			frequencyId: frequenciesEnum.daily,
-			startDate: '0001-01-01T00:00:01',
-			endDate: '0001-01-01T00:00:02',
+			startDate: nowDateTime,
+			endDate: nowDateTime,
 			isEnabled: false,
 			dataSetId: 'a0e3aca7-3bf2-4400-b831-9fdce98469b1',
 			orgId: 1,
 			createdBy: 1,
-			createdDate: '0001-01-01T00:00:01',
+			createdDate: nowDateTime,
 			statusId: statusesEnum.queued,
 			preferredDay: 1,
-			preferredTime: '0001-01-01T00:00:01',
+			preferredTime: nowDateTime,
 			deliveryTypeId: 1,
 			filePath: '',
 			filters: []
