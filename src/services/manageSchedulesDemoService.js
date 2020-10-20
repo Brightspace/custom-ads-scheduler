@@ -15,7 +15,9 @@ export class ManageSchedulesDemoService {
 			endDate: '12/31/2020',
 			isEnabled: true,
 			scheduleId: 1,
-			dataSetId: 'a0e3aca7-3bf2-4400-b831-9fdce98469b1'
+			dataSetId: 'a0e3aca7-3bf2-4400-b831-9fdce98469b1',
+			orgUnitId: '6606',
+			roleIds: '595,578'
 		},
 		{
 			name: 'ADS Schedule B',
@@ -25,7 +27,9 @@ export class ManageSchedulesDemoService {
 			endDate: '12/31/2020',
 			isEnabled: false,
 			scheduleId: 2,
-			dataSetId: 'a0e3aca7-3bf2-4400-b831-9fdce98469b2'
+			dataSetId: 'a0e3aca7-3bf2-4400-b831-9fdce98469b2',
+			orgUnitId: '6607',
+			roleIds: '595'
 		},
 	];
 

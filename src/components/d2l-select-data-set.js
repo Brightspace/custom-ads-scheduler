@@ -116,18 +116,24 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 		return html`
 			<div class="sds-input-wrapper">
 				<d2l-input-text
-					label="${ this.localize('step1.OrgUnitId.label')}"
-					placeholder="${ this.localize('step1.OrgUnitId.placeholder')}"
-					.value="${ this.orgUnitId}"
-					@change="${ this._scheduleOrgUnitIdChanged}">
+					label="${ this.localize('step1.OrgUnitId.label') }"
+					placeholder="${ this.localize('step1.OrgUnitId.placeholder') }"
+					.value="${ this.orgUnitId }"
+					@change="${ this._scheduleOrgUnitIdChanged }">
 				</d2l-input-text>
 			</div>
 		`;
 	}
 
-	_renderRoleItems(role) {
+	_renderRoleItems(role, roleList) {
+		if (roleList.includes(role.Identifier)) {
+			return html`
+				<d2l-labs-role-item item-id="${ role.Identifier }" display-name="${ role.DisplayName }" selected></d2l-labs-role-item>
+			`;
+		}
+
 		return html`
-			<d2l-labs-role-item item-id="${role.Identifier}" display-name="${role.DisplayName}"></d2l-labs-role-item>
+			<d2l-labs-role-item item-id="${ role.Identifier }" display-name="${ role.DisplayName }"></d2l-labs-role-item>
 		`;
 	}
 
@@ -145,9 +151,12 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 	}
 
 	_renderSelectRoles() {
+		const roleList = this.rolesSelected.toString().split(',');
+
 		return html`
-			<d2l-labs-role-selector @d2l-labs-role-selected="${this._scheduleRolesChanged}">
-				${ this.roleItems.map(role => this._renderRoleItems(role)) }
+			<d2l-labs-role-selector
+				@d2l-labs-role-selected="${ this._scheduleRolesChanged }">
+				${ this.roleItems.map(role => this._renderRoleItems(role, roleList)) }
 			</d2l-labs-role-selector>
 		`;
 	}
@@ -159,7 +168,6 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 				${ this._renderAdvancedDataSet() }
 				${ this._renderOrgUnitId() }
 				${ this._renderSelectRoles() }
-				<!-- TODO: Filters? -->
 			</div>
 		`;
 	}
