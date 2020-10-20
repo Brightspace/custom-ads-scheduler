@@ -110,6 +110,12 @@ class WizardManager extends LocalizeMixin(LitElement) {
 		this.isLoading = false;
 	}
 
+	_handleConfigureScheduleCommitChanges(event) {
+		const commit = event.detail;
+		window.console.log('Step Two Commit', commit);
+		this._cacheCommit(commit);
+	}
+
 	async _handleDone() {
 		await this._saveSchedule();
 		window.location.href = '/d2l/custom/ads/scheduler/manage';
@@ -148,7 +154,14 @@ class WizardManager extends LocalizeMixin(LitElement) {
 				</d2l-labs-step>
 
 				<d2l-labs-step title="${ this.localize('add.ConfigureSchedule') }" @stepper-next="${ this._handleNext }">
-					<d2l-configure-schedule></d2l-configure-schedule>
+					<d2l-configure-schedule
+						@commit-changes="${ this._handleConfigureScheduleCommitChanges }"
+						start-date=${ ifDefined(this.schedule?.startDate) }
+						end-date=${ ifDefined(this.schedule?.endDate) }
+						type=${ ifDefined(this.schedule?.type) }
+						frequency=${ ifDefined(this.schedule?.frequencyId) }
+						time=${ ifDefined(this.schedule?.preferredTime) }>
+					</d2l-configure-schedule>
 				</d2l-labs-step>
 
 				<d2l-labs-step title="${ this.localize('add.DeliveryMethod') }" next-button-title="${ this.localize('add.Done') }" @stepper-next="${ this._handleDone }">

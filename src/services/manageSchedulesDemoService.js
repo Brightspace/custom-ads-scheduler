@@ -9,25 +9,30 @@ export class ManageSchedulesDemoService {
 	static nextScheduleId = 3;
 
 	static schedules = [
+
 		{
 			scheduleId: 1,
 			name: 'ADS Schedule A',
 			type: typesEnum.diff,
 			frequencyId: frequenciesEnum.mins15,
-			startDate: '09/01/2020',
-			endDate: '12/31/2020',
+			startDate: '2020-10-20T15:00:50.033',
+			endDate: '2020-10-20T15:00:50.033',
 			isEnabled: true,
-			dataSetId: 'a0e3aca7-3bf2-4400-b831-9fdce98469b1'
+			dataSetId: 'a0e3aca7-3bf2-4400-b831-9fdce98469b1',
+			orgId: 1,
+			preferredTime: '15:00:50.010000'
 		},
 		{
 			scheduleId: 2,
 			name: 'ADS Schedule B',
 			typeId: typesEnum.full,
 			frequencyId: frequenciesEnum.weekly,
-			startDate: '09/01/2020',
-			endDate: '12/31/2020',
+			startDate: '2020-10-20T15:00:50.033',
+			endDate: '2020-10-20T15:00:50.033',
 			isEnabled: false,
-			dataSetId: 'a0e3aca7-3bf2-4400-b831-9fdce98469b2'
+			dataSetId: 'a0e3aca7-3bf2-4400-b831-9fdce98469b2',
+			orgId: 1,
+			preferredTime: '15:00:50'
 		},
 	];
 

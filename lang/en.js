@@ -35,6 +35,19 @@ export default {
 	'step1.scheduleName.label': 'Schedule Name *',
 	'step1.scheduleName.placeholder': 'Enter a name',
 	'step1.ads.label': 'Advanced Data Set *',
-	'step1.ads.placeholder': '-- Select an Advanced Data Set --'
-
+	'step1.ads.placeholder': '-- Select an Advanced Data Set --',
+	'step2.dates.label': 'Schedule Start and End Dates',
+	'step2.dates.start': 'Schedule Start Date *',
+	'step2.dates.end': 'Schedule End Date *',
+	'step2.type.label': 'Type *',
+	'step2.type.placeholder': '-- Select a Data Set Type --',
+	'step2.type.full': 'Full',
+	'step2.type.differential': 'Differential',
+	'step2.frequency.label': 'Frequency *',
+	'step2.frequency.placeholder': '-- Select a Schedule Frequency --',
+	'step2.frequency.weekly': 'Weekly',
+	'step2.frequency.daily': 'Daily',
+	'step2.frequency.hourly': 'Hourly',
+	'step2.frequency.15mins': '15 Minutes',
+	'step2.time.label': 'Select a time *'
 };
