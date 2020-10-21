@@ -80,6 +80,19 @@ class WizardManager extends LocalizeMixin(LitElement) {
 		return JSON.stringify(this.dataSetOptions);
 	}
 
+	get _deliveryTypeId() {
+		return this.schedule ? this.schedule.deliveryTypeId : undefined;
+	}
+
+	get _filePath() {
+		return this.schedule ? this.schedule.filePath : undefined;
+	}
+
+	_handleDeliveryMethodCommitChanges(event) {
+		const commit = event.detail;
+		window.console.log('Step Three Commit', commit);
+	}
+
 	_handleDone() {
 		// save data then redirect to manage
 		window.location.href = '/d2l/custom/ads/scheduler/manage';
@@ -124,7 +137,11 @@ class WizardManager extends LocalizeMixin(LitElement) {
 				</d2l-labs-step>
 
 				<d2l-labs-step title="${ this.localize('add.DeliveryMethod') }" next-button-title="${ this.localize('add.Done') }" @stepper-next="${ this._handleDone }">
-					<d2l-delivery-method></d2l-delivery-method>
+					<d2l-delivery-method
+						@commit-changes="${ this._handleDeliveryMethodCommitChanges }"
+						delivery-method="${ ifDefined(this._deliveryTypeId) }"
+						folder="${ ifDefined(this._filePath) }">
+					</d2l-delivery-method>
 				</d2l-labs-step>
 			</d2l-labs-wizard>
 		`;

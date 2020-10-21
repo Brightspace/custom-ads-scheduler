@@ -37,6 +37,11 @@ export default {
 	'step1.ads.label': 'Advanced Data Set *',
 	'step1.ads.placeholder': '-- Select an Advanced Data Set --',
 	'step1.OrgUnitId.label': 'Org Unit ID *',
-	'step1.OrgUnitId.placeholder': 'Enter an Org Unit ID'
-
+	'step1.OrgUnitId.placeholder': 'Enter an Org Unit ID',
+	'step3.deliveryMethod.label': 'File Delivery Method *',
+	'step3.deliveryMethod.placeholder': '-- Select a File Delivery Method --',
+	'step3.deliveryType.BrightspaceFilePath': 'Brightspace File Path',
+	'step3.deliveryType.BrightspaceSFTP': 'Brightspace SFTP',
+	'step3.deliveryType.CustomSFTP': 'Custom SFTP',
+	'step3.folder.label': 'Folder'
 };
