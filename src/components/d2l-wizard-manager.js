@@ -55,6 +55,7 @@ class WizardManager extends LocalizeMixin(LitElement) {
 		super.connectedCallback();
 
 		this.dataSetOptions = await this.addEditScheduleService.getAdvancedDataSets();
+		this.roleItems = await this.addEditScheduleService.getRoles();
 
 		if (this.scheduleId) {
 			this.isLoading = true;
@@ -99,15 +100,22 @@ class WizardManager extends LocalizeMixin(LitElement) {
 		window.console.log('Step One Commit', commit);
 	}
 
+	get _orgUnitId() {
+		return this.schedule ? this.schedule.orgUnitId : undefined;
+	}
+
 	_renderPage() {
 		return html`
 			<d2l-labs-wizard id="wizard" class="wizard" @stepper-restart="${ this._handleRestart }">
-				<d2l-labs-step title="${ this.localize('add.SelectDataSet')}" hide-restart-button="true" @stepper-next="${this._handleNext}">
+				<d2l-labs-step title="${ this.localize('add.SelectDataSet')}" hide-restart-button="true" @stepper-next="${ this._handleNext }">
 					<d2l-select-data-set 
 						@commit-changes="${ this._handleSelectDataSetCommitChanges }"
 						schedule-name="${ ifDefined(this._scheduleName) }"
 						data-set-options="${ this._dataSetOptions }"
-						data-set="${ ifDefined(this._dataSetId) }">
+						data-set="${ ifDefined(this._dataSetId) }"
+						org-unit-id="${ ifDefined(this._orgUnitId) }"
+						role-items="${ this._roleItems }"
+						roles-selected="${ ifDefined(this._roleIds) }">
 					</d2l-select-data-set>
 				</d2l-labs-step>
 
@@ -129,6 +137,14 @@ class WizardManager extends LocalizeMixin(LitElement) {
 				size=100>
 			</d2l-loading-spinner>
 		`;
+	}
+
+	get _roleIds() {
+		return this.schedule ? JSON.stringify(this.schedule.roleIds) : undefined;
+	}
+
+	get _roleItems() {
+		return JSON.stringify(this.roleItems);
 	}
 
 	get _scheduleName() {
