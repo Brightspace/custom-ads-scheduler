@@ -96,6 +96,10 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 		`;
 	}
 
+	validate() {
+		return true;
+	}
+
 	_commitChanges() {
 		const event = new CustomEvent('commit-changes', {
 			detail: {
@@ -124,7 +128,7 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 
 				<div class="date-wrapper">
 					<d2l-input-date
-						label="${ this.localize('step2.dates.start') }"
+						label="${ this.localize('step2.dates.start') } *"
 						value="${ this._formatDate(this.startDate) }"
 						max-value="${ this._formatDate(this.endDate) }"
 						@change="${ this._selectedStartDateChanged }">
@@ -132,7 +136,7 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 				</div>
 				<div class="date-wrapper">
 					<d2l-input-date
-						label="${ this.localize('step2.dates.end') }"
+						label="${ this.localize('step2.dates.end') } *"
 						value="${ this._formatDate(this.endDate) }"
 						min-value="${ this._formatDate(this.startDate) }"
 						@change="${ this._selectedEndDateChanged }">
@@ -145,7 +149,7 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 	_renderDay() {
 		return html`
 			<div class="property-wrapper">
-				<label for="day" class="d2l-input-label">${ this.localize('step2.day.label') }</label>
+				<label for="day" class="d2l-input-label">${ this.localize('step2.day.label') } *</label>
 				<select id="day" class="d2l-input-select" @change="${ this._selectedDayChanged }">
 					<option value="0" .selected="${ this.day === 0 }">${ this.localize('step2.day.sunday') }</option>
 					<option value="1" .selected="${ this.day === 1 }">${ this.localize('step2.day.monday') }</option>
@@ -162,7 +166,7 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 	_renderFrequency() {
 		return html`
 			<div class="property-wrapper">
-				<label for="frequency" class="d2l-input-label">${ this.localize('step2.frequency.label') }</label>
+				<label for="frequency" class="d2l-input-label">${ this.localize('step2.frequency.label') } *</label>
 				<select id="frequency" class="d2l-input-select" @change="${ this._selectedFrequencyChanged }">
 					<option disabled selected value="">${ this.localize('step2.frequency.placeholder') }</option>
 					${ this._renderFrequencyOptions() }
@@ -195,7 +199,7 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 		return html`
 			<div class="property-wrapper">
 				<d2l-input-time
-					label="${ this.localize('step2.time.label') }"
+					label="${ this.localize('step2.time.label') } *"
 					value=${ this.time }
 					@change="${ this._selectedTimeChanged }">
 				</d2l-input-time>
@@ -215,7 +219,7 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 	_renderType() {
 		return html`
 			<div class="property-wrapper">
-				<label for="type" class="d2l-input-label">${ this.localize('step2.type.label') }</label>
+				<label for="type" class="d2l-input-label">${ this.localize('step2.type.label') } *</label>
 				<select id="type" class="d2l-input-select" @change="${ this._selectedTypeChanged }">
 					<option disabled selected value="">${ this.localize('step2.type.placeholder') }</option>
 					<option value="1" .selected="${ this.type === 1 }">${ this.localize('step2.type.full') }</option>

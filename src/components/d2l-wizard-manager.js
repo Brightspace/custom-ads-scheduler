@@ -6,6 +6,7 @@ import './d2l-delivery-method';
 import { css, html, LitElement } from 'lit-element/lit-element';
 import { frequenciesEnum, statusesEnum, typesEnum } from '../constants';
 import { AddEditScheduleServiceFactory } from '../services/addEditScheduleServiceFactory';
+import { formatDate } from '@brightspace-ui/intl/lib/dateTime';
 import { getLocalizeResources } from '../localization.js';
 import { ifDefined } from 'lit-html/directives/if-defined';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
@@ -50,21 +51,21 @@ class WizardManager extends LocalizeMixin(LitElement) {
 		this.addEditScheduleService = AddEditScheduleServiceFactory.getAddEditScheduleService();
 
 		// TODO: Remove these default values when the wizard is complete - we need these for now, in order to pass validation
-		const nowDateTime = new Date(Date.now()).toISOString();
+		const nowDate = formatDate(new Date(Date.now()), { format: 'yyyy-MM-dd' });
 		this.cachedSchedule = {
 			name: '',
 			typeId: typesEnum.full,
 			frequencyId: frequenciesEnum.daily,
-			startDate: nowDateTime,
-			endDate: nowDateTime,
+			startDate: nowDate,
+			endDate: nowDate,
 			isEnabled: false,
 			dataSetId: 'a0e3aca7-3bf2-4400-b831-9fdce98469b1',
 			orgId: 1,
 			createdBy: 1,
-			createdDate: nowDateTime,
+			createdDate: nowDate,
 			statusId: statusesEnum.queued,
 			preferredDay: 1,
-			preferredTime: nowDateTime,
+			preferredTime: '00:00:00',
 			deliveryTypeId: 1,
 			filePath: '',
 			filters: []
@@ -85,6 +86,16 @@ class WizardManager extends LocalizeMixin(LitElement) {
 			${ this.isLoading ? this._renderSpinner() : this._renderPage() }
 		`;
 	}
+
+	// TODO: Think about this some more... It would be nice to only have to cache these once
+	// BUT can this result in our pointers being null?
+	updated() {
+		this.wizard = this.shadowRoot.getElementById('wizard');
+		this.selectDataSet = this.shadowRoot.getElementById('select-data-set');
+		this.configureSchedule = this.shadowRoot.getElementById('configure-schedule');
+		this.deliveryMethod = this.shadowRoot.getElementById('delivery-method');
+	}
+
 	async _cacheCommit(commit) {
 		this._updateScheduleCache(commit);
 	}
@@ -117,16 +128,16 @@ class WizardManager extends LocalizeMixin(LitElement) {
 	}
 
 	async _handleDone() {
+		const step = this.shadowRoot.getElementById(`step_${this.wizard.selectedStep}`);
+		if (step.validate()) {
+			this.wizard.next();
+		}
+
 		await this._saveSchedule();
 		window.location.href = '/d2l/custom/ads/scheduler/manage';
 	}
 
-	async _handleNext() {
-		const wizard = this.shadowRoot.getElementById('wizard');
-		wizard.next();
-	}
-
-	async _handleRestart() {
+	_handleRestart() {
 		const wizard = this.shadowRoot.getElementById('wizard');
 		wizard.restart();
 	}
@@ -137,11 +148,31 @@ class WizardManager extends LocalizeMixin(LitElement) {
 		this._cacheCommit(commit);
 	}
 
+	_handleStepOneNext() {
+		if (this.selectDataSet.validate()) {
+			this.wizard.next();
+		}
+	}
+
+	async _handleStepThreeDone() {
+		if (this.deliveryMethod.validate()) {
+			await this._saveSchedule();
+			window.location.href = '/d2l/custom/ads/scheduler/manage';
+		}
+	}
+
+	_handleStepTwoNext() {
+		if (this.configureSchedule.validate()) {
+			this.wizard.next();
+		}
+	}
+
 	_renderPage() {
 		return html`
 			<d2l-labs-wizard id="wizard" class="wizard" @stepper-restart="${ this._handleRestart }">
-				<d2l-labs-step title="${ this.localize('add.SelectDataSet')}" hide-restart-button="true" @stepper-next="${this._handleNext}">
+				<d2l-labs-step title="${ this.localize('add.SelectDataSet')}" hide-restart-button="true" @stepper-next="${this._handleStepOneNext}">
 					<d2l-select-data-set 
+						id="select-data-set"
 						@commit-changes="${ this._handleSelectDataSetCommitChanges }"
 						schedule-name="${ ifDefined(this._scheduleName) }"
 						data-set-options="${ this._dataSetOptions }"
@@ -149,8 +180,9 @@ class WizardManager extends LocalizeMixin(LitElement) {
 					</d2l-select-data-set>
 				</d2l-labs-step>
 
-				<d2l-labs-step title="${ this.localize('add.ConfigureSchedule') }" @stepper-next="${ this._handleNext }">
+				<d2l-labs-step title="${ this.localize('add.ConfigureSchedule') }" @stepper-next="${ this._handleStepTwoNext }">
 					<d2l-configure-schedule
+						id="configure-schedule"
 						@commit-changes="${ this._handleConfigureScheduleCommitChanges }"
 						start-date=${ ifDefined(this.schedule?.startDate) }
 						end-date=${ ifDefined(this.schedule?.endDate) }
@@ -160,8 +192,9 @@ class WizardManager extends LocalizeMixin(LitElement) {
 					</d2l-configure-schedule>
 				</d2l-labs-step>
 
-				<d2l-labs-step title="${ this.localize('add.DeliveryMethod') }" next-button-title="${ this.localize('add.Done') }" @stepper-next="${ this._handleDone }">
-					<d2l-delivery-method></d2l-delivery-method>
+				<d2l-labs-step title="${ this.localize('add.DeliveryMethod') }" next-button-title="${ this.localize('add.Done') }" @stepper-next="${ this._handleStepThreeDone }">
+					<d2l-delivery-method
+						id="delivery-method"></d2l-delivery-method>
 				</d2l-labs-step>
 			</d2l-labs-wizard>
 		`;

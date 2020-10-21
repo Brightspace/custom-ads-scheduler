@@ -1,3 +1,4 @@
+import '@brightspace-ui/core/components/alert/alert-toast';
 import '@brightspace-ui/core/components/inputs/input-text.js';
 import { css, html, LitElement } from 'lit-element/lit-element';
 import { getLocalizeResources } from '../localization.js';
@@ -22,6 +23,15 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 			dataSet: {
 				type: String,
 				attribute: 'data-set'
+			},
+			invalidScheduleName: {
+				type: Boolean
+			},
+			invalidDataSet: {
+				type: Boolean
+			},
+			errorText: {
+				type: String
 			}
 		};
 	}
@@ -60,13 +70,39 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 		this.scheduleName = null;
 		this.dataSetOptions = [];
 		this.dataSet = null;
+
+		this.invalidScheduleName = false;
+		this.invalidDataSet = false;
+		this.errorText = '';
 	}
 
 	render() {
 		return html`
 			<h1 class="d2l-heading-2">Select Your Advanced Data Set</h1>
 			${ this._renderStep() }
+			<d2l-alert-toast id="invalid-properties" type="critical">
+				${ this.errorText }
+			</d2l-alert-toast>
 		`;
+	}
+
+	validate() {
+		this._validateScheduleName();
+		this._validateDataSet();
+
+		this.errorText = this.localize('step1.validation.prefix');
+		if (this.invalidScheduleName) {
+			this.errorText += ` ${this.localize('step1.scheduleName.label')} *`;
+		}
+		if (this.invalidDataSet) {
+			this.errorText += `${this.invalidScheduleName ? ',' : ''} ${this.localize('step1.ads.label')} *`;
+		}
+
+		const invalid = this.invalidScheduleName || this.invalidDataSet;
+		if (invalid) {
+			this.shadowRoot.getElementById('invalid-properties').setAttribute('open', '');
+		}
+		return !invalid;
 	}
 
 	_commitChanges() {
@@ -82,8 +118,12 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 	_renderAdvancedDataSet() {
 		return html`
 			<div class="sds-input-wrapper">
-				<label for="advanced-data-set" class="d2l-input-label">${ this.localize('step1.ads.label') }</label>
-				<select id="advanced-data-set" class="d2l-input-select" @change="${ this._selectedDataSetChanged }">
+				<label for="advanced-data-set" class="d2l-input-label">${ this.localize('step1.ads.label') } *</label>
+				<select
+					id="advanced-data-set"
+					class="d2l-input-select"
+					@change="${ this._selectedDataSetChanged }"
+					aria-invalid="${ this.invalidDataSet }">
 					<option disabled selected value="">${ this.localize('step1.ads.placeholder') }</option>
 					${ this.dataSetOptions.map(option => this._renderAdvancedDataSetOption(option)) }
 				</select>
@@ -101,7 +141,8 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 		return html`
 			<div class="sds-input-wrapper">
 				<d2l-input-text
-					label="${ this.localize('step1.scheduleName.label') }"
+					aria-invalid="${ this.invalidScheduleName }"
+					label="${ this.localize('step1.scheduleName.label') } *"
 					placeholder="${ this.localize('step1.scheduleName.placeholder') }"
 					.value="${ this.scheduleName }"
 					@change="${ this._scheduleNameChanged }">
@@ -124,12 +165,24 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 
 	_scheduleNameChanged(event) {
 		this.scheduleName = event.target.value;
+		this._validateScheduleName();
 		this._commitChanges();
 	}
 
 	_selectedDataSetChanged(event) {
 		this.dataSet = event.target.value;
+		this._validateDataSet();
 		this._commitChanges();
+	}
+
+	_validateDataSet() {
+		this.invalidDataSet = this.dataSet === null;
+	}
+
+	_validateScheduleName() {
+		this.invalidScheduleName = this.scheduleName === ''
+			|| this.scheduleName === null
+			|| this.scheduleName === undefined;
 	}
 }
 

@@ -6,6 +6,10 @@ class DeliveryMethod extends LitElement {
       <div>Hello from d2l-delivery-method!</div>
     `;
 	}
+
+	validate() {
+		return true;
+	}
 }
 
 customElements.define('d2l-delivery-method', DeliveryMethod);
