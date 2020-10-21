@@ -49,5 +49,13 @@ export default {
 	'step2.frequency.daily': 'Daily',
 	'step2.frequency.hourly': 'Hourly',
 	'step2.frequency.15mins': '15 Minutes',
-	'step2.time.label': 'Select a time *'
+	'step2.time.label': 'Select a time *',
+	'step2.day.label': 'Select a day *',
+	'step2.day.sunday': 'Sunday',
+	'step2.day.monday': 'Monday',
+	'step2.day.tuesday': 'Tuesday',
+	'step2.day.wednesday': 'Wednesday',
+	'step2.day.thursday': 'Thursday',
+	'step2.day.friday': 'Friday',
+	'step2.day.saturday': 'Saturday'
 };

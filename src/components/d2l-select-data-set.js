@@ -28,6 +28,10 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 
 	static get styles() {
 		const selectDataSetStyles = css`
+			.step {
+				margin: 20px 0px 60px 0;
+			}
+
 			.sds-input-wrapper {
 				width: 500px;
 				margin-bottom: 20px;
