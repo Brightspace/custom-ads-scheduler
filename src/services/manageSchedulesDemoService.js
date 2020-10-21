@@ -37,6 +37,6 @@ export class ManageSchedulesDemoService {
 		if (window.shouldWait) {
 			await sleep(2000);
 		}
-		return this.schedules.find(schedule => schedule.scheduleId = scheduleId);
+		return this.schedules.find(schedule => schedule.scheduleId === scheduleId);
 	}
 }
