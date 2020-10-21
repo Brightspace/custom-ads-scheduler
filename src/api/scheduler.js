@@ -5,7 +5,7 @@ export class Scheduler {
 	// API Routes
 
 	static addSchedule(schedule) {
-		return this._post(Routes.NewSchedule(), schedule);
+		return this._post(Routes.NewSchedule(), JSON.stringify(schedule));
 	}
 
 	static editSchedule(scheduleId, schedule) {
