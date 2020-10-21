@@ -122,10 +122,6 @@ class WizardManager extends LocalizeMixin(LitElement) {
 	}
 
 	async _handleNext() {
-
-		// TODO: This is for demo/testing purposes. In practice, we will only save at the end of step 3 (in _handleDone)
-		await this._saveSchedule();
-
 		const wizard = this.shadowRoot.getElementById('wizard');
 		wizard.next();
 	}
