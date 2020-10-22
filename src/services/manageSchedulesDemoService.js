@@ -17,7 +17,9 @@ export class ManageSchedulesDemoService {
 			scheduleId: 1,
 			dataSetId: 'a0e3aca7-3bf2-4400-b831-9fdce98469b1',
 			orgUnitId: '6606',
-			roleIds: '595,578'
+			roleIds: '595,578',
+			deliveryTypeId: '1',
+			filePath: 'Folder1'
 		},
 		{
 			name: 'ADS Schedule B',
@@ -29,7 +31,9 @@ export class ManageSchedulesDemoService {
 			scheduleId: 2,
 			dataSetId: 'a0e3aca7-3bf2-4400-b831-9fdce98469b2',
 			orgUnitId: '6607',
-			roleIds: '595'
+			roleIds: '595',
+			deliveryTypeId: '2',
+			filePath: 'Folder2'
 		},
 	];
 
