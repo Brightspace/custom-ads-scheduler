@@ -92,10 +92,10 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 
 		this.errorText = this.localize('step1.validation.prefix');
 		if (this.invalidScheduleName) {
-			this.errorText += ` ${this.localize('step1.scheduleName.label')} *`;
+			this.errorText += ` ${this.localize('step1.scheduleName.label')}`;
 		}
 		if (this.invalidDataSet) {
-			this.errorText += `${this.invalidScheduleName ? ',' : ''} ${this.localize('step1.ads.label')} *`;
+			this.errorText += `${this.invalidScheduleName ? ',' : ''} ${this.localize('step1.ads.label')}`;
 		}
 
 		const invalid = this.invalidScheduleName || this.invalidDataSet;
@@ -180,6 +180,7 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 	}
 
 	_validateScheduleName() {
+		// TODO: Max char check
 		this.invalidScheduleName = this.scheduleName === ''
 			|| this.scheduleName === null
 			|| this.scheduleName === undefined;
