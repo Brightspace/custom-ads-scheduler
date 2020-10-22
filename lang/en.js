@@ -36,6 +36,8 @@ export default {
 	'step1.scheduleName.placeholder': 'Enter a name',
 	'step1.ads.label': 'Advanced Data Set',
 	'step1.ads.placeholder': '-- Select an Advanced Data Set --',
+	'step1.OrgUnitId.label': 'Org Unit ID *',
+	'step1.OrgUnitId.placeholder': 'Enter an Org Unit ID',
 	'step1.validation.prefix': 'Missing fields:',
 	'step2.dates.label': 'Schedule Start and End Dates',
 	'step2.dates.start': 'Schedule Start Date',
@@ -58,5 +60,6 @@ export default {
 	'step2.day.wednesday': 'Wednesday',
 	'step2.day.thursday': 'Thursday',
 	'step2.day.friday': 'Friday',
-	'step2.day.saturday': 'Saturday'
+	'step2.day.saturday': 'Saturday',
+	'step2.validation.prefix': 'Missing fields:'
 };

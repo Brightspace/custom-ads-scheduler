@@ -78,7 +78,9 @@ class WizardManager extends LocalizeMixin(LitElement) {
 		super.connectedCallback();
 
 		this.dataSetOptions = await this.addEditScheduleService.getAdvancedDataSets();
-		this._getSchedule();
+		this.roleItems = await this.addEditScheduleService.getRoles();
+
+		await this._getSchedule();
 	}
 
 	render() {
@@ -127,16 +129,6 @@ class WizardManager extends LocalizeMixin(LitElement) {
 		this._cacheCommit(commit);
 	}
 
-	async _handleDone() {
-		const step = this.shadowRoot.getElementById(`step_${this.wizard.selectedStep}`);
-		if (step.validate()) {
-			this.wizard.next();
-		}
-
-		await this._saveSchedule();
-		window.location.href = '/d2l/custom/ads/scheduler/manage';
-	}
-
 	_handleRestart() {
 		const wizard = this.shadowRoot.getElementById('wizard');
 		wizard.restart();
@@ -167,16 +159,23 @@ class WizardManager extends LocalizeMixin(LitElement) {
 		}
 	}
 
+	get _orgUnitId() {
+		return this.schedule ? this.schedule.orgUnitId : undefined;
+	}
+
 	_renderPage() {
 		return html`
 			<d2l-labs-wizard id="wizard" class="wizard" @stepper-restart="${ this._handleRestart }">
-				<d2l-labs-step title="${ this.localize('add.SelectDataSet')}" hide-restart-button="true" @stepper-next="${this._handleStepOneNext}">
+				<d2l-labs-step title="${ this.localize('add.SelectDataSet')}" hide-restart-button="true" @stepper-next="${ this._handleStepOneNext }">
 					<d2l-select-data-set 
 						id="select-data-set"
 						@commit-changes="${ this._handleSelectDataSetCommitChanges }"
 						schedule-name="${ ifDefined(this._scheduleName) }"
 						data-set-options="${ this._dataSetOptions }"
-						data-set="${ ifDefined(this._dataSetId) }">
+						data-set="${ ifDefined(this._dataSetId) }"
+						org-unit-id="${ ifDefined(this._orgUnitId) }"
+						role-items="${ this._roleItems }"
+						roles-selected="${ ifDefined(this._roleIds) }">
 					</d2l-select-data-set>
 				</d2l-labs-step>
 
@@ -207,6 +206,14 @@ class WizardManager extends LocalizeMixin(LitElement) {
 				size=100>
 			</d2l-loading-spinner>
 		`;
+	}
+
+	get _roleIds() {
+		return this.schedule ? JSON.stringify(this.schedule.roleIds) : undefined;
+	}
+
+	get _roleItems() {
+		return JSON.stringify(this.roleItems);
 	}
 
 	async _saveSchedule() {

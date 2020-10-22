@@ -20,7 +20,9 @@ export class ManageSchedulesDemoService {
 			isEnabled: true,
 			dataSetId: 'a0e3aca7-3bf2-4400-b831-9fdce98469b1',
 			orgId: 1,
-			preferredTime: '15:00:50.010000'
+			preferredTime: '15:00:50.010000',
+			orgUnitId: '6606',
+			roleIds: '595,578'
 		},
 		{
 			scheduleId: 2,
@@ -32,13 +34,15 @@ export class ManageSchedulesDemoService {
 			isEnabled: false,
 			dataSetId: 'a0e3aca7-3bf2-4400-b831-9fdce98469b2',
 			orgId: 1,
-			preferredTime: '15:00:50'
+			preferredTime: '15:00:50',
+			orgUnitId: '6607',
+			roleIds: '595'
 		},
 	];
 
 	static async addSchedule(schedule) {
 		const deepCopy = JSON.parse(JSON.stringify(schedule));
-		deepCopy.scheduleId = this.nextScheduleId;
+		deepCopy.scheduleId = `'a0e3aca7-3bf2-4400-b831-9fdce98469b${this.nextScheduleId}`;
 		this.nextScheduleId++;
 		await this.schedules.push(deepCopy);
 		this._logSchedules();
@@ -56,7 +60,7 @@ export class ManageSchedulesDemoService {
 		if (window.shouldWait) {
 			await sleep(2000);
 		}
-		return this.schedules.find(schedule => schedule.scheduleId = scheduleId);
+		return this.schedules.find(schedule => schedule.scheduleId === scheduleId);
 	}
 
 	static _logSchedules() {
