@@ -19,7 +19,7 @@ class DeliveryMethod extends LocalizeMixin(LitElement) {
 				type: String,
 				attribute: 'folder'
 			}
-		}
+		};
 	}
 
 	static get styles() {
@@ -104,16 +104,15 @@ class DeliveryMethod extends LocalizeMixin(LitElement) {
 		`;
 	}
 
-	_scheduleFolderChanged(event) {
-		this.folder = event.target.value;
-		this._commitChanges();
-	}
-
 	_scheduleDeliveryMethodChanged(event) {
 		this.deliveryMethod = event.target.value;
 		this._commitChanges();
 	}
-}
 
+	_scheduleFolderChanged(event) {
+		this.folder = event.target.value;
+		this._commitChanges();
+	}
+}
 
 customElements.define('d2l-delivery-method', DeliveryMethod);
