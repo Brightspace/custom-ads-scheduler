@@ -22,7 +22,9 @@ export class ManageSchedulesDemoService {
 			orgId: 1,
 			preferredTime: '15:00:50.010000',
 			orgUnitId: '6606',
-			roleIds: '595,578'
+			roleIds: '595,578',
+			deliveryTypeId: 1,
+			filePath: 'Folder1'
 		},
 		{
 			scheduleId: 2,
@@ -36,7 +38,9 @@ export class ManageSchedulesDemoService {
 			orgId: 1,
 			preferredTime: '15:00:50',
 			orgUnitId: '6607',
-			roleIds: '595'
+			roleIds: '595',
+			deliveryTypeId: 2,
+			filePath: 'Folder2'
 		},
 	];
 

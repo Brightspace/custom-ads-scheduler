@@ -110,8 +110,16 @@ class WizardManager extends LocalizeMixin(LitElement) {
 		return JSON.stringify(this.dataSetOptions);
 	}
 
+	get _deliveryTypeId() {
+		return this.schedule ? this.schedule.deliveryTypeId : undefined;
+	}
+
 	get _editing() {
 		return this.scheduleId !== undefined;
+	}
+
+	get _filePath() {
+		return this.schedule ? this.schedule.filePath : undefined;
 	}
 
 	async _getSchedule() {
@@ -126,6 +134,12 @@ class WizardManager extends LocalizeMixin(LitElement) {
 	_handleConfigureScheduleCommitChanges(event) {
 		const commit = event.detail;
 		window.console.log('Step Two Commit', commit);
+		this._cacheCommit(commit);
+	}
+
+	_handleDeliveryMethodCommitChanges(event) {
+		const commit = event.detail;
+		window.console.log('Step Three Commit', commit);
 		this._cacheCommit(commit);
 	}
 
@@ -193,7 +207,11 @@ class WizardManager extends LocalizeMixin(LitElement) {
 
 				<d2l-labs-step title="${ this.localize('add.DeliveryMethod') }" next-button-title="${ this.localize('add.Done') }" @stepper-next="${ this._handleStepThreeDone }">
 					<d2l-delivery-method
-						id="delivery-method"></d2l-delivery-method>
+						id="delivery-method"
+						@commit-changes="${ this._handleDeliveryMethodCommitChanges }"
+						delivery-method="${ ifDefined(this._deliveryTypeId) }"
+						folder="${ ifDefined(this._filePath) }">
+					</d2l-delivery-method>
 				</d2l-labs-step>
 			</d2l-labs-wizard>
 		`;
