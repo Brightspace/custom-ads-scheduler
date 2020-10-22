@@ -24,12 +24,12 @@ class DeliveryMethod extends LocalizeMixin(LitElement) {
 
 	static get styles() {
 		const selectDeliveryStyles = css`
-			.sds-input-wrapper {
+			.dm-input-wrapper {
 				width: 500px;
 				margin-bottom: 20px;
 			}
 
-			#advanced-data-set {
+			#delivery-method {
 				width: 100%;
 			}
 		`;
@@ -71,9 +71,9 @@ class DeliveryMethod extends LocalizeMixin(LitElement) {
 
 	_renderDeliveryMethod() {
 		return html`
-			<div class="sds-input-wrapper">
-				<label for="advanced-data-set" class="d2l-input-label">${ this.localize('step3.deliveryMethod.label') }</label>
-				<select id="advanced-data-set" class="d2l-input-select" @change="${ this._scheduleDeliveryMethodChanged }">
+			<div class="dm-input-wrapper">
+				<label for="delivery-method" class="d2l-input-label">${ this.localize('step3.deliveryMethod.label') }</label>
+				<select id="delivery-method" class="d2l-input-select" @change="${ this._scheduleDeliveryMethodChanged }">
 					<option disabled selected value="">${ this.localize('step3.deliveryMethod.placeholder') }</option>			
 					<option value='1' .selected="${ this.deliveryMethod === '1'}">${ this.localize('step3.deliveryType.BrightspaceFilePath') }</option>
 		            <option value='2' .selected="${ this.deliveryMethod === '2'}">${ this.localize('step3.deliveryType.BrightspaceSFTP') }</option>
@@ -85,7 +85,7 @@ class DeliveryMethod extends LocalizeMixin(LitElement) {
 
 	_renderFolder() {
 		return html`
-			<div class="sds-input-wrapper">
+			<div class="dm-input-wrapper">
 				<d2l-input-text
 					label="${ this.localize('step3.folder.label') }"
 					.value="${ this.folder }"
