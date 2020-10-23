@@ -199,9 +199,10 @@ class WizardManager extends LocalizeMixin(LitElement) {
 						@commit-changes="${ this._handleConfigureScheduleCommitChanges }"
 						start-date=${ ifDefined(this.schedule?.startDate) }
 						end-date=${ ifDefined(this.schedule?.endDate) }
-						type=${ ifDefined(this.schedule?.type) }
+						type=${ ifDefined(this.schedule?.typeId) }
 						frequency=${ ifDefined(this.schedule?.frequencyId) }
-						time=${ ifDefined(this.schedule?.preferredTime) }>
+						time=${ ifDefined(this.schedule?.preferredTime) }
+						day=${ ifDefined(this.schedule?.preferredDay) }>
 					</d2l-configure-schedule>
 				</d2l-labs-step>
 

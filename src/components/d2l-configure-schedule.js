@@ -106,6 +106,7 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 		this.startDate = nowDate;
 		this.endDate = nowDate;
 		this.time = '00:00:00';
+		this.preferredDay = 0;
 
 		this.invalidStartDate = false;
 		this.invalidEndDate = false;

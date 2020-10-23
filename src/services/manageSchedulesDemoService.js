@@ -13,7 +13,7 @@ export class ManageSchedulesDemoService {
 		{
 			scheduleId: 1,
 			name: 'ADS Schedule A',
-			type: typesEnum.diff,
+			typeId: typesEnum.diff,
 			frequencyId: frequenciesEnum.mins15,
 			startDate: '2020-10-20T15:00:50.033',
 			endDate: '2020-10-20T15:00:50.033',
