@@ -17,7 +17,7 @@ class WizardManager extends LocalizeMixin(LitElement) {
 	static get properties() {
 		return {
 			scheduleId: {
-				type: Number
+				type: String
 			},
 			schedule: {
 				type: Object
