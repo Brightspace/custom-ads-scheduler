@@ -230,7 +230,7 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 	}
 
 	_scheduleRolesChanged(event) {
-		this.rolesSelected = event.detail.rolesSelected;
+		this.rolesSelected = event.detail.rolesSelected.join();
 		this._commitChanges();
 	}
 
