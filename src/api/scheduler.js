@@ -57,7 +57,7 @@ export class Scheduler {
 	static _post(url, body) {
 		const options = this._options('POST');
 		options.body = body;
-		return fetch(url, options).then(r => r.json());
+		return fetch(url, options);
 	}
 
 	static _put(url, body) {
