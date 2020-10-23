@@ -158,6 +158,7 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 		if (invalid) {
 			this.shadowRoot.getElementById('invalid-properties').setAttribute('open', '');
 		}
+
 		return !invalid;
 	}
 
@@ -308,6 +309,7 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 	_selectedEndDateChanged(event) {
 		this.endDate = event.target.value;
 		this._commitChanges();
+		this._validateStartDate();
 		this._validateEndDate();
 		this.requestUpdate();
 	}
@@ -322,6 +324,7 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 		this.startDate = event.target.value;
 		this._commitChanges();
 		this._validateStartDate();
+		this._validateEndDate();
 		this.requestUpdate();
 	}
 
@@ -363,18 +366,19 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 	_validateEndDate() {
 		this.invalidEndDate = this.endDate === ''
 		|| this.endDate === null
-		|| this.endDate === undefined;
+		|| this.endDate === undefined
+		|| new Date(this.endDate) < new Date(this.startDate);
 	}
 
 	_validateFrequency() {
 		this.invalidFrequency = this.frequency === null
 		|| this.frequency === undefined;
 	}
-
 	_validateStartDate() {
 		this.invalidStartDate = this.startDate === ''
 		|| this.startDate === null
-		|| this.startDate === undefined;
+		|| this.startDate === undefined
+		|| new Date(this.endDate) < new Date(this.startDate);
 	}
 
 	_validateTime() {

@@ -119,6 +119,7 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 		if (invalid) {
 			this.shadowRoot.getElementById('invalid-properties').setAttribute('open', '');
 		}
+
 		return !invalid;
 	}
 
@@ -244,10 +245,10 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 	}
 
 	_validateScheduleName() {
-		// TODO: Max char check
 		this.invalidScheduleName = this.scheduleName === ''
 			|| this.scheduleName === null
-			|| this.scheduleName === undefined;
+			|| this.scheduleName === undefined
+			|| this.scheduleName.length > 256;
 	}
 }
 
