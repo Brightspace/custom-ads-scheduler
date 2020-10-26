@@ -18,6 +18,12 @@ class DeliveryMethod extends LocalizeMixin(LitElement) {
 			folder: {
 				type: String,
 				attribute: 'folder'
+			},
+			invalidDeliveryMethod: {
+				type: Boolean
+			},
+			errorText: {
+				type: String
 			}
 		};
 	}
@@ -50,17 +56,30 @@ class DeliveryMethod extends LocalizeMixin(LitElement) {
 		super();
 		this.deliveryMethod = null;
 		this.folder = null;
+
+		this.invalidDeliveryMethod = false;
+		this.errorText = '';
 	}
 
 	render() {
 		return html`
 			<h1 class="d2l-heading-2">Delivery Method</h1>
 			${ this._renderStep() }
+			<d2l-alert-toast id="invalid-properties" type="critical">
+				${ this.errorText }
+			</d2l-alert-toast>
 		`;
 	}
 
 	validate() {
-		return true;
+		this._validateDeliveryMethod();
+
+		if (this.invalidDeliveryMethod) {
+			this.errorText = `${ this.localize('step3.validation.prefix') } ${ this.localize('step3.deliveryMethod.label') }`;
+			this.shadowRoot.getElementById('invalid-properties').setAttribute('open', '');
+		}
+
+		return !this.invalidDeliveryMethod;
 	}
 
 	_commitChanges() {
@@ -76,12 +95,17 @@ class DeliveryMethod extends LocalizeMixin(LitElement) {
 	_renderDeliveryMethod() {
 		return html`
 			<div class="dm-input-wrapper">
-				<label for="delivery-method" class="d2l-input-label">${ this.localize('step3.deliveryMethod.label') }</label>
-				<select id="delivery-method" class="d2l-input-select" @change="${ this._scheduleDeliveryMethodChanged }">
+				<label for="delivery-method" class="d2l-input-label">${ this.localize('step3.deliveryMethod.label') } *</label>
+				<select
+					id="delivery-method"
+					class="d2l-input-select"
+					aria-invalid="${ this.invalidDeliveryMethod }"
+					@change="${ this._scheduleDeliveryMethodChanged }">
+
 					<option disabled selected value="">${ this.localize('step3.deliveryMethod.placeholder') }</option>			
-					<option value='1' .selected="${ this.deliveryMethod === '1'}">${ this.localize('step3.deliveryType.BrightspaceFilePath') }</option>
-		            <option value='2' .selected="${ this.deliveryMethod === '2'}">${ this.localize('step3.deliveryType.BrightspaceSFTP') }</option>
-					<option value='3' .selected="${ this.deliveryMethod === '3'}">${ this.localize('step3.deliveryType.CustomSFTP') }</option>
+					<option value='1' .selected="${ this.deliveryMethod === '1' }">${ this.localize('step3.deliveryType.BrightspaceFilePath') }</option>
+		            <option value='2' .selected="${ this.deliveryMethod === '2' }">${ this.localize('step3.deliveryType.BrightspaceSFTP') }</option>
+					<option value='3' .selected="${ this.deliveryMethod === '3' }">${ this.localize('step3.deliveryType.CustomSFTP') }</option>
 				</select>
 			</div>
 		`;
@@ -116,6 +140,10 @@ class DeliveryMethod extends LocalizeMixin(LitElement) {
 	_scheduleFolderChanged(event) {
 		this.folder = event.target.value;
 		this._commitChanges();
+	}
+
+	_validateDeliveryMethod() {
+		this.invalidDeliveryMethod = this.deliveryMethod === null;
 	}
 }
 
