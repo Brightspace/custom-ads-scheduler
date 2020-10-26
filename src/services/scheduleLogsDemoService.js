@@ -6,73 +6,73 @@ export class ScheduleLogsDemoService {
 
 	static allLogs = [
 		{
-			scheduleId: 1,
+			scheduleId: '1',
 			runDate: '2020-09-01T00:00:00',
 			endDate: '2020-09-01T00:00:00',
 			statusId: 4
 		},
 		{
-			scheduleId: 2,
+			scheduleId: '2',
 			runDate: '2020-09-02T00:00:00',
 			endDate: '2020-09-02T00:00:00',
 			statusId: 3
 		},
 		{
-			scheduleId: 3,
+			scheduleId: '3',
 			runDate: '2020-09-04T00:00:00',
 			endDate: '2020-09-04T00:00:00',
 			statusId: 3
 		},
 		{
-			scheduleId: 4,
+			scheduleId: '4',
 			runDate: '2020-09-03T00:00:00',
 			endDate: '2020-09-03T00:00:00',
 			statusId: 2
 		},
 		{
-			scheduleId: 5,
+			scheduleId: '5',
 			runDate: '2020-09-06T00:00:00',
 			endDate: '2020-09-06T00:00:00',
 			statusId: 3
 		},
 		{
-			scheduleId: 6,
+			scheduleId: '6',
 			runDate: '2020-09-05T00:00:00',
 			endDate: '2020-09-05T00:00:00',
 			statusId: 3
 		},
 		{
-			scheduleId: 7,
+			scheduleId: '7',
 			runDate: '2020-09-07T00:00:00',
 			endDate: '2020-09-07T00:00:00',
 			statusId: 1
 		},
 		{
-			scheduleId: 8,
+			scheduleId: '8',
 			runDate: '2020-09-09T00:00:00',
 			endDate: '2020-09-09T00:00:00',
 			statusId: 3
 		},
 		{
-			scheduleId: 9,
+			scheduleId: '9',
 			runDate: '2020-09-08T00:00:00',
 			endDate: '2020-09-08T00:00:00',
 			statusId: 3
 		},
 		{
-			scheduleId: 10,
+			scheduleId: '10',
 			runDate: '2020-09-11T00:00:00',
 			endDate: '2020-09-11T00:00:00',
 			statusId: 4
 		},
 		{
-			scheduleId: 11,
+			scheduleId: '11',
 			runDate: '2020-09-12T00:00:00',
 			endDate: '2020-09-12T00:00:00',
 			statusId: 3
 		},
 		{
-			scheduleId: 12,
+			scheduleId: '12',
 			runDate: '2020-09-13T00:00:00',
 			endDate: '2020-09-13T00:00:00',
 			statusId: 3
