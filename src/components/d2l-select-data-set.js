@@ -44,6 +44,9 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 			invalidDataSet: {
 				type: Boolean
 			},
+			invalidOrgUnitId: {
+				type: Boolean
+			},
 			errorText: {
 				type: String
 			}
@@ -90,6 +93,7 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 
 		this.invalidScheduleName = false;
 		this.invalidDataSet = false;
+		this.invalidOrgUnitId = false;
 		this.errorText = '';
 	}
 
@@ -106,6 +110,7 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 	validate() {
 		this._validateScheduleName();
 		this._validateDataSet();
+		this._validateOrgUnitId();
 
 		this.errorText = this.localize('step1.validation.prefix');
 		if (this.invalidScheduleName) {
@@ -114,8 +119,11 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 		if (this.invalidDataSet) {
 			this.errorText += `${this.invalidScheduleName ? ',' : ''} ${this.localize('step1.ads.label')}`;
 		}
+		if (this.invalidOrgUnitId) {
+			this.errorText += `${this.invalidScheduleName || this.invalidDataSet ? ',' : ''} ${this.localize('step1.OrgUnitId.label')}`;
+		}
 
-		const invalid = this.invalidScheduleName || this.invalidDataSet;
+		const invalid = this.invalidScheduleName || this.invalidDataSet || this.invalidOrgUnitId;
 		if (invalid) {
 			this.shadowRoot.getElementById('invalid-properties').setAttribute('open', '');
 		}
@@ -161,10 +169,11 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 		return html`
 			<div class="sds-input-wrapper">
 				<d2l-input-text
-					label="${ this.localize('step1.OrgUnitId.label') }"
+					aria-invalid="${ this.invalidOrgUnitId }"
+					label="${ this.localize('step1.OrgUnitId.label') } *"
 					placeholder="${ this.localize('step1.OrgUnitId.placeholder') }"
 					.value="${ this.orgUnitId }"
-					@change="${ this._scheduleOrgUnitIdChanged }">
+					@change="${ this._orgUnitIdChanged }">
 				</d2l-input-text>
 			</div>
 		`;
@@ -201,7 +210,7 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 
 		return html`
 			<d2l-labs-role-selector
-				@d2l-labs-role-selected="${ this._scheduleRolesChanged }">
+				@d2l-labs-role-selected="${ this._selectedRolesChanged }">
 				${ this.roleItems.map(role => this._renderRoleItems(role, roleList)) }
 			</d2l-labs-role-selector>
 		`;
@@ -224,12 +233,13 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 		this._commitChanges();
 	}
 
-	_scheduleOrgUnitIdChanged(event) {
+	_orgUnitIdChanged(event) {
 		this.orgUnitId = event.target.value;
+		this._validateOrgUnitId();
 		this._commitChanges();
 	}
 
-	_scheduleRolesChanged(event) {
+	_selectedRolesChanged(event) {
 		this.rolesSelected = event.detail.rolesSelected.join();
 		this._commitChanges();
 	}
@@ -249,6 +259,16 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 			|| this.scheduleName === null
 			|| this.scheduleName === undefined
 			|| this.scheduleName.length > 256;
+	}
+
+	_validateOrgUnitId() {
+		this.invalidOrgUnitId = this.orgUnitId.trim() === ''
+			|| this.orgUnitId === null
+			|| this.orgUnitId === undefined
+			|| this.orgUnitId.length > 1024
+			|| isNaN(Number(this.orgUnitId))
+			|| Number(this.orgUnitId) < 0
+			|| !Number.isInteger(Number(this.orgUnitId));
 	}
 }
 
