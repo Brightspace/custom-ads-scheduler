@@ -4,6 +4,14 @@ export class Scheduler {
 
 	// API Routes
 
+	static addSchedule(schedule) {
+		return this._post(Routes.NewSchedule(), JSON.stringify(schedule));
+	}
+
+	static editSchedule(scheduleId, schedule) {
+		return this._put(Routes.ExistingSchedule(scheduleId), JSON.stringify(schedule));
+	}
+
 	static getDataSets() {
 		return this._get(Routes.DataSets());
 	}
@@ -21,7 +29,7 @@ export class Scheduler {
 	}
 
 	static getSchedule(scheduleId) {
-		return this._get(Routes.GetSchedule(scheduleId));
+		return this._get(Routes.ExistingSchedule(scheduleId));
 	}
 
 	static setEnable(scheduleId, isEnabled) {
@@ -49,7 +57,7 @@ export class Scheduler {
 	static _post(url, body) {
 		const options = this._options('POST');
 		options.body = body;
-		return fetch(url, options).then(r => r.json());
+		return fetch(url, options);
 	}
 
 	static _put(url, body) {

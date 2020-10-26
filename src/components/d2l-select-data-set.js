@@ -1,3 +1,4 @@
+import '@brightspace-ui/core/components/alert/alert-toast';
 import '@brightspace-ui/core/components/inputs/input-text.js';
 import '@brightspace-ui-labs/role-selector/role-item.js';
 import '@brightspace-ui-labs/role-selector/role-selector.js';
@@ -36,12 +37,25 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 			rolesSelected: {
 				type: Array,
 				attribute: 'roles-selected'
+			},
+			invalidScheduleName: {
+				type: Boolean
+			},
+			invalidDataSet: {
+				type: Boolean
+			},
+			errorText: {
+				type: String
 			}
 		};
 	}
 
 	static get styles() {
 		const selectDataSetStyles = css`
+			.step {
+				margin: 20px 0px 60px 0;
+			}
+
 			.sds-input-wrapper {
 				width: 500px;
 				margin-bottom: 20px;
@@ -73,22 +87,49 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 		this.orgUnitId = null;
 		this.roleItems = [];
 		this.rolesSelected = [];
+
+		this.invalidScheduleName = false;
+		this.invalidDataSet = false;
+		this.errorText = '';
 	}
 
 	render() {
 		return html`
 			<h1 class="d2l-heading-2">Select Your Advanced Data Set</h1>
 			${ this._renderStep() }
+			<d2l-alert-toast id="invalid-properties" type="critical">
+				${ this.errorText }
+			</d2l-alert-toast>
 		`;
+	}
+
+	validate() {
+		this._validateScheduleName();
+		this._validateDataSet();
+
+		this.errorText = this.localize('step1.validation.prefix');
+		if (this.invalidScheduleName) {
+			this.errorText += ` ${this.localize('step1.scheduleName.label')}`;
+		}
+		if (this.invalidDataSet) {
+			this.errorText += `${this.invalidScheduleName ? ',' : ''} ${this.localize('step1.ads.label')}`;
+		}
+
+		const invalid = this.invalidScheduleName || this.invalidDataSet;
+		if (invalid) {
+			this.shadowRoot.getElementById('invalid-properties').setAttribute('open', '');
+		}
+
+		return !invalid;
 	}
 
 	_commitChanges() {
 		const event = new CustomEvent('commit-changes', {
 			detail: {
-				scheduleName: this.scheduleName,
-				dataSet: this.dataSet,
+				name: this.scheduleName,
+				dataSetId: this.dataSet,
 				orgUnitId: this.orgUnitId,
-				rolesSelected: this.rolesSelected
+				roleIds: this.rolesSelected
 			}
 		});
 		this.dispatchEvent(event);
@@ -97,8 +138,12 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 	_renderAdvancedDataSet() {
 		return html`
 			<div class="sds-input-wrapper">
-				<label for="advanced-data-set" class="d2l-input-label">${ this.localize('step1.ads.label') }</label>
-				<select id="advanced-data-set" class="d2l-input-select" @change="${ this._selectedDataSetChanged }">
+				<label for="advanced-data-set" class="d2l-input-label">${ this.localize('step1.ads.label') } *</label>
+				<select
+					id="advanced-data-set"
+					class="d2l-input-select"
+					@change="${ this._selectedDataSetChanged }"
+					aria-invalid="${ this.invalidDataSet }">
 					<option disabled selected value="">${ this.localize('step1.ads.placeholder') }</option>
 					${ this.dataSetOptions.map(option => this._renderAdvancedDataSetOption(option)) }
 				</select>
@@ -141,7 +186,8 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 		return html`
 			<div class="sds-input-wrapper">
 				<d2l-input-text
-					label="${ this.localize('step1.scheduleName.label') }"
+					aria-invalid="${ this.invalidScheduleName }"
+					label="${ this.localize('step1.scheduleName.label') } *"
 					placeholder="${ this.localize('step1.scheduleName.placeholder') }"
 					.value="${ this.scheduleName }"
 					@change="${ this._scheduleNameChanged }">
@@ -174,6 +220,7 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 
 	_scheduleNameChanged(event) {
 		this.scheduleName = event.target.value;
+		this._validateScheduleName();
 		this._commitChanges();
 	}
 
@@ -183,13 +230,25 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 	}
 
 	_scheduleRolesChanged(event) {
-		this.rolesSelected = event.detail.rolesSelected;
+		this.rolesSelected = event.detail.rolesSelected.join();
 		this._commitChanges();
 	}
 
 	_selectedDataSetChanged(event) {
 		this.dataSet = event.target.value;
+		this._validateDataSet();
 		this._commitChanges();
+	}
+
+	_validateDataSet() {
+		this.invalidDataSet = this.dataSet === null;
+	}
+
+	_validateScheduleName() {
+		this.invalidScheduleName = this.scheduleName === ''
+			|| this.scheduleName === null
+			|| this.scheduleName === undefined
+			|| this.scheduleName.length > 256;
 	}
 }
 

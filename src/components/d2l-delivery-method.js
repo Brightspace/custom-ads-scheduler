@@ -59,6 +59,10 @@ class DeliveryMethod extends LocalizeMixin(LitElement) {
 		`;
 	}
 
+	validate() {
+		return true;
+	}
+
 	_commitChanges() {
 		const event = new CustomEvent('commit-changes', {
 			detail: {
