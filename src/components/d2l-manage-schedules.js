@@ -118,12 +118,12 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 	}
 
 	_handleEdit(event) {
-		const schedule = this._getScheduleById(parseInt(event.target.getAttribute('schedule-id')));
+		const schedule = this._getScheduleById(event.target.getAttribute('schedule-id'));
 		window.location.href = `/d2l/custom/ads/scheduler/schedule/edit/${schedule.scheduleId}`;
 	}
 
 	async _handleEnableDisable(event) {
-		const schedule = this._getScheduleById(parseInt(event.target.getAttribute('schedule-id')));
+		const schedule = this._getScheduleById(event.target.getAttribute('schedule-id'));
 
 		const response = await this.manageSchedulesService.setEnable(schedule.scheduleId, !schedule.isEnabled);
 		if (response.status === 200) {
@@ -139,7 +139,7 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 	}
 
 	_handleViewLog(event) {
-		const schedule = this._getScheduleById(parseInt(event.target.getAttribute('schedule-id')));
+		const schedule = this._getScheduleById(event.target.getAttribute('schedule-id'));
 		window.location.href = `/d2l/custom/ads/scheduler/logs/view/${schedule.scheduleId}`;
 	}
 

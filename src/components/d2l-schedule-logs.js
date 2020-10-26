@@ -15,7 +15,7 @@ class ScheduleLogs extends LocalizeMixin(LitElement) {
 	static get properties() {
 		return {
 			scheduleId: {
-				type: Number,
+				type: String,
 				attribute: 'schedule-id'
 			},
 			scheduleName: {
