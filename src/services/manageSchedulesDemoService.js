@@ -11,7 +11,7 @@ export class ManageSchedulesDemoService {
 	static schedules = [
 
 		{
-			scheduleId: 1,
+			scheduleId: '30C5DBC7-06CF-4FCF-89D8-02A3C5F255B1',
 			name: 'ADS Schedule A',
 			typeId: typesEnum.diff,
 			frequencyId: frequenciesEnum.mins15,
@@ -27,7 +27,7 @@ export class ManageSchedulesDemoService {
 			filePath: 'Folder1'
 		},
 		{
-			scheduleId: 2,
+			scheduleId: '30C5DBC7-06CF-4FCF-89D8-02A3C5F255B2',
 			name: 'ADS Schedule B',
 			typeId: typesEnum.full,
 			frequencyId: frequenciesEnum.weekly,
