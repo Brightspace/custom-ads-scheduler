@@ -48,6 +48,7 @@ export class Scheduler {
 			credentials: 'include',
 			headers: new Headers({
 				'Access-Control-Allow-Origin': '*',
+				'X-Csrf-Token': this._xsrfToken
 			}),
 			method: method,
 			mode: 'cors',
@@ -64,6 +65,13 @@ export class Scheduler {
 		const options = this._options('PUT');
 		options.body = body;
 		return fetch(url, options);
+	}
+
+	static get _xsrfToken() {
+		return  D2L && D2L.LP && D2L.LP.Web && D2L.LP.Web.Authentication &&
+		D2L.LP.Web.Authentication.Xsrf &&
+		D2L.LP.Web.Authentication.Xsrf.GetXsrfToken &&
+		D2L.LP.Web.Authentication.Xsrf.GetXsrfToken() || '';
 	}
 
 }
