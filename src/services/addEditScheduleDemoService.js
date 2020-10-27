@@ -7,21 +7,100 @@ export class AddEditScheduleDemoService {
 				Name: 'Data Set A',
 				Description: 'This is a description of Advanced Data Set A',
 				Category: 'AdvancedDataSets',
-				Filters: []
+				Filters: [
+					{
+						'Name': 'userId',
+						'Type': 4
+					},
+					{
+						'Name': 'parentOrgUnitId',
+						'Type': 2
+					},
+					{
+						'Name': 'startDate',
+						'Type': 1
+					},
+					{
+						'Name': 'endDate',
+						'Type': 1
+					},
+					{
+						'Name': 'roles',
+						'Type': 3
+					}
+				]
 			},
 			{
 				DataSetId: 'a0e3aca7-3bf2-4400-b831-9fdce98469b2',
 				Name: 'Data Set B',
 				Description: 'This is a description of Advanced Data Set B',
 				Category: 'AdvancedDataSets',
-				Filters: []
+				Filters: [
+					{
+						'Name': 'parentOrgUnitId',
+						'Type': 2
+					},
+					{
+						'Name': 'startDate',
+						'Type': 1
+					},
+					{
+						'Name': 'endDate',
+						'Type': 1
+					},
+					{
+						'Name': 'roles',
+						'Type': 3
+					}
+				]
 			},
 			{
 				DataSetId: 'a0e3aca7-3bf2-4400-b831-9fdce98469b3',
 				Name: 'Data Set C',
 				Description: 'This is a description of Advanced Data Set C',
 				Category: 'AdvancedDataSets',
-				Filters: []
+				Filters: [
+					{
+						'Name': 'parentOrgUnitId',
+						'Type': 2
+					},
+					{
+						'Name': 'startDate',
+						'Type': 1
+					},
+					{
+						'Name': 'endDate',
+						'Type': 1
+					},
+					{
+						'Name': 'userId',
+						'Type': 4
+					}
+				]
+			},
+			{
+				DataSetId: 'a0e3aca7-3bf2-4400-b831-9fdce98469b4',
+				Name: 'Data Set D',
+				Description: 'This is a description of Advanced Data Set D',
+				Category: 'AdvancedDataSets',
+				Filters: [
+					{
+						'Name': 'userId',
+						'Type': 4
+					},
+					{
+						'Name': 'startDate',
+						'Type': 1
+					},
+					{
+						'Name': 'endDate',
+						'Type': 1
+					},
+					{
+						'Name': 'roles',
+						'Type': 3
+					}
+				]
 			}
 		];
 	}
