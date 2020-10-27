@@ -188,6 +188,7 @@ class WizardManager extends LocalizeMixin(LitElement) {
 						data-set-options="${ this._dataSetOptions }"
 						data-set="${ ifDefined(this._dataSetId) }"
 						org-unit-id="${ ifDefined(this._orgUnitId) }"
+						user-id="${ ifDefined(this._userId) }"
 						role-items="${ this._roleItems }"
 						roles-selected="${ ifDefined(this._roleIds) }">
 					</d2l-select-data-set>
@@ -254,5 +255,8 @@ class WizardManager extends LocalizeMixin(LitElement) {
 		});
 	}
 
+	get _userId() {
+		return this.schedule ? this.schedule.userId : undefined;
+	}
 }
 customElements.define('d2l-wizard-manager', WizardManager);

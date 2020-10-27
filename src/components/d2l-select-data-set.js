@@ -26,9 +26,16 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 				type: String,
 				attribute: 'data-set'
 			},
+			filters: {
+				type: Array
+			},
 			orgUnitId: {
 				type: String,
 				attribute: 'org-unit-id'
+			},
+			userId: {
+				type: String,
+				attribute: 'user-id'
 			},
 			roleItems: {
 				type: Array,
@@ -42,6 +49,12 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 				type: Boolean
 			},
 			invalidDataSet: {
+				type: Boolean
+			},
+			invalidOrgUnitId: {
+				type: Boolean
+			},
+			invalidUserId: {
 				type: Boolean
 			},
 			errorText: {
@@ -85,19 +98,23 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 		this.dataSetOptions = [];
 		this.dataSet = null;
 		this.orgUnitId = null;
+		this.userId = null;
 		this.roleItems = [];
 		this.rolesSelected = [];
+		this.filters = [];
 
 		this.invalidScheduleName = false;
 		this.invalidDataSet = false;
+		this.invalidOrgUnitId = false;
+		this.invalidUserId = false;
 		this.errorText = '';
 	}
 
 	render() {
 		return html`
-			<h1 class="d2l-heading-2">Select Your Advanced Data Set</h1>
+			<h1 class='d2l-heading-2'>Select Your Advanced Data Set</h1>
 			${ this._renderStep() }
-			<d2l-alert-toast id="invalid-properties" type="critical">
+			<d2l-alert-toast id='invalid-properties' type='critical'>
 				${ this.errorText }
 			</d2l-alert-toast>
 		`;
@@ -107,15 +124,31 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 		this._validateScheduleName();
 		this._validateDataSet();
 
-		this.errorText = this.localize('step1.validation.prefix');
-		if (this.invalidScheduleName) {
-			this.errorText += ` ${this.localize('step1.scheduleName.label')}`;
-		}
-		if (this.invalidDataSet) {
-			this.errorText += `${this.invalidScheduleName ? ',' : ''} ${this.localize('step1.ads.label')}`;
+		if (this.filters.includes('userId')) {
+			this._validateUserId();
 		}
 
-		const invalid = this.invalidScheduleName || this.invalidDataSet;
+		if (this.filters.includes('parentOrgUnitId')) {
+			this._validateOrgUnitId();
+		}
+
+		this.errorText = this.localize('step1.validation.prefix');
+
+		const invalidProperties = [];
+		if (this.invalidScheduleName) invalidProperties.push(this.localize('step1.scheduleName.label'));
+		if (this.invalidDataSet) invalidProperties.push(this.localize('step1.ads.label'));
+		if (this.filters.includes('userId') && this.invalidUserId) invalidProperties.push(this.localize('step1.userId.label'));
+		if (this.filters.includes('parentOrgUnitId') && this.invalidOrgUnitId) invalidProperties.push(this.localize('step1.orgUnitId.label'));
+
+		for (let i = 0; i < invalidProperties.length; i++) {
+			this.errorText += `${i === 0 ? ' ' : ', '}${invalidProperties[i]}`;
+		}
+
+		const invalid = this.invalidScheduleName
+			|| this.invalidDataSet
+			|| (this.filters.includes('userId') && this.invalidUserId)
+			|| (this.filters.includes('parentOrgUnitId') && this.invalidOrgUnitId);
+
 		if (invalid) {
 			this.shadowRoot.getElementById('invalid-properties').setAttribute('open', '');
 		}
@@ -128,6 +161,7 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 			detail: {
 				name: this.scheduleName,
 				dataSetId: this.dataSet,
+				userId: this.userId,
 				orgUnitId: this.orgUnitId,
 				roleIds: this.rolesSelected
 			}
@@ -135,16 +169,31 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 		this.dispatchEvent(event);
 	}
 
+	get _getFilters() {
+		const filtersArray = this.dataSetOptions
+			.filter(option => option.DataSetId === this.dataSet)
+			.map(data => { return data.Filters; })[0];
+
+		this.filters = filtersArray ? filtersArray.map(f => { return f.Name; }) : [];
+		return this.filters;
+	}
+
+	_orgUnitIdChanged(event) {
+		this.orgUnitId = event.target.value;
+		this._validateOrgUnitId();
+		this._commitChanges();
+	}
+
 	_renderAdvancedDataSet() {
 		return html`
-			<div class="sds-input-wrapper">
-				<label for="advanced-data-set" class="d2l-input-label">${ this.localize('step1.ads.label') } *</label>
+			<div class='sds-input-wrapper'>
+				<label for='advanced-data-set' class='d2l-input-label'>${ this.localize('step1.ads.label') } *</label>
 				<select
-					id="advanced-data-set"
-					class="d2l-input-select"
-					@change="${ this._selectedDataSetChanged }"
-					aria-invalid="${ this.invalidDataSet }">
-					<option disabled selected value="">${ this.localize('step1.ads.placeholder') }</option>
+					id='advanced-data-set'
+					class='d2l-input-select'
+					@change='${ this._selectedDataSetChanged }'
+					aria-invalid='${ this.invalidDataSet }'>
+					<option disabled selected value=''>${ this.localize('step1.ads.placeholder') }</option>
 					${ this.dataSetOptions.map(option => this._renderAdvancedDataSetOption(option)) }
 				</select>
 			</div>
@@ -153,18 +202,64 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 
 	_renderAdvancedDataSetOption(option) {
 		return html`
-			<option value=${ option.DataSetId } .selected="${ option.DataSetId === this.dataSet }">${ option.Name }</option>
+			<option value=${ option.DataSetId } .selected='${ option.DataSetId === this.dataSet }' @click='${ this._getFilters }'>${ option.Name }</option>
 		`;
+	}
+
+	_renderFilters() {
+		if (this.filters.includes('userId') && this.filters.includes('parentOrgUnitId') && this.filters.includes('roles')) {
+			return html`
+				${ this._renderUserId() }
+				${ this._renderOrgUnitId() }
+				${ this._renderSelectRoles() }
+			`;
+		}
+
+		if (this.filters.includes('userId') && this.filters.includes('parentOrgUnitId')) {
+			return html`
+				${ this._renderUserId() }
+				${ this._renderOrgUnitId() }
+			`;
+		}
+
+		if (this.filters.includes('userId') && this.filters.includes('roles')) {
+			return html`
+				${ this._renderUserId() }
+				${ this._renderSelectRoles() }
+			`;
+		}
+
+		if (this.filters.includes('parentOrgUnitId') && this.filters.includes('roles')) {
+			return html`
+				${ this._renderOrgUnitId() }
+				${ this._renderSelectRoles() }
+			`;
+		}
+
+		if (this.filters.includes('userId')) {
+			return this._renderUserId();
+		}
+
+		if (this.filters.includes('parentOrgUnitId')) {
+			return this._renderOrgUnitId();
+		}
+
+		if (this.filters.includes('roles')) {
+			return this._renderSelectRoles();
+		}
+
+		return;
 	}
 
 	_renderOrgUnitId() {
 		return html`
-			<div class="sds-input-wrapper">
+			<div class='sds-input-wrapper'>
 				<d2l-input-text
-					label="${ this.localize('step1.OrgUnitId.label') }"
-					placeholder="${ this.localize('step1.OrgUnitId.placeholder') }"
-					.value="${ this.orgUnitId }"
-					@change="${ this._scheduleOrgUnitIdChanged }">
+					aria-invalid='${ this.invalidOrgUnitId }'
+					label='${ this.localize('step1.orgUnitId.label') } *'
+					placeholder='${ this.localize('step1.orgUnitId.placeholder') }'
+					.value='${ this.orgUnitId }'
+					@change='${ this._orgUnitIdChanged }'>
 				</d2l-input-text>
 			</div>
 		`;
@@ -173,24 +268,24 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 	_renderRoleItems(role, roleList) {
 		if (roleList.includes(role.Identifier)) {
 			return html`
-				<d2l-labs-role-item item-id="${ role.Identifier }" display-name="${ role.DisplayName }" selected></d2l-labs-role-item>
+				<d2l-labs-role-item item-id='${ role.Identifier }' display-name='${ role.DisplayName }' selected></d2l-labs-role-item>
 			`;
 		}
 
 		return html`
-			<d2l-labs-role-item item-id="${ role.Identifier }" display-name="${ role.DisplayName }"></d2l-labs-role-item>
+			<d2l-labs-role-item item-id='${ role.Identifier }' display-name='${ role.DisplayName }'></d2l-labs-role-item>
 		`;
 	}
 
 	_renderScheduleName() {
 		return html`
-			<div class="sds-input-wrapper">
+			<div class='sds-input-wrapper'>
 				<d2l-input-text
-					aria-invalid="${ this.invalidScheduleName }"
-					label="${ this.localize('step1.scheduleName.label') } *"
-					placeholder="${ this.localize('step1.scheduleName.placeholder') }"
-					.value="${ this.scheduleName }"
-					@change="${ this._scheduleNameChanged }">
+					aria-invalid='${ this.invalidScheduleName }'
+					label='${ this.localize('step1.scheduleName.label') } *'
+					placeholder='${ this.localize('step1.scheduleName.placeholder') }'
+					.value='${ this.scheduleName }'
+					@change='${ this._scheduleNameChanged }'>
 				</d2l-input-text>
 			</div>
 		`;
@@ -201,7 +296,7 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 
 		return html`
 			<d2l-labs-role-selector
-				@d2l-labs-role-selected="${ this._scheduleRolesChanged }">
+				@d2l-labs-role-selected='${ this._selectedRolesChanged }'>
 				${ this.roleItems.map(role => this._renderRoleItems(role, roleList)) }
 			</d2l-labs-role-selector>
 		`;
@@ -209,11 +304,24 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 
 	_renderStep() {
 		return html`
-			<div class="step">
-				${ this._renderScheduleName() }
-				${ this._renderAdvancedDataSet() }
-				${ this._renderOrgUnitId() }
-				${ this._renderSelectRoles() }
+			<div class='step'>
+				${ this._renderScheduleName()}
+				${ this._renderAdvancedDataSet()}
+				${ this._renderFilters()}
+			</div>
+		`;
+	}
+
+	_renderUserId() {
+		return html`
+			<div class='sds-input-wrapper'>
+				<d2l-input-text
+					aria-invalid='${ this.invalidUserId }'
+					label='${ this.localize('step1.userId.label') } *'
+					placeholder='${ this.localize('step1.userId.placeholder') }'
+					.value='${ this.userId }'
+					@change='${ this._userIdChanged }'>
+				</d2l-input-text>
 			</div>
 		`;
 	}
@@ -224,19 +332,20 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 		this._commitChanges();
 	}
 
-	_scheduleOrgUnitIdChanged(event) {
-		this.orgUnitId = event.target.value;
+	_selectedDataSetChanged(event) {
+		this.dataSet = event.target.value;
+		this._validateDataSet();
 		this._commitChanges();
 	}
 
-	_scheduleRolesChanged(event) {
+	_selectedRolesChanged(event) {
 		this.rolesSelected = event.detail.rolesSelected.join();
 		this._commitChanges();
 	}
 
-	_selectedDataSetChanged(event) {
-		this.dataSet = event.target.value;
-		this._validateDataSet();
+	_userIdChanged(event) {
+		this.userId = event.target.value;
+		this._validateUserId();
 		this._commitChanges();
 	}
 
@@ -244,11 +353,29 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 		this.invalidDataSet = this.dataSet === null;
 	}
 
+	_validateNumberOnlyInput(input) {
+		return input === null
+			|| input === undefined
+			|| input.trim() === ''
+			|| input.length > 1024
+			|| isNaN(Number(input))
+			|| Number(input) < 0
+			|| !Number.isInteger(Number(input));
+	}
+
+	_validateOrgUnitId() {
+		this.invalidOrgUnitId = this._validateNumberOnlyInput(this.orgUnitId);
+	}
+
 	_validateScheduleName() {
 		this.invalidScheduleName = this.scheduleName === ''
 			|| this.scheduleName === null
 			|| this.scheduleName === undefined
 			|| this.scheduleName.length > 256;
+	}
+
+	_validateUserId() {
+		this.invalidUserId = this._validateNumberOnlyInput(this.userId);
 	}
 }
 

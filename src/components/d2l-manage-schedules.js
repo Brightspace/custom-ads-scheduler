@@ -235,6 +235,7 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 					<d2l-button
 						id="get-started"
 						primary
+						?disabled="${!this.dataHubAccess}"
 						class="get-started-button"
 						@click=${ this._handleNew }>
 							${ this.localize('actionStart') }
