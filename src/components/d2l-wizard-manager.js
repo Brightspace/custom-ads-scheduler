@@ -248,10 +248,6 @@ class WizardManager extends LocalizeMixin(LitElement) {
 		return this.schedule?.name || undefined;
 	}
 
-	get _userId() {
-		return this.schedule ? this.schedule.userId : undefined;
-	}
-
 	_updateScheduleCache(commit) {
 		const props = Object.keys(commit);
 		props.forEach(p => {
@@ -259,5 +255,8 @@ class WizardManager extends LocalizeMixin(LitElement) {
 		});
 	}
 
+	get _userId() {
+		return this.schedule ? this.schedule.userId : undefined;
+	}
 }
 customElements.define('d2l-wizard-manager', WizardManager);

@@ -9,24 +9,24 @@ export class AddEditScheduleDemoService {
 				Category: 'AdvancedDataSets',
 				Filters: [
 					{
-						"Name": "userId",
-						"Type": 4
+						'Name': 'userId',
+						'Type': 4
 					},
 					{
-						"Name": "parentOrgUnitId",
-						"Type": 2
+						'Name': 'parentOrgUnitId',
+						'Type': 2
 					},
 					{
-						"Name": "startDate",
-						"Type": 1
+						'Name': 'startDate',
+						'Type': 1
 					},
 					{
-						"Name": "endDate",
-						"Type": 1
+						'Name': 'endDate',
+						'Type': 1
 					},
 					{
-						"Name": "roles",
-						"Type": 3
+						'Name': 'roles',
+						'Type': 3
 					}
 				]
 			},
@@ -37,20 +37,20 @@ export class AddEditScheduleDemoService {
 				Category: 'AdvancedDataSets',
 				Filters: [
 					{
-						"Name": "parentOrgUnitId",
-						"Type": 2
+						'Name': 'parentOrgUnitId',
+						'Type': 2
 					},
 					{
-						"Name": "startDate",
-						"Type": 1
+						'Name': 'startDate',
+						'Type': 1
 					},
 					{
-						"Name": "endDate",
-						"Type": 1
+						'Name': 'endDate',
+						'Type': 1
 					},
 					{
-						"Name": "roles",
-						"Type": 3
+						'Name': 'roles',
+						'Type': 3
 					}
 				]
 			},
@@ -61,20 +61,20 @@ export class AddEditScheduleDemoService {
 				Category: 'AdvancedDataSets',
 				Filters: [
 					{
-						"Name": "parentOrgUnitId",
-						"Type": 2
+						'Name': 'parentOrgUnitId',
+						'Type': 2
 					},
 					{
-						"Name": "startDate",
-						"Type": 1
+						'Name': 'startDate',
+						'Type': 1
 					},
 					{
-						"Name": "endDate",
-						"Type": 1
+						'Name': 'endDate',
+						'Type': 1
 					},
 					{
-						"Name": "userId",
-						"Type": 4
+						'Name': 'userId',
+						'Type': 4
 					}
 				]
 			},
@@ -85,20 +85,20 @@ export class AddEditScheduleDemoService {
 				Category: 'AdvancedDataSets',
 				Filters: [
 					{
-						"Name": "userId",
-						"Type": 4
+						'Name': 'userId',
+						'Type': 4
 					},
 					{
-						"Name": "startDate",
-						"Type": 1
+						'Name': 'startDate',
+						'Type': 1
 					},
 					{
-						"Name": "endDate",
-						"Type": 1
+						'Name': 'endDate',
+						'Type': 1
 					},
 					{
-						"Name": "roles",
-						"Type": 3
+						'Name': 'roles',
+						'Type': 3
 					}
 				]
 			}
