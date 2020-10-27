@@ -353,14 +353,18 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 		this.invalidDataSet = this.dataSet === null;
 	}
 
+	_validateNumberOnlyInput(input) {
+		return input === null
+			|| input === undefined
+			|| input.trim() === ''
+			|| input.length > 1024
+			|| isNaN(Number(input))
+			|| Number(input) < 0
+			|| !Number.isInteger(Number(input));
+	}
+
 	_validateOrgUnitId() {
-		this.invalidOrgUnitId = this.orgUnitId === null
-			|| this.orgUnitId === undefined
-			|| this.orgUnitId.trim() === ''
-			|| this.orgUnitId.length > 1024
-			|| isNaN(Number(this.orgUnitId))
-			|| Number(this.orgUnitId) < 0
-			|| !Number.isInteger(Number(this.orgUnitId));
+		this.invalidOrgUnitId = this._validateNumberOnlyInput(this.orgUnitId);
 	}
 
 	_validateScheduleName() {
@@ -371,14 +375,7 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 	}
 
 	_validateUserId() {
-		this.invalidUserId =  this.userId === null
-			|| this.userId === undefined
-			|| this.userId.trim() === ''
-			|| this.userId.length > 1024
-			|| isNaN(Number(this.userId))
-			|| Number(this.userId) < 0
-			|| !Number.isInteger(Number(this.userId));
-
+		this.invalidUserId = this._validateNumberOnlyInput(this.userId);
 	}
 }
 
