@@ -84,11 +84,6 @@ class ScheduleLogs extends LocalizeMixin(LitElement) {
 			.description-text {
 				margin-bottom: 18px;
 			}
-
-			.manage-schedules-button {
-				margin-bottom: 12px;
-				align-self: center;
-			}
 		`;
 		return [
 			d2lTableStyles,

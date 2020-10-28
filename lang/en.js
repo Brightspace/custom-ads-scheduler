@@ -30,7 +30,6 @@ export default {
 	'logs.runDate': 'Run Date',
 	'logs.completionDate': 'Completion Date',
 	'logs.completionStatus': 'Completion Status',
-	'logs.manageSchedules': 'Back to Scheduler',
 	'step1.title': 'Select Your Advanced Data Set',
 	'step1.scheduleName.label': 'Schedule Name',
 	'step1.scheduleName.placeholder': 'Enter a name',
