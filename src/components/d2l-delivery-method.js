@@ -30,10 +30,6 @@ class DeliveryMethod extends LocalizeMixin(LitElement) {
 
 	static get styles() {
 		const selectDeliveryStyles = css`
-			.step {
-				margin: 20px 0px 60px 0;
-			}
-
 			.dm-input-wrapper {
 				width: 500px;
 				margin-bottom: 20px;
@@ -121,7 +117,6 @@ class DeliveryMethod extends LocalizeMixin(LitElement) {
 				<d2l-input-text
 					label="${ this.localize('step3.folder.label') }"
 					.value="${ this.folder }"
-					maxlength="2047"
 					@change="${ this._scheduleFolderChanged }">
 				</d2l-input-text>
 			</div>
@@ -139,7 +134,6 @@ class DeliveryMethod extends LocalizeMixin(LitElement) {
 
 	_scheduleDeliveryMethodChanged(event) {
 		this.deliveryMethod = event.target.value;
-		this._validateDeliveryMethod();
 		this._commitChanges();
 	}
 
