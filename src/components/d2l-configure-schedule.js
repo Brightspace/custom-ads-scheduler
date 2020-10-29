@@ -189,24 +189,19 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 		return html`
 			<div class="property-wrapper dates-wrapper">
 
-				<div class="date-wrapper">
-					<d2l-input-date
-						label="${ this.localize('step2.dates.start') } *"
-						value="${ this._formatDate(this.startDate) }"
-						max-value="${ this._formatDate(this.endDate) }"
-						@change="${ this._selectedStartDateChanged }"
-						.forceInvalid="${ this.invalidStartDate }">
-					</d2l-input-date>
+				<div>
+					<d2l-input-date-range
+						label="Schedule Start and End Dates"
+						label-hidden
+						inclusive-date-range
+						start-label="${ this.localize('step2.dates.start') } *"
+						end-label="${ this.localize('step2.dates.end') } *"
+						start-value="${ this._formatDate(this.startDate) }"
+						end-value="${ this._formatDate(this.endDate) }"
+						@change="${ this._selectedStartEndDateChanged }">
+					</d2l-input-date-range>
 				</div>
-				<div class="date-wrapper">
-					<d2l-input-date
-						label="${ this.localize('step2.dates.end') } *"
-						value="${ this._formatDate(this.endDate) }"
-						min-value="${ this._formatDate(this.startDate) }"
-						@change="${ this._selectedEndDateChanged }"
-						.forceInvalid="${ this.invalidEndDate }">
-					</d2l-input-date>
-				</div>
+
 			</div>
 		`;
 	}
@@ -307,22 +302,15 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 		this._commitChanges();
 	}
 
-	_selectedEndDateChanged(event) {
-		this.endDate = event.target.value;
-		this._commitChanges();
-		this._validateStartDate();
-		this._validateEndDate();
-		this.requestUpdate();
-	}
-
 	_selectedFrequencyChanged(event) {
 		this.frequency = Number(event.target.value);
 		this._validateFrequency();
 		this._commitChanges();
 	}
 
-	_selectedStartDateChanged(event) {
-		this.startDate = event.target.value;
+	_selectedStartEndDateChanged(event) {
+		this.startDate = event.target.startValue;
+		this.endDate = event.target.endValue;
 		this._commitChanges();
 		this._validateStartDate();
 		this._validateEndDate();
