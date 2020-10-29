@@ -273,6 +273,7 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 					label='${ this.localize('step1.scheduleName.label') } *'
 					placeholder='${ this.localize('step1.scheduleName.placeholder') }'
 					.value='${ this.scheduleName }'
+					maxlength='255'
 					@change='${ this._scheduleNameChanged }'>
 				</d2l-input-text>
 			</div>
@@ -362,8 +363,7 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 	_validateScheduleName() {
 		this.invalidScheduleName = this.scheduleName === ''
 			|| this.scheduleName === null
-			|| this.scheduleName === undefined
-			|| this.scheduleName.length > 256;
+			|| this.scheduleName === undefined;
 	}
 
 	_validateUserId() {
