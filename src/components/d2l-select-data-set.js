@@ -248,7 +248,7 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 					maxlength='10'
 					@change='${ this._orgUnitIdChanged }'>
 				</d2l-input-text>
-				${ this.invalidOrgUnitId ? html`<d2l-alert type="critical">${ this.localize('step1.orgUnitId.errorMessage') }</d2l-alert>` : null }
+				${ this.invalidOrgUnitId ? html`<d2l-tooltip state="error" align="start">${ this.localize('step1.orgUnitId.errorMessage') }</d2l-tooltip>` : null }
 			</div>
 		`;
 	}
@@ -311,7 +311,7 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 					maxlength='10'
 					@change='${ this._userIdChanged }'>
 				</d2l-input-text>
-				${ this.invalidUserId ? html`<d2l-alert type="critical">${ this.localize('step1.userId.errorMessage') }</d2l-alert>` : null }
+				${ this.invalidUserId ? html`<d2l-tooltip state="error" align="start">${ this.localize('step1.userId.errorMessage') }</d2l-tooltip>` : null }
 			</div>
 		`;
 	}
