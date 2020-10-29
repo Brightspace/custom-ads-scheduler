@@ -123,35 +123,22 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 	validate() {
 		this._validateScheduleName();
 		this._validateDataSet();
-
-		if (this.filters.includes('userId')) {
-			this._validateUserId();
-		}
-
-		if (this.filters.includes('parentOrgUnitId')) {
-			this._validateOrgUnitId();
-		}
+		this._validateUserId();
+		this._validateOrgUnitId();
 
 		this.errorText = this.localize('step1.validation.prefix');
 
-		const invalidProperties = [];
-		if (this.invalidScheduleName) invalidProperties.push(this.localize('step1.scheduleName.label'));
-		if (this.invalidDataSet) invalidProperties.push(this.localize('step1.ads.label'));
-		if (this.filters.includes('userId') && this.invalidUserId) invalidProperties.push(this.localize('step1.userId.label'));
-		if (this.filters.includes('parentOrgUnitId') && this.invalidOrgUnitId) invalidProperties.push(this.localize('step1.orgUnitId.label'));
+		if (this.invalidScheduleName) this.errorText += ` ${this.localize('step1.scheduleName.label')}`;
+		if (this.invalidDataSet) this.errorText += `${this.invalidScheduleName ?  ', ' : ''} ${ this.localize('step1.ads.label') }`;
 
-		for (let i = 0; i < invalidProperties.length; i++) {
-			this.errorText += `${i === 0 ? ' ' : ', '}${invalidProperties[i]}`;
+		if (this.invalidScheduleName || this.invalidDataSet) {
+			this.shadowRoot.getElementById('invalid-properties').setAttribute('open', '');
 		}
 
 		const invalid = this.invalidScheduleName
 			|| this.invalidDataSet
 			|| (this.filters.includes('userId') && this.invalidUserId)
 			|| (this.filters.includes('parentOrgUnitId') && this.invalidOrgUnitId);
-
-		if (invalid) {
-			this.shadowRoot.getElementById('invalid-properties').setAttribute('open', '');
-		}
 
 		return !invalid;
 	}
@@ -199,7 +186,6 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 			</div>
 		`;
 	}
-
 	_renderAdvancedDataSetOption(option) {
 		return html`
 			<option value=${ option.DataSetId } .selected='${ option.DataSetId === this.dataSet }' @click='${ this._getFilters }'>${ option.Name }</option>
@@ -259,8 +245,10 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 					label='${ this.localize('step1.orgUnitId.label') } *'
 					placeholder='${ this.localize('step1.orgUnitId.placeholder') }'
 					.value='${ this.orgUnitId }'
+					maxlength='10'
 					@change='${ this._orgUnitIdChanged }'>
 				</d2l-input-text>
+				${ this.invalidOrgUnitId ? html`<d2l-alert type="critical">${ this.localize('step1.orgUnitId.errorMessage') }</d2l-alert>` : null }
 			</div>
 		`;
 	}
@@ -320,8 +308,10 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 					label='${ this.localize('step1.userId.label') } *'
 					placeholder='${ this.localize('step1.userId.placeholder') }'
 					.value='${ this.userId }'
+					maxlength='10'
 					@change='${ this._userIdChanged }'>
 				</d2l-input-text>
+				${ this.invalidUserId ? html`<d2l-alert type="critical">${ this.localize('step1.userId.errorMessage') }</d2l-alert>` : null }
 			</div>
 		`;
 	}
@@ -364,7 +354,9 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 	}
 
 	_validateOrgUnitId() {
-		this.invalidOrgUnitId = this._validateNumberOnlyInput(this.orgUnitId);
+		if (this.filters.includes('parentOrgUnitId')) {
+			this.invalidOrgUnitId = this._validateNumberOnlyInput(this.orgUnitId);
+		}
 	}
 
 	_validateScheduleName() {
@@ -375,7 +367,9 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 	}
 
 	_validateUserId() {
-		this.invalidUserId = this._validateNumberOnlyInput(this.userId);
+		if (this.filters.includes('userId')) {
+			this.invalidUserId = this._validateNumberOnlyInput(this.userId);
+		}
 	}
 }
 
