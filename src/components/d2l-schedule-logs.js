@@ -82,12 +82,7 @@ class ScheduleLogs extends LocalizeMixin(LitElement) {
 			}
 
 			.description-text {
-				margin-bottom: 10px;
-			}
-
-			.manage-schedules-button {
-				margin-bottom: 12px;
-				align-self: center;
+				margin-bottom: 18px;
 			}
 		`;
 		return [
@@ -211,13 +206,6 @@ class ScheduleLogs extends LocalizeMixin(LitElement) {
 			<div class="description-text d2l-body-standard">
 				${ this.localize('logs.desc', { scheduleId:`${this.scheduleId}` }) }
 			</div>
-			<d2l-button
-				id="back-to-manage"
-				primary
-				class="manage-schedules-button"
-				@click=${ this._handleReturnToManageSchedules }>
-					${ this.localize('logs.manageSchedules') }
-			</d2l-button>
 		`;
 
 		return html`
