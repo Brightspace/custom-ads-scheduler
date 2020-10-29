@@ -202,14 +202,15 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 			<div class="property-wrapper dates-wrapper">
 
 				<div>
-					<!-- This component does its own specialized tooltips -->
+					<!-- This component handles its own validation tooltips -->
 					<d2l-input-date-range
 						id="dates"
 						label="Schedule Start and End Dates"
 						label-hidden
 						inclusive-date-range
-						start-label="${ this.localize('step2.dates.start') } *"
-						end-label="${ this.localize('step2.dates.end') } *"
+						required
+						start-label="${ this.localize('step2.dates.start') }"
+						end-label="${ this.localize('step2.dates.end') }"
 						start-value="${ this._formatDate(this.startDate) }"
 						end-value="${ this._formatDate(this.endDate) }"
 						@change="${ this._selectedStartEndDateChanged }">
@@ -236,10 +237,9 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 					<option value="6" .selected="${ this.day === 6 }">${ this.localize('step2.day.saturday') }</option>
 				</select>
 				${ this.invalidDay ? html`
-				<d2l-tooltip for="day" state="error" align="start" offset="10" class="one-line-tooltip">
-					Preferred Day must be selected
-				</d2l-tooltip>
-				` : ''}
+				<d2l-tooltip for="day" state="error" align="start" class="one-line-tooltip">
+					${ this.localize('step2.day.errorMessage') }
+				</d2l-tooltip>` : null }
 			</div>
 		`;
 	}
@@ -255,10 +255,9 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 					${ this._renderFrequencyOptions() }
 				</select>
 				${ this.invalidFrequency ? html`
-				<d2l-tooltip for="frequency" state="error" align="start" offset="10" class="one-line-tooltip">
-					Schedule Frequency must be selected
-				</d2l-tooltip>
-				` : ''}
+				<d2l-tooltip for="frequency" state="error" align="start" class="one-line-tooltip">
+					${ this.localize('step2.frequency.errorMessage') }
+				</d2l-tooltip>` : null }
 			</div>
 		`;
 	}
@@ -294,10 +293,9 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 					.forceInvalid="${ this.invalidTime }">
 				</d2l-input-time>
 				${ this.invalidTime ? html`
-				<d2l-tooltip for="time" state="error" align="start" offset="10" class="one-line-tooltip">
-					Preferred Time must be selected
-				</d2l-tooltip>
-				` : ''}
+				<d2l-tooltip for="time" state="error" align="start" class="one-line-tooltip">
+					${ this.localize('step2.time.errorMessage') }
+				</d2l-tooltip>` : null }
 			</div>
 		`;
 	}
@@ -323,10 +321,9 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 					<option value="2" .selected="${ this.type === 2 }">${ this.localize('step2.type.differential') }</option>
 				</select>
 				${ this.invalidType ? html`
-				<d2l-tooltip for="type" state="error" align="start" offset="10" class="one-line-tooltip">
-					Schedule Type must be selected
-				</d2l-tooltip>
-				` : ''}
+				<d2l-tooltip for="type" state="error" align="start" class="one-line-tooltip">
+					${ this.localize('step2.type.errorMessage') }
+				</d2l-tooltip>` : null }
 			</div>
 		`;
 	}
@@ -382,7 +379,7 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 	}
 
 	_validateDay() {
-		this.invalidDay = true || this._showDay && (
+		this.invalidDay = this._showDay && (
 			this.day === null ||
 			this.day === undefined
 		);

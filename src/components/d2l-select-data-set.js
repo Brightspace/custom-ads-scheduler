@@ -77,6 +77,10 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 			#advanced-data-set {
 				width: 100%;
 			}
+			
+			.one-line-tooltip {
+				white-space: nowrap;
+			}
 		`;
 		return [
 			heading1Styles,
@@ -131,6 +135,16 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 		if (this.invalidScheduleName) this.errorText += ` ${this.localize('step1.scheduleName.label')}`;
 		if (this.invalidDataSet) this.errorText += `${this.invalidScheduleName ?  ', ' : ''} ${ this.localize('step1.ads.label') }`;
 
+		const invalidProperties = [];
+		if (this.invalidScheduleName) invalidProperties.push(this.localize('step1.scheduleName.label'));
+		if (this.invalidDataSet) invalidProperties.push(this.localize('step1.ads.label'));
+		if (this.invalidUserId) invalidProperties.push(this.localize('step1.userId.label'));
+		if (this.invalidOrgUnitId) invalidProperties.push(this.localize('step1.orgUnitId.label'));
+
+		for (let i = 0; i < invalidProperties.length; i++) {
+			this.errorText += `${ i === 0 ? ' ' : ', ' }${ invalidProperties[i] }`;
+		}
+
 		if (this.invalidScheduleName || this.invalidDataSet) {
 			this.shadowRoot.getElementById('invalid-properties').setAttribute('open', '');
 		}
@@ -183,6 +197,10 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 					<option disabled selected value=''>${ this.localize('step1.ads.placeholder') }</option>
 					${ this.dataSetOptions.map(option => this._renderAdvancedDataSetOption(option)) }
 				</select>
+				${ this.invalidDataSet ? html`
+				<d2l-tooltip for="advanced-data-set" state="error" align="start" class="one-line-tooltip">
+					${ this.localize('step1.ads.errorMessage') }
+				</d2l-tooltip>` : null }
 			</div>
 		`;
 	}
@@ -269,6 +287,7 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 		return html`
 			<div class='sds-input-wrapper'>
 				<d2l-input-text
+					id="schedule-name"
 					aria-invalid='${ this.invalidScheduleName }'
 					label='${ this.localize('step1.scheduleName.label') } *'
 					placeholder='${ this.localize('step1.scheduleName.placeholder') }'
@@ -276,6 +295,10 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 					maxlength='255'
 					@change='${ this._scheduleNameChanged }'>
 				</d2l-input-text>
+				${ this.invalidScheduleName ? html`
+				<d2l-tooltip for="schedule-name" state="error" align="start" class="one-line-tooltip">
+					${ this.localize('step1.scheduleName.errorMessage') }
+				</d2l-tooltip>` : null }
 			</div>
 		`;
 	}
