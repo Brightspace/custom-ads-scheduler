@@ -40,6 +40,8 @@ export default {
 	'step1.userId.label': 'User ID',
 	'step1.userId.placeholder': 'Enter a User ID',
 	'step1.validation.prefix': 'Invalid fields:',
+	'step1.orgUnitId.errorMessage': 'Org Unit ID must be a numeric value',
+	'step1.userId.errorMessage': 'User ID must be a numeric value',
 	'step2.dates.label': 'Schedule Start and End Dates',
 	'step2.dates.start': 'Schedule Start Date',
 	'step2.dates.end': 'Schedule End Date',
