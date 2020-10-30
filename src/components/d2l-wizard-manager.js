@@ -67,8 +67,7 @@ class WizardManager extends LocalizeMixin(LitElement) {
 			preferredDay: 1,
 			preferredTime: '00:00:00',
 			deliveryTypeId: 1,
-			filePath: '',
-			filters: []
+			filePath: ''
 		};
 
 		this.isLoading = true;
@@ -251,7 +250,11 @@ class WizardManager extends LocalizeMixin(LitElement) {
 	_updateScheduleCache(commit) {
 		const props = Object.keys(commit);
 		props.forEach(p => {
-			this.cachedSchedule[p] = commit[p];
+			if (commit[p] === null) {
+				delete this.cachedSchedule[p];
+			} else {
+				this.cachedSchedule[p] = commit[p];
+			}
 		});
 	}
 
