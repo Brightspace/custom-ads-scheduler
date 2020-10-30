@@ -67,8 +67,7 @@ class WizardManager extends LocalizeMixin(LitElement) {
 			preferredDay: 1,
 			preferredTime: '00:00:00',
 			deliveryTypeId: 1,
-			filePath: '',
-			filters: []
+			filePath: ''
 		};
 
 		this.isLoading = true;
