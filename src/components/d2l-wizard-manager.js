@@ -251,7 +251,11 @@ class WizardManager extends LocalizeMixin(LitElement) {
 	_updateScheduleCache(commit) {
 		const props = Object.keys(commit);
 		props.forEach(p => {
-			this.cachedSchedule[p] = commit[p];
+			if (commit[p] === null) {
+				delete this.cachedSchedule[p];
+			} else {
+				this.cachedSchedule[p] = commit[p];
+			}
 		});
 	}
 
