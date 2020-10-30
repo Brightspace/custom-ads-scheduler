@@ -34,7 +34,6 @@ export default {
 	'step1.scheduleName.label': 'Schedule Name',
 	'step1.scheduleName.placeholder': 'Enter a name',
 	'step1.scheduleName.errorMessage': 'Schedule Name cannot be blank',
-	'step1.scheduleName.tooLong': 'Schedule Name cannot be blank',
 	'step1.ads.label': 'Advanced Data Set',
 	'step1.ads.placeholder': '-- Select an Advanced Data Set --',
 	'step1.ads.errorMessage': 'An Advanced Data Set must be selected',
