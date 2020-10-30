@@ -74,9 +74,11 @@ export default {
 	'step2.validation.prefix': 'Invalid fields:',
 	'step3.deliveryMethod.label': 'File Delivery Method',
 	'step3.deliveryMethod.placeholder': '-- Select a File Delivery Method --',
+	'step3.deliveryMethod.errorMessage': 'Delivery Method must be selected',
 	'step3.deliveryType.BrightspaceFilePath': 'Brightspace File Path',
 	'step3.deliveryType.BrightspaceSFTP': 'Brightspace SFTP',
 	'step3.deliveryType.CustomSFTP': 'Custom SFTP',
 	'step3.folder.label': 'Folder',
+	'step3.folder.errorMessage': 'Folder must be a valid directory name',
 	'step3.validation.prefix': 'Invalid fields:'
 };

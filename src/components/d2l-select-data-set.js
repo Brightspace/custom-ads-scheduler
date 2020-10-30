@@ -145,14 +145,14 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 			this.errorText += `${ i === 0 ? ' ' : ', ' }${ invalidProperties[i] }`;
 		}
 
-		if (this.invalidScheduleName || this.invalidDataSet) {
-			this.shadowRoot.getElementById('invalid-properties').setAttribute('open', '');
-		}
-
 		const invalid = this.invalidScheduleName
 			|| this.invalidDataSet
 			|| (this.filters.includes('userId') && this.invalidUserId)
 			|| (this.filters.includes('parentOrgUnitId') && this.invalidOrgUnitId);
+
+		if (invalid) {
+			this.shadowRoot.getElementById('invalid-properties').setAttribute('open', '');
+		}
 
 		return !invalid;
 	}
