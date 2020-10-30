@@ -110,6 +110,13 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 		this.errorText = '';
 	}
 
+	async connectedCallback() {
+		super.connectedCallback();
+
+		// Sanitize any incoming filters that conflict with the selected data set
+		this._commitChanges();
+	}
+
 	render() {
 		return html`
 			<h1 class='d2l-heading-2'>Select Your Advanced Data Set</h1>
