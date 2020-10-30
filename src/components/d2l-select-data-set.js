@@ -114,6 +114,7 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 		super.connectedCallback();
 
 		// Sanitize any incoming filters that conflict with the selected data set
+		this._updateFilters();
 		this._commitChanges();
 	}
 
@@ -163,15 +164,6 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 		this.dispatchEvent(event);
 	}
 
-	get _getFilters() {
-		const filtersArray = this.dataSetOptions
-			.filter(option => option.DataSetId === this.dataSet)
-			.map(data => { return data.Filters; })[0];
-
-		this.filters = filtersArray ? filtersArray.map(f => { return f.Name; }) : [];
-		return this.filters;
-	}
-
 	_orgUnitIdChanged(event) {
 		this.orgUnitId = event.target.value;
 		this._validateOrgUnitId();
@@ -195,7 +187,7 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 	}
 	_renderAdvancedDataSetOption(option) {
 		return html`
-			<option value=${ option.DataSetId } .selected='${ option.DataSetId === this.dataSet }' @click='${ this._getFilters }'>${ option.Name }</option>
+			<option value=${ option.DataSetId } .selected='${ option.DataSetId === this.dataSet }'>${ option.Name }</option>
 		`;
 	}
 
@@ -332,6 +324,7 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 
 	_selectedDataSetChanged(event) {
 		this.dataSet = event.target.value;
+		this._updateFilters();
 		this._validateDataSet();
 		this._commitChanges();
 	}
@@ -351,6 +344,14 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 
 	get _showUserId() {
 		return this.filters.includes('userId');
+	}
+
+	_updateFilters() {
+		const filtersArray = this.dataSetOptions
+			.filter(option => option.DataSetId === this.dataSet)
+			.map(data => { return data.Filters; })[0];
+
+		this.filters = filtersArray ? filtersArray.map(f => { return f.Name; }) : [];
 	}
 
 	_userIdChanged(event) {
