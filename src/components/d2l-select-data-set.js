@@ -110,6 +110,14 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 		this.errorText = '';
 	}
 
+	async connectedCallback() {
+		super.connectedCallback();
+
+		// Sanitize any incoming filters that conflict with the selected data set
+		this._updateFilters();
+		this._commitChanges();
+	}
+
 	render() {
 		return html`
 			<h1 class='d2l-heading-2'>Select Your Advanced Data Set</h1>
@@ -137,8 +145,8 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 
 		const invalid = this.invalidScheduleName
 			|| this.invalidDataSet
-			|| (this.filters.includes('userId') && this.invalidUserId)
-			|| (this.filters.includes('parentOrgUnitId') && this.invalidOrgUnitId);
+			|| (this._showUserId && this.invalidUserId)
+			|| (this._showOrgUnit && this.invalidOrgUnitId);
 
 		return !invalid;
 	}
@@ -148,21 +156,12 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 			detail: {
 				name: this.scheduleName,
 				dataSetId: this.dataSet,
-				userId: this.userId,
-				orgUnitId: this.orgUnitId,
-				roleIds: this.rolesSelected
+				userId: this._showUserId ? this.userId : null,
+				orgUnitId: this._showOrgUnit ? this.orgUnitId : null,
+				roleIds: this._showRoles ? this.rolesSelected : null
 			}
 		});
 		this.dispatchEvent(event);
-	}
-
-	get _getFilters() {
-		const filtersArray = this.dataSetOptions
-			.filter(option => option.DataSetId === this.dataSet)
-			.map(data => { return data.Filters; })[0];
-
-		this.filters = filtersArray ? filtersArray.map(f => { return f.Name; }) : [];
-		return this.filters;
 	}
 
 	_orgUnitIdChanged(event) {
@@ -188,12 +187,12 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 	}
 	_renderAdvancedDataSetOption(option) {
 		return html`
-			<option value=${ option.DataSetId } .selected='${ option.DataSetId === this.dataSet }' @click='${ this._getFilters }'>${ option.Name }</option>
+			<option value=${ option.DataSetId } .selected='${ option.DataSetId === this.dataSet }'>${ option.Name }</option>
 		`;
 	}
 
 	_renderFilters() {
-		if (this.filters.includes('userId') && this.filters.includes('parentOrgUnitId') && this.filters.includes('roles')) {
+		if (this._showUserId && this._showOrgUnit && this._showRoles) {
 			return html`
 				${ this._renderUserId() }
 				${ this._renderOrgUnitId() }
@@ -201,36 +200,36 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 			`;
 		}
 
-		if (this.filters.includes('userId') && this.filters.includes('parentOrgUnitId')) {
+		if (this._showUserId && this._showOrgUnit) {
 			return html`
 				${ this._renderUserId() }
 				${ this._renderOrgUnitId() }
 			`;
 		}
 
-		if (this.filters.includes('userId') && this.filters.includes('roles')) {
+		if (this._showUserId && this._showRoles) {
 			return html`
 				${ this._renderUserId() }
 				${ this._renderSelectRoles() }
 			`;
 		}
 
-		if (this.filters.includes('parentOrgUnitId') && this.filters.includes('roles')) {
+		if (this._showOrgUnit && this._showRoles) {
 			return html`
 				${ this._renderOrgUnitId() }
 				${ this._renderSelectRoles() }
 			`;
 		}
 
-		if (this.filters.includes('userId')) {
+		if (this._showUserId) {
 			return this._renderUserId();
 		}
 
-		if (this.filters.includes('parentOrgUnitId')) {
+		if (this._showOrgUnit) {
 			return this._renderOrgUnitId();
 		}
 
-		if (this.filters.includes('roles')) {
+		if (this._showRoles) {
 			return this._renderSelectRoles();
 		}
 
@@ -325,6 +324,7 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 
 	_selectedDataSetChanged(event) {
 		this.dataSet = event.target.value;
+		this._updateFilters();
 		this._validateDataSet();
 		this._commitChanges();
 	}
@@ -332,6 +332,26 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 	_selectedRolesChanged(event) {
 		this.rolesSelected = event.detail.rolesSelected.join();
 		this._commitChanges();
+	}
+
+	get _showOrgUnit() {
+		return this.filters.includes('parentOrgUnitId');
+	}
+
+	get _showRoles() {
+		return this.filters.includes('roles');
+	}
+
+	get _showUserId() {
+		return this.filters.includes('userId');
+	}
+
+	_updateFilters() {
+		const filtersArray = this.dataSetOptions
+			.filter(option => option.DataSetId === this.dataSet)
+			.map(data => { return data.Filters; })[0];
+
+		this.filters = filtersArray ? filtersArray.map(f => { return f.Name; }) : [];
 	}
 
 	_userIdChanged(event) {
@@ -355,7 +375,7 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 	}
 
 	_validateOrgUnitId() {
-		if (this.filters.includes('parentOrgUnitId')) {
+		if (this._showOrgUnit) {
 			this.invalidOrgUnitId = this._validateNumberOnlyInput(this.orgUnitId);
 		}
 	}
@@ -367,7 +387,7 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 	}
 
 	_validateUserId() {
-		if (this.filters.includes('userId')) {
+		if (this._showUserId) {
 			this.invalidUserId = this._validateNumberOnlyInput(this.userId);
 		}
 	}
