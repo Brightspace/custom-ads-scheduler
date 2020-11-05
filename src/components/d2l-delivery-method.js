@@ -151,8 +151,9 @@ class DeliveryMethod extends LocalizeMixin(LitElement) {
 					@change="${ this._scheduleFolderChanged }">
 				</d2l-input-text>
 				${ this.invalidFolder ? html`
-				<d2l-tooltip for="folder" state="error" align="start" class="one-line-tooltip">
-					${ this.localize('step3.folder.errorMessage') }
+				<d2l-tooltip for="folder" state="error" align="start">
+					${ this.localize('step3.folder.errorMessage') } <br/>
+					${ this.localize('step3.folder.invalidCharacters') }
 				</d2l-tooltip>` : null }
 			</div>
 		`;
@@ -184,10 +185,10 @@ class DeliveryMethod extends LocalizeMixin(LitElement) {
 	}
 
 	_validateFolder() {
-		const validDirectoryTest = /^[a-zA-Z].*/;
+		const invalidDirectoryCharacters = /[<>:"/\\|?*]/;
 		this.invalidFolder = this.folder === null
 			|| this.folder === undefined
-			|| !validDirectoryTest.test(this.folder);
+			|| invalidDirectoryCharacters.test(this.folder);
 	}
 }
 
