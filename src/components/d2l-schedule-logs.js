@@ -183,7 +183,7 @@ class ScheduleLogs extends LocalizeMixin(LitElement) {
 
 	async _queryNumLogs() {
 		const numLogs = await this.scheduleLogsService.getNumLogs(this.scheduleId);
-		this.maxPage = Math.ceil(numLogs / this.pageCount);
+		this.maxPage = Math.max(Math.ceil(numLogs / this.pageCount), 1);
 	}
 
 	_renderLog(log) {

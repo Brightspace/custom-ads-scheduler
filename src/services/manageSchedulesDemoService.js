@@ -46,6 +46,10 @@ export class ManageSchedulesDemoService {
 		},
 	];
 
+	static _logSchedules() {
+		window.console.log('Demo Schedules Service - Saved Schedules', this.schedules);
+	}
+
 	static async addSchedule(schedule) {
 		const deepCopy = JSON.parse(JSON.stringify(schedule));
 		deepCopy.scheduleId = `'a0e3aca7-3bf2-4400-b831-9fdce98469b${this.nextScheduleId}`;
@@ -69,7 +73,4 @@ export class ManageSchedulesDemoService {
 		return this.schedules.find(schedule => schedule.scheduleId === scheduleId);
 	}
 
-	static _logSchedules() {
-		window.console.log('Demo Schedules Service - Saved Schedules', this.schedules);
-	}
 }
