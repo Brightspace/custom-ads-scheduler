@@ -72,5 +72,4 @@ export class ManageSchedulesDemoService {
 	static _logSchedules() {
 		window.console.log('Demo Schedules Service - Saved Schedules', this.schedules);
 	}
-
 }
