@@ -2,6 +2,40 @@ import { Routes } from './routes';
 
 export class Scheduler {
 
+	// API Routes
+
+	static addSchedule(schedule) {
+		return this._post(Routes.NewSchedule(), JSON.stringify(schedule));
+	}
+
+	static editSchedule(scheduleId, schedule) {
+		return this._put(Routes.ExistingSchedule(scheduleId), JSON.stringify(schedule));
+	}
+
+	static getDataSets() {
+		return this._get(Routes.DataSets());
+	}
+
+	static getLogs(scheduleId, page, count) {
+		return this._get(Routes.ScheduleLogs(scheduleId, page, count));
+	}
+
+	static getNumLogs(scheduleId) {
+		return this._get(Routes.NumScheduleLogs(scheduleId));
+	}
+
+	static getRoleItems() {
+		return this._get(Routes.RoleItems());
+	}
+
+	static getSchedule(scheduleId) {
+		return this._get(Routes.ExistingSchedule(scheduleId));
+	}
+
+	static setEnable(scheduleId, isEnabled) {
+		return this._put(Routes.SetEnable(scheduleId, isEnabled));
+	}
+
 	// Helper Methods
 
 	static _get(url) {
@@ -38,40 +72,6 @@ export class Scheduler {
 		D2L.LP.Web.Authentication.Xsrf &&
 		D2L.LP.Web.Authentication.Xsrf.GetXsrfToken &&
 		D2L.LP.Web.Authentication.Xsrf.GetXsrfToken() || '';
-	}
-
-	// API Routes
-
-	static addSchedule(schedule) {
-		return this._post(Routes.NewSchedule(), JSON.stringify(schedule));
-	}
-
-	static editSchedule(scheduleId, schedule) {
-		return this._put(Routes.ExistingSchedule(scheduleId), JSON.stringify(schedule));
-	}
-
-	static getDataSets() {
-		return this._get(Routes.DataSets());
-	}
-
-	static getLogs(scheduleId, page, count) {
-		return this._get(Routes.ScheduleLogs(scheduleId, page, count));
-	}
-
-	static getNumLogs(scheduleId) {
-		return this._get(Routes.NumScheduleLogs(scheduleId));
-	}
-
-	static getRoleItems() {
-		return this._get(Routes.RoleItems());
-	}
-
-	static getSchedule(scheduleId) {
-		return this._get(Routes.ExistingSchedule(scheduleId));
-	}
-
-	static setEnable(scheduleId, isEnabled) {
-		return this._put(Routes.SetEnable(scheduleId, isEnabled));
 	}
 
 }
