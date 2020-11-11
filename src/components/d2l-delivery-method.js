@@ -22,6 +22,9 @@ class DeliveryMethod extends LocalizeMixin(LitElement) {
 			invalidDeliveryMethod: {
 				type: Boolean
 			},
+			invalidFolder: {
+				type: Boolean
+			},
 			errorText: {
 				type: String
 			}
@@ -62,6 +65,7 @@ class DeliveryMethod extends LocalizeMixin(LitElement) {
 		this.folder = null;
 
 		this.invalidDeliveryMethod = false;
+		this.invalidFolder = false;
 		this.errorText = '';
 	}
 
@@ -77,9 +81,21 @@ class DeliveryMethod extends LocalizeMixin(LitElement) {
 
 	validate() {
 		this._validateDeliveryMethod();
+		this._validateFolder();
 
-		if (this.invalidDeliveryMethod) {
-			this.errorText = `${ this.localize('step3.validation.prefix') } ${ this.localize('step3.deliveryMethod.label') }`;
+		this.errorText = this.localize('step2.validation.prefix');
+
+		const invalidProperties = [];
+		if (this.invalidStartDate) invalidProperties.push(this.localize('step3.deliveryMethod.errorMessage'));
+		if (this.invalidEndDate) invalidProperties.push(this.localize('step3.folder.errorMessage'));
+
+		for (let i = 0; i < invalidProperties.length; i++) {
+			this.errorText += `${ i === 0 ? ' ' : ', ' }${ invalidProperties[i] }`;
+		}
+
+		const invalid = this.invalidDeliveryMethod || this.invalidFolder;
+
+		if (invalid) {
 			this.shadowRoot.getElementById('invalid-properties').setAttribute('open', '');
 		}
 
@@ -111,6 +127,10 @@ class DeliveryMethod extends LocalizeMixin(LitElement) {
 		            <option value='2' .selected="${ this.deliveryMethod === '2' }">${ this.localize('step3.deliveryType.BrightspaceSFTP') }</option>
 					<option value='3' .selected="${ this.deliveryMethod === '3' }">${ this.localize('step3.deliveryType.CustomSFTP') }</option>
 				</select>
+				${ this.invalidDeliveryMethod ? html`
+				<d2l-tooltip for="delivery-method" state="error" align="start" class="one-line-tooltip">
+					${ this.localize('step3.deliveryMethod.errorMessage') }
+				</d2l-tooltip>` : null }
 			</div>
 		`;
 	}
@@ -119,11 +139,18 @@ class DeliveryMethod extends LocalizeMixin(LitElement) {
 		return html`
 			<div class="dm-input-wrapper">
 				<d2l-input-text
+					id="folder"
 					label="${ this.localize('step3.folder.label') }"
 					.value="${ this.folder }"
+					aria-invalid="${ this.invalidFolder }"
 					maxlength="2047"
 					@change="${ this._scheduleFolderChanged }">
 				</d2l-input-text>
+				${ this.invalidFolder ? html`
+				<d2l-tooltip for="folder" state="error" align="start">
+					${ this.localize('step3.folder.errorMessage') } <br/>
+					${ this.localize('step3.folder.invalidCharacters') }
+				</d2l-tooltip>` : null }
 			</div>
 		`;
 	}
@@ -145,11 +172,19 @@ class DeliveryMethod extends LocalizeMixin(LitElement) {
 
 	_scheduleFolderChanged(event) {
 		this.folder = event.target.value;
+		this._validateFolder();
 		this._commitChanges();
 	}
 
 	_validateDeliveryMethod() {
 		this.invalidDeliveryMethod = this.deliveryMethod === null;
+	}
+
+	_validateFolder() {
+		const invalidDirectoryCharacters = /[<>:"/\\|?*]/;
+		this.invalidFolder = this.folder === null
+			|| this.folder === undefined
+			|| invalidDirectoryCharacters.test(this.folder);
 	}
 }
 

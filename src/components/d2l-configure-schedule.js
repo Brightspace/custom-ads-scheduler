@@ -56,6 +56,9 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 			invalidDay: {
 				type: Boolean
 			},
+			startAfterEndDate: {
+				type: Boolean
+			},
 			errorText: {
 				type: String
 			}
@@ -85,6 +88,10 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 			.date-wrapper {
 				flex: 1;
 			}
+
+			.one-line-tooltip {
+				white-space: nowrap;
+			}
 		`;
 		return [
 			heading1Styles,
@@ -106,7 +113,7 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 		this.startDate = nowDate;
 		this.endDate = nowDate;
 		this.time = '00:00:00';
-		this.preferredDay = 0;
+		this.day = 0;
 
 		this.invalidStartDate = false;
 		this.invalidEndDate = false;
@@ -114,6 +121,9 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 		this.invalidFrequency = false;
 		this.invalidTime = false;
 		this.invalidDay = false;
+
+		this.startAfterEndDate = false;
+
 		this.errorText = '';
 	}
 
@@ -130,19 +140,13 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 	validate() {
 		this._validateStartDate();
 		this._validateEndDate();
+		this._validateStartBeforeEndDate();
 		this._validateType();
 		this._validateFrequency();
 		this._validateTime();
 		this._validateDay();
 
 		this.errorText = this.localize('step2.validation.prefix');
-
-		const invalid = this.invalidStartDate
-			|| this.invalidEndDate
-			|| this.invalidType
-			|| this.invalidFrequency
-			|| this.invalidTime
-			|| this.invalidDay;
 
 		const invalidProperties = [];
 		if (this.invalidStartDate) invalidProperties.push(this.localize('step2.dates.start'));
@@ -155,6 +159,14 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 		for (let i = 0; i < invalidProperties.length; i++) {
 			this.errorText += `${ i === 0 ? ' ' : ', ' }${ invalidProperties[i] }`;
 		}
+
+		const invalid = this.invalidStartDate
+			|| this.invalidEndDate
+			|| this.invalidType
+			|| this.invalidFrequency
+			|| this.invalidTime
+			|| this.invalidDay
+			|| this.startAfterEndDate;
 
 		if (invalid) {
 			this.shadowRoot.getElementById('invalid-properties').setAttribute('open', '');
@@ -190,12 +202,15 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 			<div class="property-wrapper dates-wrapper">
 
 				<div>
+					<!-- This component handles its own validation tooltips -->
 					<d2l-input-date-range
+						id="dates"
 						label="Schedule Start and End Dates"
 						label-hidden
 						inclusive-date-range
-						start-label="${ this.localize('step2.dates.start') } *"
-						end-label="${ this.localize('step2.dates.end') } *"
+						required
+						start-label="${ this.localize('step2.dates.start') }"
+						end-label="${ this.localize('step2.dates.end') }"
 						start-value="${ this._formatDate(this.startDate) }"
 						end-value="${ this._formatDate(this.endDate) }"
 						@change="${ this._selectedStartEndDateChanged }">
@@ -221,6 +236,10 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 					<option value="5" .selected="${ this.day === 5 }">${ this.localize('step2.day.friday') }</option>
 					<option value="6" .selected="${ this.day === 6 }">${ this.localize('step2.day.saturday') }</option>
 				</select>
+				${ this.invalidDay ? html`
+				<d2l-tooltip for="day" state="error" align="start" class="one-line-tooltip">
+					${ this.localize('step2.day.errorMessage') }
+				</d2l-tooltip>` : null }
 			</div>
 		`;
 	}
@@ -235,6 +254,10 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 					<option disabled selected value="">${ this.localize('step2.frequency.placeholder') }</option>
 					${ this._renderFrequencyOptions() }
 				</select>
+				${ this.invalidFrequency ? html`
+				<d2l-tooltip for="frequency" state="error" align="start" class="one-line-tooltip">
+					${ this.localize('step2.frequency.errorMessage') }
+				</d2l-tooltip>` : null }
 			</div>
 		`;
 	}
@@ -263,11 +286,16 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 		return html`
 			<div class="property-wrapper">
 				<d2l-input-time
+					id="time"
 					label="${ this.localize('step2.time.label') } *"
 					value=${ this.time }
 					@change="${ this._selectedTimeChanged }"
 					.forceInvalid="${ this.invalidTime }">
 				</d2l-input-time>
+				${ this.invalidTime ? html`
+				<d2l-tooltip for="time" state="error" align="start" class="one-line-tooltip">
+					${ this.localize('step2.time.errorMessage') }
+				</d2l-tooltip>` : null }
 			</div>
 		`;
 	}
@@ -292,6 +320,10 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 					<option value="1" .selected="${ this.type === 1 }">${ this.localize('step2.type.full') }</option>
 					<option value="2" .selected="${ this.type === 2 }">${ this.localize('step2.type.differential') }</option>
 				</select>
+				${ this.invalidType ? html`
+				<d2l-tooltip for="type" state="error" align="start" class="one-line-tooltip">
+					${ this.localize('step2.type.errorMessage') }
+				</d2l-tooltip>` : null }
 			</div>
 		`;
 	}
@@ -314,6 +346,7 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 		this._commitChanges();
 		this._validateStartDate();
 		this._validateEndDate();
+		this._validateStartBeforeEndDate();
 		this.requestUpdate();
 	}
 
@@ -355,19 +388,22 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 	_validateEndDate() {
 		this.invalidEndDate = this.endDate === ''
 		|| this.endDate === null
-		|| this.endDate === undefined
-		|| new Date(this.endDate) < new Date(this.startDate);
+		|| this.endDate === undefined;
 	}
 
 	_validateFrequency() {
 		this.invalidFrequency = this.frequency === null
 		|| this.frequency === undefined;
 	}
+
+	_validateStartBeforeEndDate() {
+		this.startAfterEndDate = new Date(this.endDate) < new Date(this.startDate);
+	}
+
 	_validateStartDate() {
 		this.invalidStartDate = this.startDate === ''
 		|| this.startDate === null
-		|| this.startDate === undefined
-		|| new Date(this.endDate) < new Date(this.startDate);
+		|| this.startDate === undefined;
 	}
 
 	_validateTime() {
