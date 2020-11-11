@@ -45,10 +45,6 @@ class DeliveryMethod extends LocalizeMixin(LitElement) {
 			#delivery-method {
 				width: 100%;
 			}
-
-			.one-line-tooltip {
-				white-space: nowrap;
-			}
 		`;
 		return [
 			heading1Styles,
