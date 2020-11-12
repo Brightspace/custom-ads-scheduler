@@ -4,43 +4,52 @@ export class Scheduler {
 
 	// API Routes
 
-	static addSchedule(schedule) {
-		return this._post(Routes.NewSchedule(), JSON.stringify(schedule));
+	static async addSchedule(schedule) {
+		return await this._post(Routes.NewSchedule(), JSON.stringify(schedule));
 	}
 
-	static editSchedule(scheduleId, schedule) {
-		return this._put(Routes.ExistingSchedule(scheduleId), JSON.stringify(schedule));
+	static async editSchedule(scheduleId, schedule) {
+		return await this._put(Routes.ExistingSchedule(scheduleId), JSON.stringify(schedule));
 	}
 
-	static getDataSets() {
-		return this._get(Routes.DataSets());
+	static async getDataSets() {
+		return await this._get(Routes.DataSets());
 	}
 
-	static getLogs(scheduleId, page, count) {
-		return this._get(Routes.ScheduleLogs(scheduleId, page, count));
+	static async getLogs(scheduleId, page, count) {
+		return await this._get(Routes.ScheduleLogs(scheduleId, page, count));
 	}
 
-	static getNumLogs(scheduleId) {
-		return this._get(Routes.NumScheduleLogs(scheduleId));
+	static async getNumLogs(scheduleId) {
+		return await this._get(Routes.NumScheduleLogs(scheduleId));
 	}
 
-	static getRoleItems() {
-		return this._get(Routes.RoleItems());
+	static async getRoleItems() {
+		return await this._get(Routes.RoleItems());
 	}
 
-	static getSchedule(scheduleId) {
-		return this._get(Routes.ExistingSchedule(scheduleId));
+	static async getSchedule(scheduleId) {
+		return await this._get(Routes.ExistingSchedule(scheduleId));
 	}
 
-	static setEnable(scheduleId, isEnabled) {
-		return this._put(Routes.SetEnable(scheduleId, isEnabled));
+	static async setEnable(scheduleId, isEnabled) {
+		return await this._put(Routes.SetEnable(scheduleId, isEnabled));
 	}
 
 	// Helper Methods
 
+	static async _fetch(url, options) {
+		return await fetch(url, options)
+			.then(response => {
+				if (!response.ok) {
+					throw Error(response.statusText);
+				}
+			});
+	}
+
 	static _get(url) {
 		const options = this._options('GET');
-		return fetch(url, options).then(r => r.json());
+		return this._fetch(url, options).then(r => r.json());
 	}
 
 	static _options(method) {
@@ -58,13 +67,13 @@ export class Scheduler {
 	static _post(url, body) {
 		const options = this._options('POST');
 		options.body = body;
-		return fetch(url, options);
+		return this._fetch(url, options);
 	}
 
 	static _put(url, body) {
 		const options = this._options('PUT');
 		options.body = body;
-		return fetch(url, options);
+		return this._fetch(url, options);
 	}
 
 	static get _xsrfToken() {

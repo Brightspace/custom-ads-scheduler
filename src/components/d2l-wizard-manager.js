@@ -161,7 +161,12 @@ class WizardManager extends LocalizeMixin(LitElement) {
 
 	async _handleStepThreeDone() {
 		if (this.deliveryMethod.validate()) {
-			await this._saveSchedule();
+			try {
+				await this._saveSchedule();
+			} catch (e) {
+				window.console.error(e);
+				return;
+			}
 			window.location.href = '/d2l/custom/ads/scheduler/manage';
 		}
 	}
