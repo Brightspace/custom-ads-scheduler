@@ -79,7 +79,7 @@ export default {
 	'step3.deliveryType.BrightspaceSFTP': 'Brightspace SFTP',
 	'step3.deliveryType.CustomSFTP': 'Custom SFTP',
 	'step3.folder.label': 'Folder',
-	'step3.folder.errorMessage': 'Folder must be a valid directory name',
-	'step3.folder.invalidCharacters': 'Invalid characters include < > : " / \\ | ? *',
+	'step3.folder.errorMessage': 'Folder must be a valid directory',
+	'step3.folder.invalidCharacters': 'Invalid characters include < > : " \\ | ? *',
 	'step3.validation.prefix': 'Invalid fields:'
 };
