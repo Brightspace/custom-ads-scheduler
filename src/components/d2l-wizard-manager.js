@@ -165,6 +165,7 @@ class WizardManager extends LocalizeMixin(LitElement) {
 				await this._saveSchedule();
 			} catch (e) {
 				window.console.error(e);
+				this.shadowRoot.getElementById('failed-to-save').setAttribute('open', '');
 				return;
 			}
 			window.location.href = '/d2l/custom/ads/scheduler/manage';
@@ -220,6 +221,9 @@ class WizardManager extends LocalizeMixin(LitElement) {
 					</d2l-delivery-method>
 				</d2l-labs-step>
 			</d2l-labs-wizard>
+			<d2l-alert-toast id="failed-to-save" type="critical">
+				${ this.localize('add.FailedToSave') }
+			</d2l-alert-toast>
 		`;
 	}
 
