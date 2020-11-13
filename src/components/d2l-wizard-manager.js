@@ -164,7 +164,6 @@ class WizardManager extends LocalizeMixin(LitElement) {
 			try {
 				await this._saveSchedule();
 			} catch (e) {
-				window.console.error(e);
 				this.shadowRoot.getElementById('failed-to-save').setAttribute('open', '');
 				return;
 			}
