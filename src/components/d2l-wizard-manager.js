@@ -161,7 +161,12 @@ class WizardManager extends LocalizeMixin(LitElement) {
 
 	async _handleStepThreeDone() {
 		if (this.deliveryMethod.validate()) {
-			await this._saveSchedule();
+			try {
+				await this._saveSchedule();
+			} catch (e) {
+				this.shadowRoot.getElementById('failed-to-save').setAttribute('open', '');
+				return;
+			}
 			window.location.href = '/d2l/custom/ads/scheduler/manage';
 		}
 	}
@@ -215,6 +220,9 @@ class WizardManager extends LocalizeMixin(LitElement) {
 					</d2l-delivery-method>
 				</d2l-labs-step>
 			</d2l-labs-wizard>
+			<d2l-alert-toast id="failed-to-save" type="critical">
+				${ this.localize('add.FailedToSave') }
+			</d2l-alert-toast>
 		`;
 	}
 
