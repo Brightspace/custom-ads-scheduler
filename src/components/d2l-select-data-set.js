@@ -140,14 +140,11 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 
 		this.errorText = this.localize('step1.validation.prefix');
 
-		if (this.invalidScheduleName) this.errorText += ` ${this.localize('step1.scheduleName.label')}`;
-		if (this.invalidDataSet) this.errorText += `${this.invalidScheduleName ?  ', ' : ''} ${ this.localize('step1.ads.label') }`;
-
 		const invalidProperties = [];
 		if (this.invalidScheduleName) invalidProperties.push(this.localize('step1.scheduleName.label'));
 		if (this.invalidDataSet) invalidProperties.push(this.localize('step1.ads.label'));
-		if (this.invalidUserId) invalidProperties.push(this.localize('step1.userId.label'));
-		if (this.invalidOrgUnitId) invalidProperties.push(this.localize('step1.orgUnitId.label'));
+		if (this._showUserId && this.invalidUserId) invalidProperties.push(this.localize('step1.userId.label'));
+		if (this._showOrgUnit && this.invalidOrgUnitId) invalidProperties.push(this.localize('step1.orgUnitId.label'));
 
 		for (let i = 0; i < invalidProperties.length; i++) {
 			this.errorText += `${ i === 0 ? ' ' : ', ' }${ invalidProperties[i] }`;
