@@ -2,6 +2,7 @@ import '@brightspace-ui/core/components/inputs/input-date-range.js';
 import '@brightspace-ui/core/components/inputs/input-text.js';
 import '@brightspace-ui/core/components/inputs/input-time.js';
 import { css, html, LitElement } from 'lit-element/lit-element';
+import { frequenciesEnum, participationDataSetId, typesEnum } from '../constants';
 import { formatDate } from '@brightspace-ui/intl/lib/dateTime';
 import { getLocalizeResources } from '../localization.js';
 import { heading1Styles } from '@brightspace-ui/core/components/typography/styles.js';
@@ -37,6 +38,10 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 			day: {
 				type: Number,
 				attribute: 'day'
+			},
+			dataSetId: {
+				type: String,
+				attribute: 'data-set-id'
 			},
 			invalidStartDate: {
 				type: Boolean
@@ -114,6 +119,7 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 		this.endDate = nowDate;
 		this.time = '00:00:00';
 		this.day = 0;
+		this.dataSetId = '';
 
 		this.invalidStartDate = false;
 		this.invalidEndDate = false;
@@ -194,7 +200,11 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 	}
 
 	get _isDifferential() {
-		return this.type === 2;
+		return this.type === typesEnum.diff;
+	}
+
+	get _isParticipationDataSet() {
+		return this.dataSetId === participationDataSetId;
 	}
 
 	_renderDates() {
@@ -248,7 +258,7 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 		return html`
 			<div class="property-wrapper">
 				<label for="frequency" class="d2l-input-label">${ this.localize('step2.frequency.label') } *</label>
-				<select id="frequency" class="d2l-input-select" 
+				<select id="frequency" class="d2l-input-select"
 					@change="${ this._selectedFrequencyChanged }"
 					aria-invalid="${ this.invalidFrequency }">
 					<option disabled selected value="">${ this.localize('step2.frequency.placeholder') }</option>
@@ -263,11 +273,14 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 	}
 
 	_renderFrequencyOptions() {
+		if (!this._showFifteenMinFrequency && this.frequency === frequenciesEnum.mins15) {
+			this.frequency = frequenciesEnum.hourly;
+		}
 		return html`
-			${ this._showFifteenMinFrequency ? html`<option value="4" .selected="${ this.frequency === 4 }">${ this.localize('step2.frequency.15mins') }</option>` : ''}
-			${ this._showHourlyFrequency ? html`<option value="3" .selected="${ this.frequency === 3 }">${ this.localize('step2.frequency.hourly') }</option>` : ''}
-			<option value="2" .selected="${ this.frequency === 2 }">${ this.localize('step2.frequency.daily') }</option>
-			<option value="1" .selected="${ this.frequency === 1 }">${ this.localize('step2.frequency.weekly') }</option>
+			${ this._showFifteenMinFrequency ? html`<option value="${frequenciesEnum.mins15}" .selected="${ this.frequency === frequenciesEnum.mins15 }">${ this.localize('step2.frequency.15mins') }</option>` : ''}
+			${ this._showHourlyFrequency ? html`<option value="${frequenciesEnum.hourly}" .selected="${ this.frequency === frequenciesEnum.hourly }">${ this.localize('step2.frequency.hourly') }</option>` : ''}
+			<option value="${frequenciesEnum.daily}" .selected="${ this.frequency === frequenciesEnum.daily }">${ this.localize('step2.frequency.daily') }</option>
+			<option value="${frequenciesEnum.weekly}" .selected="${ this.frequency === frequenciesEnum.weekly }">${ this.localize('step2.frequency.weekly') }</option>
 		`;
 	}
 
@@ -313,12 +326,12 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 		return html`
 			<div class="property-wrapper">
 				<label for="type" class="d2l-input-label">${ this.localize('step2.type.label') } *</label>
-				<select id="type" class="d2l-input-select" 
+				<select id="type" class="d2l-input-select"
 					@change="${ this._selectedTypeChanged }"
 					aria-invalid="${ this.invalidType }">
 					<option disabled selected value="">${ this.localize('step2.type.placeholder') }</option>
-					<option value="1" .selected="${ this.type === 1 }">${ this.localize('step2.type.full') }</option>
-					<option value="2" .selected="${ this.type === 2 }">${ this.localize('step2.type.differential') }</option>
+					<option value="${typesEnum.full}" .selected="${ this.type === typesEnum.full }">${ this.localize('step2.type.full') }</option>
+					<option value="${typesEnum.diff}" .selected="${ this.type === typesEnum.diff }">${ this.localize('step2.type.differential') }</option>
 				</select>
 				${ this.invalidType ? html`
 				<d2l-tooltip for="type" state="error" align="start" class="one-line-tooltip">
@@ -363,11 +376,11 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 	}
 
 	get _showDay() {
-		return this.frequency === 1;
+		return this.frequency === frequenciesEnum.weekly;
 	}
 
 	get _showFifteenMinFrequency() {
-		return this._isDifferential || this.showFifteenMinFrequency;
+		return this._isDifferential && this._isParticipationDataSet;
 	}
 
 	get _showHourlyFrequency() {
@@ -375,7 +388,7 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 	}
 
 	get _showTime() {
-		return this.frequency === 2;
+		return this.frequency === frequenciesEnum.daily;
 	}
 
 	_validateDay() {
@@ -393,7 +406,8 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 
 	_validateFrequency() {
 		this.invalidFrequency = this.frequency === null
-		|| this.frequency === undefined;
+		|| this.frequency === undefined
+		|| (!this._showFifteenMinFrequency && this.frequency === frequenciesEnum.mins15);
 	}
 
 	_validateStartBeforeEndDate() {

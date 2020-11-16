@@ -35,3 +35,5 @@ export const statusesEnum = {
 	completed: 3,
 	failed: 4
 };
+
+export const participationDataSetId = '270ce7b6-7da1-423b-9592-31bb80bf4e1a';

@@ -24,6 +24,9 @@ class WizardManager extends LocalizeMixin(LitElement) {
 			},
 			isLoading: {
 				type: Boolean
+			},
+			selectedSchedule: {
+				type: String
 			}
 		};
 	}
@@ -69,6 +72,8 @@ class WizardManager extends LocalizeMixin(LitElement) {
 			deliveryTypeId: 1,
 			filePath: ''
 		};
+
+		this.selectedSchedule = '';
 
 		this.isLoading = true;
 	}
@@ -185,7 +190,7 @@ class WizardManager extends LocalizeMixin(LitElement) {
 		return html`
 			<d2l-labs-wizard id="wizard" class="wizard" @stepper-restart="${ this._handleRestart }">
 				<d2l-labs-step title="${ this.localize('add.SelectDataSet')}" hide-restart-button="true" @stepper-next="${ this._handleStepOneNext }">
-					<d2l-select-data-set 
+					<d2l-select-data-set
 						id="select-data-set"
 						@commit-changes="${ this._handleSelectDataSetCommitChanges }"
 						schedule-name="${ ifDefined(this._scheduleName) }"
@@ -207,7 +212,8 @@ class WizardManager extends LocalizeMixin(LitElement) {
 						type=${ ifDefined(this.schedule?.typeId) }
 						frequency=${ ifDefined(this.schedule?.frequencyId) }
 						time=${ ifDefined(this.schedule?.preferredTime) }
-						day=${ ifDefined(this.schedule?.preferredDay) }>
+						day=${ ifDefined(this.schedule?.preferredDay) }
+						data-set-id="${ ifDefined(this.selectedSchedule) }">
 					</d2l-configure-schedule>
 				</d2l-labs-step>
 
@@ -264,6 +270,7 @@ class WizardManager extends LocalizeMixin(LitElement) {
 				this.cachedSchedule[p] = commit[p];
 			}
 		});
+		this.selectedSchedule = this.cachedSchedule.dataSetId;
 	}
 
 	get _userId() {
