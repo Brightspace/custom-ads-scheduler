@@ -80,7 +80,7 @@ export class ScheduleLogsDemoService {
 	];
 
 	// NOTE: Assumes 1-based page index
-	static async getLogs(scheduleId, page, pageSize) {
+	static async getLogs(scheduleId, pageNumber, pageSize) {
 		if (window.shouldWait) {
 			await sleep(2000);
 		}
@@ -93,7 +93,7 @@ export class ScheduleLogsDemoService {
 
 			// Determine start index - Protect against querying a larger page index than allowed
 			const maxStartIndex = Math.floor(this.allLogs.length / pageSize) * pageSize;
-			const startIndex = Math.min((page - 1) * pageSize, maxStartIndex);
+			const startIndex = Math.min((pageNumber - 1) * pageSize, maxStartIndex);
 
 			// Determine end index & return sorted query result
 			const endIndex = Math.min(startIndex + pageSize, this.allLogs.length);

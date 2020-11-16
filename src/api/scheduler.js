@@ -16,8 +16,8 @@ export class Scheduler {
 		return await this._get(Routes.DataSets());
 	}
 
-	static async getLogs(scheduleId, page, count) {
-		return await this._get(Routes.ScheduleLogs(scheduleId, page, count));
+	static async getLogs(scheduleId, pageNumber, pageSize) {
+		return await this._get(Routes.ScheduleLogs(scheduleId, pageNumber, pageSize));
 	}
 
 	static async getNumLogs(scheduleId) {
