@@ -270,7 +270,7 @@ class WizardManager extends LocalizeMixin(LitElement) {
 				this.cachedSchedule[p] = commit[p];
 			}
 		});
-		this.selectedSchedule = this.cachedSchedule.dataSetId
+		this.selectedSchedule = this.cachedSchedule.dataSetId;
 	}
 
 	get _userId() {

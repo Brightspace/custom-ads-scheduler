@@ -2,6 +2,7 @@ import '@brightspace-ui/core/components/inputs/input-date-range.js';
 import '@brightspace-ui/core/components/inputs/input-text.js';
 import '@brightspace-ui/core/components/inputs/input-time.js';
 import { css, html, LitElement } from 'lit-element/lit-element';
+import { frequenciesEnum, participationDataSetId, typesEnum } from '../constants';
 import { formatDate } from '@brightspace-ui/intl/lib/dateTime';
 import { getLocalizeResources } from '../localization.js';
 import { heading1Styles } from '@brightspace-ui/core/components/typography/styles.js';
@@ -9,7 +10,6 @@ import { inputLabelStyles } from '@brightspace-ui/core/components/inputs/input-l
 import { inputStyles } from '@brightspace-ui/core/components/inputs/input-styles.js';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 import { selectStyles } from '@brightspace-ui/core/components/inputs/input-select-styles';
-import { participationDataSetId, frequenciesEnum, typesEnum } from '../constants';
 
 class ConfigureSchedule extends LocalizeMixin(LitElement) {
 
@@ -203,6 +203,10 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 		return this.type === typesEnum.diff;
 	}
 
+	get _isParticipationDataSet() {
+		return this.dataSetId === participationDataSetId;
+	}
+
 	_renderDates() {
 		return html`
 			<div class="property-wrapper dates-wrapper">
@@ -377,10 +381,6 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 
 	get _showFifteenMinFrequency() {
 		return this._isDifferential && this._isParticipationDataSet;
-	}
-
-	get _isParticipationDataSet() {
-		return this.dataSetId === participationDataSetId;
 	}
 
 	get _showHourlyFrequency() {
