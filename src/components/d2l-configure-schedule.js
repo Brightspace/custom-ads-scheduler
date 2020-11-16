@@ -166,8 +166,6 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 			this.errorText += `${ i === 0 ? ' ' : ', ' }${ invalidProperties[i] }`;
 		}
 
-		// TODO: check 15 min option
-
 		const invalid = this.invalidStartDate
 			|| this.invalidEndDate
 			|| this.invalidType
