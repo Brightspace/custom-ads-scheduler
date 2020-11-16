@@ -385,7 +385,7 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 	}
 
 	_validateNumberOnlyInput(input) {
-		var regex = /^\d+$/;
+		const regex = /^\d+$/;
 
 		return input === null
 			|| input === undefined
