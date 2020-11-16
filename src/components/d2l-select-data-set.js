@@ -385,13 +385,13 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 	}
 
 	_validateNumberOnlyInput(input) {
+		var regex = /^\d+$/;
+
 		return input === null
 			|| input === undefined
 			|| input.trim() === ''
 			|| input.length > 1024
-			|| isNaN(Number(input))
-			|| Number(input) < 0
-			|| !Number.isInteger(Number(input));
+			|| !regex.test(input);
 	}
 
 	_validateOrgUnitId() {
