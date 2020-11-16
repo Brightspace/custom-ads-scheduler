@@ -213,7 +213,7 @@ class WizardManager extends LocalizeMixin(LitElement) {
 						frequency=${ ifDefined(this.schedule?.frequencyId) }
 						time=${ ifDefined(this.schedule?.preferredTime) }
 						day=${ ifDefined(this.schedule?.preferredDay) }
-						data-set-id="${ this.selectedSchedule }">
+						data-set-id="${ ifDefined(this.selectedSchedule) }">
 					</d2l-configure-schedule>
 				</d2l-labs-step>
 
