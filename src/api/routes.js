@@ -7,6 +7,6 @@ export class Routes {
 	static NewSchedule() { return `/d2l/api/customization/${API_VERSION}/ads/scheduler/schedules`; }
 	static NumScheduleLogs(scheduleId) { return `/d2l/api/customization/${API_VERSION}/ads/scheduler/schedules/${scheduleId}/logs/count`; }
 	static RoleItems() { return `/d2l/api/lp/${DS_API_VERSION}/roles/`; }
-	static ScheduleLogs(scheduleId, page, count) { return `/d2l/api/customization/${API_VERSION}/ads/scheduler/schedules/${scheduleId}/logs?page=${page}&count=${count}`; }
+	static ScheduleLogs(scheduleId, pageNumber, pageSize) { return `/d2l/api/customization/${API_VERSION}/ads/scheduler/schedules/${scheduleId}/logs?pageNumber=${pageNumber}&pageSize=${pageSize}`; }
 	static SetEnable(scheduleId, isEnabled) { return `/d2l/api/customization/${API_VERSION}/ads/scheduler/schedules/${scheduleId}/enable/${isEnabled}`; }
 }

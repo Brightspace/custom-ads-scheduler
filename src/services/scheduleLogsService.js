@@ -2,8 +2,8 @@ import { Scheduler } from '../api/scheduler';
 
 export class ScheduleLogsService {
 
-	static async getLogs(scheduleId, page, count) {
-		const logs = await Scheduler.getLogs(scheduleId, page, count);
+	static async getLogs(scheduleId, pageNumber, pageSize) {
+		const logs = await Scheduler.getLogs(scheduleId, pageNumber, pageSize);
 		return logs;
 	}
 

@@ -22,17 +22,14 @@ class ScheduleLogs extends LocalizeMixin(LitElement) {
 				type: String,
 				attribute: 'schedule-name'
 			},
-			page: {
+			pageNumber: {
 				type: Number
 			},
 			maxPage: {
 				type: Number
 			},
-			pageCount: {
+			pageSize: {
 				type: Number
-			},
-			pageCountOptions: {
-				type: Array
 			},
 			logs: {
 				type: Array
@@ -103,9 +100,9 @@ class ScheduleLogs extends LocalizeMixin(LitElement) {
 		this.scheduleId = 0;
 		this.scheduleName = '';
 		this.logs = Array();
-		this.page = 1;
+		this.pageNumber = 1;
 		this.maxPage = 1;
-		this.pageCount = 10;
+		this.pageSize = 10;
 
 		this.scheduleLogsService = ScheduleLogsServiceFactory.getScheduleLogsService();
 
@@ -141,18 +138,18 @@ class ScheduleLogs extends LocalizeMixin(LitElement) {
 	async _handleItemsPerPageChange(event) {
 
 		// Update the page count and total # of logs
-		this.pageCount = event.detail.itemCount;
+		this.pageSize = event.detail.itemCount;
 		await this._queryNumLogs();
 
 		// If the number of total logs and the new page size no longer support the current page, adjust it
-		this.page = Math.min(this.page, this.maxPage);
+		this.pageNumber = Math.min(this.page, this.maxPage);
 
 		// Re-query the page of logs with new pagination values
 		await this._queryLogs();
 	}
 
 	async _handlePageChange(event) {
-		this.page = event.detail.page;
+		this.pageNumber = event.detail.page;
 		await this._queryLogs();
 	}
 
@@ -164,7 +161,7 @@ class ScheduleLogs extends LocalizeMixin(LitElement) {
 		if (logsArray) {
 
 			// Enforce our page size on the client side as well, just in case
-			this.logs = logsArray.slice(0, this.pageCount);
+			this.logs = logsArray.slice(0, this.pageSize);
 		}
 	}
 
@@ -175,7 +172,7 @@ class ScheduleLogs extends LocalizeMixin(LitElement) {
 	async _queryLogs() {
 		this.isQuerying = true;
 
-		const logs = await this.scheduleLogsService.getLogs(this.scheduleId, this.page, this.pageCount);
+		const logs = await this.scheduleLogsService.getLogs(this.scheduleId, this.pageNumber, this.pageSize);
 		this._mapLogsArray(logs);
 
 		this.isQuerying = false;
@@ -183,7 +180,7 @@ class ScheduleLogs extends LocalizeMixin(LitElement) {
 
 	async _queryNumLogs() {
 		const numLogs = await this.scheduleLogsService.getNumLogs(this.scheduleId);
-		this.maxPage = Math.max(Math.ceil(numLogs / this.pageCount), 1);
+		this.maxPage = Math.max(Math.ceil(numLogs / this.pageSize), 1);
 	}
 
 	_renderLog(log) {
@@ -221,11 +218,11 @@ class ScheduleLogs extends LocalizeMixin(LitElement) {
 		return html`
 			<d2l-labs-pagination
 				id="log-pagination"
-				page-number="${ this.page }"
+				page-number="${ this.pageNumber }"
 				max-page-number="${ this.maxPage }"
 				show-item-count-select
 				item-count-options="[10, 25, 50]"
-				selected-count-option="${ this.pageCount }"
+				selected-count-option="${ this.pageSize }"
 				@pagination-page-change="${ this._handlePageChange }"
 				@pagination-item-counter-change="${ this._handleItemsPerPageChange }"></d2l-labs-pagination>
 		`;
