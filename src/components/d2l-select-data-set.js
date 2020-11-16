@@ -124,7 +124,7 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 
 	render() {
 		return html`
-			<h1 class='d2l-heading-2'>Select Your Advanced Data Set</h1>
+			<h1 class='d2l-heading-2'>${ this.localize('step1.title') }</h1>
 			${ this._renderStep() }
 			<d2l-alert-toast id='invalid-properties' type='critical'>
 				${ this.errorText }
@@ -186,6 +186,7 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 			<div class='sds-input-wrapper'>
 				<label for='advanced-data-set' class='d2l-input-label'>${ this.localize('step1.ads.label') } *</label>
 				<select
+					title='${ this.localize('step1.ads.tooltip') }'
 					id='advanced-data-set'
 					class='d2l-input-select'
 					@change='${ this._selectedDataSetChanged }'
@@ -255,6 +256,7 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 		return html`
 			<div class='sds-input-wrapper'>
 				<d2l-input-text
+					title='${ this.localize('step1.orgUnitId.placeholder') }'
 					aria-invalid='${ this.invalidOrgUnitId }'
 					label='${ this.localize('step1.orgUnitId.label') } *'
 					placeholder='${ this.localize('step1.orgUnitId.placeholder') }'
@@ -283,6 +285,7 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 		return html`
 			<div class='sds-input-wrapper'>
 				<d2l-input-text
+					title='${ this.localize('step1.scheduleName.tooltip') }'
 					id="schedule-name"
 					aria-invalid='${ this.invalidScheduleName }'
 					label='${ this.localize('step1.scheduleName.label') } *'
@@ -324,6 +327,7 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 		return html`
 			<div class='sds-input-wrapper'>
 				<d2l-input-text
+					title='${ this.localize('step1.userId.placeholder') } '
 					aria-invalid='${ this.invalidUserId }'
 					label='${ this.localize('step1.userId.label') } *'
 					placeholder='${ this.localize('step1.userId.placeholder') }'
