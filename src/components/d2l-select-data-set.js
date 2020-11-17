@@ -306,7 +306,7 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 		const roleList = this.rolesSelected.toString().split(',');
 
 		return html`
-			<d2l-labs-role-selector
+			<d2l-labs-role-selector title='${ this.localize('step1.role.selector.tooltip') }'
 				@d2l-labs-role-selected='${ this._selectedRolesChanged }'>
 				${ this.roleItems.map(role => this._renderRoleItems(role, roleList)) }
 			</d2l-labs-role-selector>

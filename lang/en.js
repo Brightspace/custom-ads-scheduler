@@ -48,6 +48,7 @@ export default {
 	'step1.validation.prefix': 'Invalid fields:',
 	'step1.orgUnitId.errorMessage': 'Org Unit ID must be a numeric value',
 	'step1.userId.errorMessage': 'User ID must be a numeric value',
+	'step1.role.selector.tooltip': 'Select Roles',
 	'step2.dates.label': 'Schedule Start and End Dates',
 	'step2.dates.start': 'Schedule Start Date',
 	'step2.dates.end': 'Schedule End Date',
