@@ -142,7 +142,7 @@ class ScheduleLogs extends LocalizeMixin(LitElement) {
 		await this._queryNumLogs();
 
 		// If the number of total logs and the new page size no longer support the current page, adjust it
-		this.pageNumber = Math.min(this.page, this.maxPage);
+		this.pageNumber = Math.min(this.pageNumber, this.maxPage);
 
 		// Re-query the page of logs with new pagination values
 		await this._queryLogs();
