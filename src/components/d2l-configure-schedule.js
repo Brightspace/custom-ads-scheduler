@@ -131,11 +131,13 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 		this.startAfterEndDate = false;
 
 		this.errorText = '';
+
+		this.firstRender = true;
 	}
 
 	render() {
 		return html`
-			<h1 class="d2l-heading-2">Schedule Details</h1>
+			<h1 class="d2l-heading-2" tabindex="0" id="step-title" aria-label="${ this.localize('step2.ariaTitle') }">${ this.localize('step2.title') }</h1>
 			${ this._renderStep() }
 			<d2l-alert-toast id="invalid-properties" type="critical">
 				${ this.errorText }
@@ -234,8 +236,9 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 	_renderDay() {
 		return html`
 			<div class="property-wrapper">
-				<label for="day" class="d2l-input-label">${ this.localize('step2.day.label') } *</label>
+				<label for="day" class="d2l-input-label d2l-input-label-required">${ this.localize('step2.day.label') }</label>
 				<select id="day" class="d2l-input-select"
+					required
 				 	@change="${ this._selectedDayChanged }"
 					aria-invalid="${ this.invalidDay }">
 					<option value="0" .selected="${ this.day === 0 }">${ this.localize('step2.day.sunday') }</option>
@@ -257,11 +260,11 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 	_renderFrequency() {
 		return html`
 			<div class="property-wrapper">
-				<label for="frequency" class="d2l-input-label">${ this.localize('step2.frequency.label') } *</label>
+				<label for="frequency" class="d2l-input-label d2l-input-label-required">${ this.localize('step2.frequency.label') }</label>
 				<select id="frequency" class="d2l-input-select"
+					required
 					@change="${ this._selectedFrequencyChanged }"
 					aria-invalid="${ this.invalidFrequency }">
-					<option disabled selected value="">${ this.localize('step2.frequency.placeholder') }</option>
 					${ this._renderFrequencyOptions() }
 				</select>
 				${ this.invalidFrequency ? html`
@@ -275,8 +278,14 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 	_renderFrequencyOptions() {
 		if (!this._showFifteenMinFrequency && this.frequency === frequenciesEnum.mins15) {
 			this.frequency = frequenciesEnum.hourly;
+			this._commitChanges();
+		}
+		if (!this._showHourlyFrequency && (this.frequency === frequenciesEnum.mins15 || this.frequency === frequenciesEnum.hourly)) {
+			this.frequency = frequenciesEnum.daily;
+			this._commitChanges();
 		}
 		return html`
+			<option disabled selected value="">${ this.localize('step2.frequency.placeholder') }</option>
 			${ this._showFifteenMinFrequency ? html`<option value="${frequenciesEnum.mins15}" .selected="${ this.frequency === frequenciesEnum.mins15 }">${ this.localize('step2.frequency.15mins') }</option>` : ''}
 			${ this._showHourlyFrequency ? html`<option value="${frequenciesEnum.hourly}" .selected="${ this.frequency === frequenciesEnum.hourly }">${ this.localize('step2.frequency.hourly') }</option>` : ''}
 			<option value="${frequenciesEnum.daily}" .selected="${ this.frequency === frequenciesEnum.daily }">${ this.localize('step2.frequency.daily') }</option>
@@ -300,7 +309,8 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 			<div class="property-wrapper">
 				<d2l-input-time
 					id="time"
-					label="${ this.localize('step2.time.label') } *"
+					label="${ this.localize('step2.time.label') }"
+					required
 					value=${ this.time }
 					@change="${ this._selectedTimeChanged }"
 					.forceInvalid="${ this.invalidTime }">
@@ -325,8 +335,9 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 	_renderType() {
 		return html`
 			<div class="property-wrapper">
-				<label for="type" class="d2l-input-label">${ this.localize('step2.type.label') } *</label>
+				<label for="type" class="d2l-input-label d2l-input-label-required">${ this.localize('step2.type.label') }</label>
 				<select id="type" class="d2l-input-select"
+					required
 					@change="${ this._selectedTypeChanged }"
 					aria-invalid="${ this.invalidType }">
 					<option disabled selected value="">${ this.localize('step2.type.placeholder') }</option>
@@ -370,6 +381,7 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 	}
 
 	_selectedTypeChanged(event) {
+		this.firstRender = false;
 		this.type = Number(event.target.value);
 		this._validateType();
 		this._commitChanges();
@@ -380,10 +392,16 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 	}
 
 	get _showFifteenMinFrequency() {
+		if (this.firstRender) {
+			return true;
+		}
 		return this._isDifferential && this._isParticipationDataSet;
 	}
 
 	get _showHourlyFrequency() {
+		if (this.firstRender) {
+			return true;
+		}
 		return this._isDifferential;
 	}
 

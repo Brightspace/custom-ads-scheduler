@@ -77,7 +77,7 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 			#advanced-data-set {
 				width: 100%;
 			}
-			
+
 			.one-line-tooltip {
 				white-space: nowrap;
 			}
@@ -124,7 +124,7 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 
 	render() {
 		return html`
-			<h1 class='d2l-heading-2'>${ this.localize('step1.title') }</h1>
+			<h1 class='d2l-heading-2' aria-label="${ this.localize('step1.ariaTitle') }">${ this.localize('step1.title') }</h1>
 			${ this._renderStep() }
 			<d2l-alert-toast id='invalid-properties' type='critical'>
 				${ this.errorText }
@@ -184,11 +184,12 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 	_renderAdvancedDataSet() {
 		return html`
 			<div class='sds-input-wrapper'>
-				<label for='advanced-data-set' class='d2l-input-label'>${ this.localize('step1.ads.label') } *</label>
+				<label for='advanced-data-set' class='d2l-input-label d2l-input-label-required'>${ this.localize('step1.ads.label') }</label>
 				<select
 					title='${ this.localize('step1.ads.tooltip') }'
 					id='advanced-data-set'
 					class='d2l-input-select'
+					required
 					@change='${ this._selectedDataSetChanged }'
 					aria-invalid='${ this.invalidDataSet }'>
 					<option disabled selected value=''>${ this.localize('step1.ads.placeholder') }</option>
@@ -258,7 +259,8 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 				<d2l-input-text
 					title='${ this.localize('step1.orgUnitId.placeholder') }'
 					aria-invalid='${ this.invalidOrgUnitId }'
-					label='${ this.localize('step1.orgUnitId.label') } *'
+					label='${ this.localize('step1.orgUnitId.label') }'
+					required
 					placeholder='${ this.localize('step1.orgUnitId.placeholder') }'
 					.value='${ this.orgUnitId }'
 					maxlength='10'
@@ -288,7 +290,8 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 					title='${ this.localize('step1.scheduleName.tooltip') }'
 					id="schedule-name"
 					aria-invalid='${ this.invalidScheduleName }'
-					label='${ this.localize('step1.scheduleName.label') } *'
+					label='${ this.localize('step1.scheduleName.label') }'
+					required
 					placeholder='${ this.localize('step1.scheduleName.placeholder') }'
 					.value='${ this.scheduleName }'
 					maxlength='255'
@@ -306,7 +309,7 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 		const roleList = this.rolesSelected.toString().split(',');
 
 		return html`
-			<d2l-labs-role-selector title='${ this.localize('step1.role.selector.tooltip') }'
+			<d2l-labs-role-selector id='role-selector' title='${ this.localize('step1.role.selector.tooltip') }'
 				@d2l-labs-role-selected='${ this._selectedRolesChanged }'>
 				${ this.roleItems.map(role => this._renderRoleItems(role, roleList)) }
 			</d2l-labs-role-selector>
@@ -329,7 +332,8 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 				<d2l-input-text
 					title='${ this.localize('step1.userId.placeholder') } '
 					aria-invalid='${ this.invalidUserId }'
-					label='${ this.localize('step1.userId.label') } *'
+					label='${ this.localize('step1.userId.label') }'
+					required
 					placeholder='${ this.localize('step1.userId.placeholder') }'
 					.value='${ this.userId }'
 					maxlength='10'

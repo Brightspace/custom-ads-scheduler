@@ -153,19 +153,19 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 					aria-label="Open dropdown for ${schedule.name}">
 				</d2l-button-icon>
 				<d2l-dropdown-menu>
-					<d2l-menu>
+					<d2l-menu label="${ this.localize('menuLabel', 'scheduleName', schedule.name) }">
 						${ this._renderEditDropdownOption(schedule.scheduleId) }
 						<d2l-menu-item
 							id="dropdown-log-${schedule.scheduleId}"
 							schedule-id="${ schedule.scheduleId }"
 							text="${  this.localize('actionViewLog')}"
-							@click="${ this._handleViewLog }">
+							@d2l-menu-item-select="${ this._handleViewLog }">
 						</d2l-menu-item>
 						<d2l-menu-item
 							id="dropdown-enable-${schedule.scheduleId}"
 							schedule-id="${ schedule.scheduleId }"
 							text="${ schedule.isEnabled ? this.localize('actionDisable') : this.localize('actionEnable') }"
-							@click="${ this._handleEnableDisable }">
+							@d2l-menu-item-select="${ this._handleEnableDisable }">
 						</d2l-menu-item>
 					</d2l-menu>
 				</d2l-dropdown-menu>
@@ -194,7 +194,7 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 					id="dropdown-edit-${scheduleId}"
 					schedule-id="${ scheduleId }"
 					text="${  this.localize('actionEdit') }"
-					@click="${ this._handleEdit }">
+					@d2l-menu-item-select="${ this._handleEdit }">
 				</d2l-menu-item>
 			`;
 		}
