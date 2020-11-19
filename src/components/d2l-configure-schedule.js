@@ -137,7 +137,7 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 
 	render() {
 		return html`
-			<h1 class="d2l-heading-2" tabindex="0" id="step-title" aria-label="${ this.localize('step2.ariaTitle') }">${ this.localize('step2.title') }</h1>
+			<h1 class="d2l-heading-2" tabindex="0" aria-label="${ this.localize('step2.ariaTitle') }">${ this.localize('step2.title') }</h1>
 			${ this._renderStep() }
 			<d2l-alert-toast id="invalid-properties" type="critical">
 				${ this.errorText }
