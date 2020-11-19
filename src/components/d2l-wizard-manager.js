@@ -27,6 +27,9 @@ class WizardManager extends LocalizeMixin(LitElement) {
 			},
 			selectedSchedule: {
 				type: String
+			},
+			orgUnitId: {
+				type: String
 			}
 		};
 	}
@@ -82,7 +85,7 @@ class WizardManager extends LocalizeMixin(LitElement) {
 		super.connectedCallback();
 
 		this.dataSetOptions = await this.addEditScheduleService.getAdvancedDataSets();
-		this.roleItems = await this.addEditScheduleService.getRoles();
+		this.roleItems = await this.addEditScheduleService.getRoles(this.orgUnitId);
 
 		await this._getSchedule();
 	}
@@ -198,7 +201,7 @@ class WizardManager extends LocalizeMixin(LitElement) {
 						data-set="${ ifDefined(this._dataSetId) }"
 						org-unit-id="${ ifDefined(this._orgUnitId) }"
 						user-id="${ ifDefined(this._userId) }"
-						role-items="${ this._roleItems }"
+						role-items="${ ifDefined(this._roleItems) }"
 						roles-selected="${ ifDefined(this._roleIds) }">
 					</d2l-select-data-set>
 				</d2l-labs-step>

@@ -13,8 +13,8 @@ export class AddEditScheduleService {
 		});
 	}
 
-	static async getRoles() {
-		return await Scheduler.getRoleItems();
+	static async getRoles(orgUnitId) {
+		return await Scheduler.getRoleItems(orgUnitId);
 	}
 
 }
