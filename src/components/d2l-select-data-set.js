@@ -124,7 +124,7 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 
 	render() {
 		return html`
-			<h1 class='d2l-heading-2' tabindex="0" aria-label="${ this.localize('step1.ariaTitle') }">${ this.localize('step1.title') }</h1>
+			<h1 class='d2l-heading-2'>${ this.localize('step1.title') }</h1>
 			${ this._renderStep() }
 			<d2l-alert-toast id='invalid-properties' type='critical'>
 				${ this.errorText }

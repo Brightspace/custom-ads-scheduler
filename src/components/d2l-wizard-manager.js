@@ -149,7 +149,6 @@ class WizardManager extends LocalizeMixin(LitElement) {
 
 	_handleRestart() {
 		this.wizard.restart();
-		this.selectDataSet.shadowRoot.getElementById('schedule-name').focus();
 	}
 
 	_handleSelectDataSetCommitChanges(event) {
@@ -161,7 +160,6 @@ class WizardManager extends LocalizeMixin(LitElement) {
 	_handleStepOneNext() {
 		if (this.selectDataSet.validate()) {
 			this.wizard.next();
-			this.configureSchedule.shadowRoot.getElementById('dates').focus();
 		}
 	}
 
@@ -180,7 +178,6 @@ class WizardManager extends LocalizeMixin(LitElement) {
 	_handleStepTwoNext() {
 		if (this.configureSchedule.validate()) {
 			this.wizard.next();
-			this.deliveryMethod.shadowRoot.getElementById('delivery-method').focus();
 		}
 	}
 
