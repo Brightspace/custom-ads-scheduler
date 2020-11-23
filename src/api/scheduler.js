@@ -24,8 +24,8 @@ export class Scheduler {
 		return await this._get(Routes.NumScheduleLogs(scheduleId));
 	}
 
-	static async getRoleItems() {
-		return await this._get(Routes.RoleItems());
+	static async getRoleItems(orgUnitId) {
+		return await this._get(Routes.RoleItems(orgUnitId));
 	}
 
 	static async getSchedule(scheduleId) {
