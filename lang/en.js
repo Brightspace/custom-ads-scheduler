@@ -88,6 +88,6 @@ export default {
 	'step3.folder.label': 'Folder',
 	'step3.folder.errorMessage': 'Folder must be a valid directory',
 	'step3.folder.invalidCharacters': 'Invalid characters include < > : " \\ | ? *',
-	'step3.folder.invalidCharactersAria': 'Invalid characters include less greater colon quote backslash bar question star',
+	'step3.folder.invalidCharactersAria': 'Invalid characters include less, greater, colon, quote, backslash, bar, question mark, star',
 	'step3.validation.prefix': 'Invalid fields:'
 };
