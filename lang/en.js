@@ -8,6 +8,7 @@ export default {
 	'actionDisable': 'Disable',
 	'actionViewLog': 'View Log',
 	'actionEdit': 'Edit',
+	'menuLabel': 'Actions for {scheduleName}',
 	'scheduleName': 'Schedule Name',
 	'type': 'Type',
 	'frequency': 'Frequency',
@@ -49,6 +50,7 @@ export default {
 	'step1.orgUnitId.errorMessage': 'Org Unit ID must be a numeric value',
 	'step1.userId.errorMessage': 'User ID must be a numeric value',
 	'step1.role.selector.tooltip': 'Select Roles',
+	'step2.title': 'Schedule Details',
 	'step2.dates.label': 'Schedule Start and End Dates',
 	'step2.dates.start': 'Schedule Start Date',
 	'step2.dates.end': 'Schedule End Date',
@@ -76,6 +78,7 @@ export default {
 	'step2.day.saturday': 'Saturday',
 	'step2.day.errorMessage': 'Preferred Day must be selected',
 	'step2.validation.prefix': 'Invalid fields:',
+	'step3.title': 'Delivery Method',
 	'step3.deliveryMethod.label': 'File Delivery Method',
 	'step3.deliveryMethod.placeholder': '-- Select a File Delivery Method --',
 	'step3.deliveryMethod.errorMessage': 'Delivery Method must be selected',
@@ -85,5 +88,6 @@ export default {
 	'step3.folder.label': 'Folder',
 	'step3.folder.errorMessage': 'Folder must be a valid directory',
 	'step3.folder.invalidCharacters': 'Invalid characters include < > : " \\ | ? *',
+	'step3.folder.invalidCharactersAria': 'Invalid characters include less, greater, colon, quote, backslash, bar, question mark, star',
 	'step3.validation.prefix': 'Invalid fields:'
 };

@@ -151,8 +151,7 @@ class WizardManager extends LocalizeMixin(LitElement) {
 	}
 
 	_handleRestart() {
-		const wizard = this.shadowRoot.getElementById('wizard');
-		wizard.restart();
+		this.wizard.restart();
 	}
 
 	_handleSelectDataSetCommitChanges(event) {

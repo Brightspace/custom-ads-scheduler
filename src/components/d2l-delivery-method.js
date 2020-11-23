@@ -66,7 +66,7 @@ class DeliveryMethod extends LocalizeMixin(LitElement) {
 	constructor() {
 		super();
 		this.deliveryMethod = null;
-		this.folder = null;
+		this.folder = '';
 
 		this.invalidDeliveryMethod = false;
 		this.invalidFolder = false;
@@ -75,7 +75,7 @@ class DeliveryMethod extends LocalizeMixin(LitElement) {
 
 	render() {
 		return html`
-			<h1 class="d2l-heading-2">Delivery Method</h1>
+			<h1 class="d2l-heading-2">${ this.localize('step3.title') }</h1>
 			${ this._renderStep() }
 			<d2l-alert-toast id="invalid-properties" type="critical">
 				${ this.errorText }
@@ -119,14 +119,15 @@ class DeliveryMethod extends LocalizeMixin(LitElement) {
 	_renderDeliveryMethod() {
 		return html`
 			<div class="dm-input-wrapper">
-				<label for="delivery-method" class="d2l-input-label">${ this.localize('step3.deliveryMethod.label') } *</label>
+				<label for="delivery-method" class="d2l-input-label d2l-input-label-required">${ this.localize('step3.deliveryMethod.label') }</label>
 				<select
 					id="delivery-method"
 					class="d2l-input-select"
 					aria-invalid="${ this.invalidDeliveryMethod }"
+					required
 					@change="${ this._scheduleDeliveryMethodChanged }">
 
-					<option disabled selected value="">${ this.localize('step3.deliveryMethod.placeholder') }</option>			
+					<option disabled selected value="">${ this.localize('step3.deliveryMethod.placeholder') }</option>
 					<option value='1' .selected="${ this.deliveryMethod === '1' }">${ this.localize('step3.deliveryType.BrightspaceFilePath') }</option>
 		            <option value='2' .selected="${ this.deliveryMethod === '2' }">${ this.localize('step3.deliveryType.BrightspaceSFTP') }</option>
 					<option value='3' .selected="${ this.deliveryMethod === '3' }">${ this.localize('step3.deliveryType.CustomSFTP') }</option>
@@ -142,16 +143,17 @@ class DeliveryMethod extends LocalizeMixin(LitElement) {
 	_renderFolder() {
 		return html`
 			<div class="dm-input-wrapper">
-				<d2l-input-text
+				<label for='folder' class='d2l-input-label'>${ this.localize('step3.folder.label') }</label>
+				<input
+					class="d2l-input"
 					id="folder"
-					label="${ this.localize('step3.folder.label') }"
 					.value="${ this.folder }"
 					aria-invalid="${ this.invalidFolder }"
 					maxlength="2047"
 					@change="${ this._scheduleFolderChanged }">
-				</d2l-input-text>
+				</input>
 				${ this.invalidFolder ? html`
-				<d2l-tooltip for="folder" state="error" align="start" class="one-line-tooltip">
+				<d2l-tooltip aria-label="${ this.localize('step3.folder.errorMessage') + this.localize('step3.folder.invalidCharactersAria') }" for="folder" state="error" align="start" class="one-line-tooltip">
 					${ this.localize('step3.folder.errorMessage') } <br/>
 					${ this.localize('step3.folder.invalidCharacters') }
 				</d2l-tooltip>` : null }
