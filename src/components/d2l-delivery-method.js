@@ -90,8 +90,8 @@ class DeliveryMethod extends LocalizeMixin(LitElement) {
 		this.errorText = this.localize('step2.validation.prefix');
 
 		const invalidProperties = [];
-		if (this.invalidDeliveryMethod) invalidProperties.push(this.localize('step3.deliveryMethod.errorMessage'));
-		if (this.invalidFolder) invalidProperties.push(this.localize('step3.folder.errorMessage'));
+		if (this.invalidDeliveryMethod) invalidProperties.push(this.localize('step3.deliveryMethod.label'));
+		if (this.invalidFolder) invalidProperties.push(this.localize('step3.folder.label'));
 
 		for (let i = 0; i < invalidProperties.length; i++) {
 			this.errorText += `${ i === 0 ? ' ' : ', ' }${ invalidProperties[i] }`;
