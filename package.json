@@ -45,7 +45,7 @@
   },
   "dependencies": {
     "@brightspace-ui-labs/pagination": "^1",
-    "@brightspace-ui-labs/role-selector": "^1.1.4",
+    "@brightspace-ui-labs/role-selector": "^1.1.3",
     "@brightspace-ui-labs/wizard": "^1.0.0",
     "@brightspace-ui/core": "^1.92.0",
     "@brightspace-ui/intl": "^3.0.11",
