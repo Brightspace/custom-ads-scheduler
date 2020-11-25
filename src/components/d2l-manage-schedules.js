@@ -130,12 +130,24 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 			schedule.isEnabled = !schedule.isEnabled;
 			this.requestUpdate();
 		} else {
-			this.shadowRoot.getElementById('error').setAttribute('open', '');
+			this.shadowRoot.getElementById('errorStatusToggleFailed').setAttribute('open', '');
 		}
 	}
 
 	_handleNew() {
 		window.location.href = '/d2l/custom/ads/scheduler/schedule/add';
+	}
+
+	async _handleRunNow(event) {
+
+		const schedule = this._getScheduleById(event.target.getAttribute('schedule-id'));
+
+		const response = await this.manageSchedulesService.runNow(schedule.scheduleId);
+		if (response.status === 200) {
+			this.requestUpdate();
+		} else {
+			this.shadowRoot.getElementById('errorRunNowFailed').setAttribute('open', '');
+		}
 	}
 
 	_handleViewLog(event) {
@@ -160,6 +172,12 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 							schedule-id="${ schedule.scheduleId }"
 							text="${  this.localize('actionViewLog')}"
 							@d2l-menu-item-select="${ this._handleViewLog }">
+						</d2l-menu-item>
+						<d2l-menu-item
+							id="dropdown-run-now-${schedule.scheduleId}"
+							schedule-id="${ schedule.scheduleId }"
+							text="${  this.localize('actionRunNow')}"
+							@d2l-menu-item-select="${ this._handleRunNow }">
 						</d2l-menu-item>
 						<d2l-menu-item
 							id="dropdown-enable-${schedule.scheduleId}"
@@ -222,8 +240,11 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 			<div class="description-text d2l-body-standard ${classMap({ 'no-data-hub-access': !this.dataHubAccess })}">
 				${ this.localize('schedulerDesc') }
 			</div>
-			<d2l-alert-toast id="error" type="critical">
+			<d2l-alert-toast id="errorStatusToggleFailed" type="critical">
 				${ this.localize('statusToggleFailed') }
+			</d2l-alert-toast>
+			<d2l-alert-toast id="errorRunNowFailed" type="critical">
+				${ this.localize('runNowFailed') }
 			</d2l-alert-toast>
 		`;
 
