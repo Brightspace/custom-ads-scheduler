@@ -143,6 +143,18 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 		window.location.href = `/d2l/custom/ads/scheduler/logs/view/${schedule.scheduleId}`;
 	}
 
+	_handleRunNow(event) {
+
+		const schedule = this._getScheduleById(event.target.getAttribute('schedule-id'));
+
+		const response = await this.manageSchedulesService.runNow(schedule.scheduleId);
+		if (response.status === 200) {
+			this.requestUpdate();
+		} else {
+			this.shadowRoot.getElementById('error').setAttribute('open', '');
+		}
+	}
+
 	_renderActionChevron(schedule) {
 		return html`
 			<d2l-dropdown>
@@ -160,6 +172,12 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 							schedule-id="${ schedule.scheduleId }"
 							text="${  this.localize('actionViewLog')}"
 							@d2l-menu-item-select="${ this._handleViewLog }">
+						</d2l-menu-item>
+						<d2l-menu-item
+							id="dropdown-run-now-${schedule.scheduleId}"
+							schedule-id="${ schedule.scheduleId }"
+							text="${  this.localize('actionRunNow')}"
+							@d2l-menu-item-select="${ this._handleRunNow }">
 						</d2l-menu-item>
 						<d2l-menu-item
 							id="dropdown-enable-${schedule.scheduleId}"

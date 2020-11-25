@@ -18,4 +18,8 @@ export class ManageSchedulesService {
 		return await Scheduler.setEnable(scheduleId, isEnabled);
 	}
 
+	static async runNow(scheduleId) {
+		return await Scheduler.runNow(scheduleId);
+	}
+
 }

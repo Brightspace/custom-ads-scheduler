@@ -7,6 +7,7 @@ export default {
 	'actionEnable': 'Enable',
 	'actionDisable': 'Disable',
 	'actionViewLog': 'View Log',
+	'actionRunNow': 'Run Now',
 	'actionEdit': 'Edit',
 	'menuLabel': 'Actions for {scheduleName}',
 	'scheduleName': 'Schedule Name',
