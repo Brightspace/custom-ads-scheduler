@@ -130,7 +130,7 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 			schedule.isEnabled = !schedule.isEnabled;
 			this.requestUpdate();
 		} else {
-			this.shadowRoot.getElementById('error').setAttribute('open', '');
+			this.shadowRoot.getElementById('errorStatusToggleFailed').setAttribute('open', '');
 		}
 	}
 
@@ -146,7 +146,7 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 		if (response.status === 200) {
 			this.requestUpdate();
 		} else {
-			this.shadowRoot.getElementById('error').setAttribute('open', '');
+			this.shadowRoot.getElementById('errorRunNowFailed').setAttribute('open', '');
 		}
 	}
 
@@ -240,8 +240,11 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 			<div class="description-text d2l-body-standard ${classMap({ 'no-data-hub-access': !this.dataHubAccess })}">
 				${ this.localize('schedulerDesc') }
 			</div>
-			<d2l-alert-toast id="error" type="critical">
+			<d2l-alert-toast id="errorStatusToggleFailed" type="critical">
 				${ this.localize('statusToggleFailed') }
+			</d2l-alert-toast>
+			<d2l-alert-toast id="errorRunNowFailed" type="critical">
+				${ this.localize('runNowFailed') }
 			</d2l-alert-toast>
 		`;
 

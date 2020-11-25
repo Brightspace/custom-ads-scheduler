@@ -18,6 +18,7 @@ export default {
 	'enabled': 'Enabled',
 	'disabled': 'Disabled',
 	'statusToggleFailed': 'Failed to change status of schedule',
+	'runNowFailed': 'Failed to trigger Run Now',
 	'schedule.type.full': 'Full',
 	'schedule.type.differential': 'Differential',
 	'schedule.frequency.weekly': 'Weekly',
