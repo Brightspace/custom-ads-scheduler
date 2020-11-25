@@ -32,6 +32,10 @@ export class Scheduler {
 		return await this._get(Routes.ExistingSchedule(scheduleId));
 	}
 
+	static async runNow(scheduleId) {
+		return await this._put(Routes.RunNow(scheduleId));
+	}
+
 	static async setEnable(scheduleId, isEnabled) {
 		return await this._put(Routes.SetEnable(scheduleId, isEnabled));
 	}
