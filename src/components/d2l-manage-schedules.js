@@ -138,11 +138,6 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 		window.location.href = '/d2l/custom/ads/scheduler/schedule/add';
 	}
 
-	_handleViewLog(event) {
-		const schedule = this._getScheduleById(event.target.getAttribute('schedule-id'));
-		window.location.href = `/d2l/custom/ads/scheduler/logs/view/${schedule.scheduleId}`;
-	}
-
 	async _handleRunNow(event) {
 
 		const schedule = this._getScheduleById(event.target.getAttribute('schedule-id'));
@@ -153,6 +148,11 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 		} else {
 			this.shadowRoot.getElementById('error').setAttribute('open', '');
 		}
+	}
+
+	_handleViewLog(event) {
+		const schedule = this._getScheduleById(event.target.getAttribute('schedule-id'));
+		window.location.href = `/d2l/custom/ads/scheduler/logs/view/${schedule.scheduleId}`;
 	}
 
 	_renderActionChevron(schedule) {

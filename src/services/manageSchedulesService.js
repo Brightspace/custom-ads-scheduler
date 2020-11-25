@@ -14,12 +14,12 @@ export class ManageSchedulesService {
 		return await Scheduler.getSchedule(scheduleId);
 	}
 
-	static async setEnable(scheduleId, isEnabled) {
-		return await Scheduler.setEnable(scheduleId, isEnabled);
-	}
-
 	static async runNow(scheduleId) {
 		return await Scheduler.runNow(scheduleId);
+	}
+
+	static async setEnable(scheduleId, isEnabled) {
+		return await Scheduler.setEnable(scheduleId, isEnabled);
 	}
 
 }
