@@ -143,7 +143,7 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 		window.location.href = `/d2l/custom/ads/scheduler/logs/view/${schedule.scheduleId}`;
 	}
 
-	_handleRunNow(event) {
+	async _handleRunNow(event) {
 
 		const schedule = this._getScheduleById(event.target.getAttribute('schedule-id'));
 
