@@ -30,6 +30,7 @@ export default {
 	'add.DeliveryMethod': 'Choose Your Delivery Method',
 	'add.FailedToSave': 'Failed to save schedule',
 	'add.Done': 'Done',
+	'done.button.tooltip': 'Save the schedule',
 	'logs.desc': 'Schedule Logs allow you to view a history of all of the dates the schedule has run, and if the schedule ran successfully or not on each date.',
 	'logs.runDate': 'Run Date',
 	'logs.completionDate': 'Completion Date',
