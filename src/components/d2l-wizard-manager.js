@@ -219,7 +219,7 @@ class WizardManager extends LocalizeMixin(LitElement) {
 					</d2l-configure-schedule>
 				</d2l-labs-step>
 
-				<d2l-labs-step title="${ this.localize('add.DeliveryMethod') }" next-button-title="${ this.localize('add.Done') }" @stepper-next="${ this._handleStepThreeDone }">
+				<d2l-labs-step title="${ this.localize('add.DeliveryMethod')}" next-button-tooltip="${ this.localize('done.button.tooltip') }" next-button-title="${this.localize('add.Done')}" @stepper-next="${this._handleStepThreeDone }">
 					<d2l-delivery-method
 						id="delivery-method"
 						@commit-changes="${ this._handleDeliveryMethodCommitChanges }"

@@ -149,6 +149,7 @@ class DeliveryMethod extends LocalizeMixin(LitElement) {
 					id="folder"
 					.value="${ this.folder }"
 					aria-invalid="${ this.invalidFolder }"
+					title="${ this.localize('step3.folder.tooltip') }"
 					maxlength="2047"
 					@change="${ this._scheduleFolderChanged }">
 				</input>

@@ -218,6 +218,7 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 					<d2l-input-date-range
 						id="dates"
 						label="Schedule Start and End Dates"
+						title="${ this.localize('step2.calender.tooltip') }"
 						label-hidden
 						inclusive-date-range
 						required
@@ -240,7 +241,8 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 				<select id="day" class="d2l-input-select"
 					required
 				 	@change="${ this._selectedDayChanged }"
-					aria-invalid="${ this.invalidDay }">
+					aria-invalid="${ this.invalidDay }"
+					title="${ this.localize('step2.day.tooltip') }">
 					<option value="0" .selected="${ this.day === 0 }">${ this.localize('step2.day.sunday') }</option>
 					<option value="1" .selected="${ this.day === 1 }">${ this.localize('step2.day.monday') }</option>
 					<option value="2" .selected="${ this.day === 2 }">${ this.localize('step2.day.tuesday') }</option>
@@ -264,7 +266,8 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 				<select id="frequency" class="d2l-input-select"
 					required
 					@change="${ this._selectedFrequencyChanged }"
-					aria-invalid="${ this.invalidFrequency }">
+					aria-invalid="${ this.invalidFrequency }"
+					title="${ this.localize('step2.frequency.tooltip') }">
 					${ this._renderFrequencyOptions() }
 				</select>
 				${ this.invalidFrequency ? html`
@@ -313,7 +316,8 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 					required
 					value=${ this.time }
 					@change="${ this._selectedTimeChanged }"
-					.forceInvalid="${ this.invalidTime }">
+					.forceInvalid="${ this.invalidTime }"
+					title="${ this.localize('step2.time.tooltip') }">
 				</d2l-input-time>
 				${ this.invalidTime ? html`
 				<d2l-tooltip for="time" state="error" align="start" class="one-line-tooltip">
@@ -339,7 +343,8 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 				<select id="type" class="d2l-input-select"
 					required
 					@change="${ this._selectedTypeChanged }"
-					aria-invalid="${ this.invalidType }">
+					aria-invalid="${ this.invalidType }"
+					title="${ this.localize('step2.type.tooltip') }">
 					<option disabled selected value="">${ this.localize('step2.type.placeholder') }</option>
 					<option value="${typesEnum.full}" .selected="${ this.type === typesEnum.full }">${ this.localize('step2.type.full') }</option>
 					<option value="${typesEnum.diff}" .selected="${ this.type === typesEnum.diff }">${ this.localize('step2.type.differential') }</option>
