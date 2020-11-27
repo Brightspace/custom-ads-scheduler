@@ -45,10 +45,6 @@ export class Scheduler {
 	static async _fetch(url, options) {
 		return await fetch(url, options)
 			.then(response => {
-				if (response.status === 403) {
-					return [];
-				}
-
 				if (!response.ok) {
 					throw Error(response.statusText);
 				}
