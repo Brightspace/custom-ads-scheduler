@@ -85,7 +85,12 @@ class WizardManager extends LocalizeMixin(LitElement) {
 		super.connectedCallback();
 
 		this.dataSetOptions = await this.addEditScheduleService.getAdvancedDataSets();
-		this.roleItems = await this.addEditScheduleService.getRoles(this.orgUnitId);
+
+		try {
+			this.roleItems = await this.addEditScheduleService.getRoles(this.orgUnitId);
+		} catch (e) {
+			this.roleItems = [];
+		}
 
 		await this._getSchedule();
 	}
