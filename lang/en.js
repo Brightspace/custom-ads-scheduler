@@ -57,6 +57,7 @@ export default {
 	'step2.dates.label': 'Schedule Start and End Dates',
 	'step2.dates.start': 'Schedule Start Date',
 	'step2.dates.end': 'Schedule End Date',
+	'step2.dates.errorMessage': 'Schedule Start Date should be before End Date',
 	'step2.type.label': 'Type',
 	'step2.type.placeholder': '-- Select a Data Set Type --',
 	'step2.type.full': 'Full',

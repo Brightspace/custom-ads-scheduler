@@ -163,6 +163,7 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 		if (this.invalidFrequency) invalidProperties.push(this.localize('step2.frequency.label'));
 		if (this.invalidTime) invalidProperties.push(this.localize('step2.time.label'));
 		if (this.invalidDay) invalidProperties.push(this.localize('step2.day.label'));
+		if (this.startAfterEndDate) invalidProperties.push(this.localize('step2.dates.errorMessage'));
 
 		for (let i = 0; i < invalidProperties.length; i++) {
 			this.errorText += `${ i === 0 ? ' ' : ', ' }${ invalidProperties[i] }`;
