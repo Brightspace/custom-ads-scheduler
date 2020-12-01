@@ -34,7 +34,8 @@ export const statusesEnum = {
 	queued: 1,
 	processing: 2,
 	completed: 3,
-	failed: 4
+	failedDelivery: 4,
+	failedDataSet: 5
 };
 
 export const participationDataSetId = '270ce7b6-7da1-423b-9592-31bb80bf4e1a';

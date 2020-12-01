@@ -155,10 +155,6 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 		window.location.href = `/d2l/custom/ads/scheduler/logs/view/${schedule.scheduleId}`;
 	}
 
-	_parseStatus(statusId) {
-		return statuses[statusId] || '';
-	}
-
 	_renderActionChevron(schedule) {
 		return html`
 			<d2l-dropdown>
@@ -286,7 +282,7 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 				<td>${ this.localize(`schedule.type.${types[schedule.typeId]}`) }</td>
 				<td>${ this.localize(`schedule.frequency.${frequencies[schedule.frequencyId]}`) }</td>
 				<td>${ this._formatDateTime(new Date(schedule.startDate))} - ${this._formatDateTime(new Date(schedule.endDate))}</td>
-				<td>${schedule.isEnabled ? this._parseStatus(schedule.statusId) : this.localize('disabled') }</td>
+				<td>${schedule.isEnabled ? statuses[schedule.statusId] : this.localize('disabled') }</td>
 			</tr>
 		`;
 	}
