@@ -10,7 +10,7 @@ import '@brightspace-ui/core/components/menu/menu-item';
 import './nothing-here-illustration';
 import { bodyStandardStyles, heading2Styles } from '@brightspace-ui/core/components/typography/styles.js';
 import { css, html, LitElement } from 'lit-element/lit-element';
-import { frequencies, types, statuses } from '../constants';
+import { frequencies, statuses, types } from '../constants';
 import { classMap } from 'lit-html/directives/class-map.js';
 import { d2lTableStyles } from '../styles/d2lTableStyles';
 import { formatDateTime } from '@brightspace-ui/intl/lib/dateTime';
