@@ -96,7 +96,6 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 
 	constructor() {
 		super();
-
 		this.manageSchedulesService = ManageSchedulesServiceFactory.getManageSchedulesService();
 
 		this.schedules = Array();
@@ -282,7 +281,7 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 				<td>${ this.localize(`schedule.type.${types[schedule.typeId]}`) }</td>
 				<td>${ this.localize(`schedule.frequency.${frequencies[schedule.frequencyId]}`) }</td>
 				<td>${ this._formatDateTime(new Date(schedule.startDate))} - ${this._formatDateTime(new Date(schedule.endDate))}</td>
-				<td>${schedule.isEnabled ? statuses[schedule.statusId] : this.localize('disabled') }</td>
+				<td>${ schedule.isEnabled ? this.localize(`schedule.status.${statuses[schedule.statusId]}`) : this.localize('disabled') }</td>
 			</tr>
 		`;
 	}
