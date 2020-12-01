@@ -14,7 +14,8 @@ export const statuses = {
 	1: 'Queued',
 	2: 'Processing',
 	3: 'Completed',
-	4: 'Failed'
+	4: 'Failed - Delivery',
+	5: 'Failed - Data Set'
 };
 
 export const typesEnum = {
