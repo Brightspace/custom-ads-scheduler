@@ -55,6 +55,7 @@ export default {
 	'step1.userId.label': 'User ID',
 	'step1.userId.placeholder': 'Enter a User ID',
 	'step1.validation.prefix': 'Invalid fields:',
+	'step1.invalidRolePermission': 'You do not have permission to view roles for this org unit',
 	'step1.orgUnitId.errorMessage': 'Org Unit ID must be a numeric value',
 	'step1.userId.errorMessage': 'User ID must be a numeric value',
 	'step1.role.selector.tooltip': 'Select Roles',
