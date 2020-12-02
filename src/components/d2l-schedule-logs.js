@@ -166,7 +166,7 @@ class ScheduleLogs extends LocalizeMixin(LitElement) {
 	}
 
 	_parseStatus(statusId) {
-		return statuses[statusId] || '';
+		return this.localize(`schedule.status.${statuses[statusId]}`) || '';
 	}
 
 	async _queryLogs() {

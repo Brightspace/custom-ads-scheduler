@@ -10,7 +10,7 @@ import '@brightspace-ui/core/components/menu/menu-item';
 import './nothing-here-illustration';
 import { bodyStandardStyles, heading2Styles } from '@brightspace-ui/core/components/typography/styles.js';
 import { css, html, LitElement } from 'lit-element/lit-element';
-import { frequencies, types } from '../constants';
+import { frequencies, statuses, types } from '../constants';
 import { classMap } from 'lit-html/directives/class-map.js';
 import { d2lTableStyles } from '../styles/d2lTableStyles';
 import { formatDateTime } from '@brightspace-ui/intl/lib/dateTime';
@@ -96,7 +96,6 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 
 	constructor() {
 		super();
-
 		this.manageSchedulesService = ManageSchedulesServiceFactory.getManageSchedulesService();
 
 		this.schedules = Array();
@@ -281,8 +280,8 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 				</td>
 				<td>${ this.localize(`schedule.type.${types[schedule.typeId]}`) }</td>
 				<td>${ this.localize(`schedule.frequency.${frequencies[schedule.frequencyId]}`) }</td>
-				<td>${ this._formatDateTime(new Date(schedule.startDate)) } - ${ this._formatDateTime(new Date(schedule.endDate)) }</td>
-				<td>${ schedule.isEnabled ? this.localize('enabled') : this.localize('disabled') }</td>
+				<td>${ this._formatDateTime(new Date(schedule.startDate))} - ${this._formatDateTime(new Date(schedule.endDate))}</td>
+				<td>${ schedule.isEnabled ? this.localize(`schedule.status.${statuses[schedule.statusId]}`) : this.localize('disabled') }</td>
 			</tr>
 		`;
 	}
