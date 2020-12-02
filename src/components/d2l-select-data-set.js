@@ -139,7 +139,6 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 			return false;
 		}
 
-
 		this._validateScheduleName();
 		this._validateDataSet();
 		this._validateUserId();
