@@ -133,6 +133,12 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 	}
 
 	validate() {
+		if (this._showRoles && this.roleItems.length === 0) {
+			this.errorText = this.localize('step1.invalidRolePermission');
+			this.shadowRoot.getElementById('invalid-properties').setAttribute('open', '');
+			return false;
+		}
+
 		this._validateScheduleName();
 		this._validateDataSet();
 		this._validateUserId();
