@@ -131,7 +131,7 @@ class ScheduleLogs extends LocalizeMixin(LitElement) {
 
 	_formatDateTime(dateTime) {
 		return dateTime === null
-			? this.localize('logs.unavailableDate')
+			? this.localize('unavailableDate')
 			: formatDateTime(new Date(dateTime), { format: 'short' });
 	}
 
