@@ -13,6 +13,8 @@ export default {
 	'scheduleName': 'Schedule Name',
 	'type': 'Type',
 	'frequency': 'Frequency',
+	'lastRunTime': 'Last Run Time',
+	'nextRunTime': 'Next Run Time',
 	'scheduleDates': 'Schedule Dates',
 	'status': 'Status',
 	'enabled': 'Enabled',
