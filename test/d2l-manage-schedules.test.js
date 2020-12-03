@@ -81,8 +81,8 @@ describe('d2l-manage-schedules', () => {
 			expect(rowData[1].innerText).to.contain(translations[`schedule.type.${types[testSchedule.typeId]}`]);
 			expect(rowData[2].innerText).to.contain(translations[`schedule.frequency.${frequencies[testSchedule.frequencyId]}`]);
 			expect(rowData[3].innerText).to.contain(testSchedule.lastRunTime);
-			expect(rowData[3].innerText).to.contain(testSchedule.nextRunTime);
-			expect(rowData[4].innerText).to.contain(testSchedule.isEnabled ? translations[`schedule.status.${statuses[testSchedule.statusId]}`] : translations['disabled']);
+			expect(rowData[4].innerText).to.contain(testSchedule.nextRunTime);
+			expect(rowData[5].innerText).to.contain(testSchedule.isEnabled ? translations[`schedule.status.${statuses[testSchedule.statusId]}`] : translations['disabled']);
 		});
 	});
 
