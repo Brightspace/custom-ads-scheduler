@@ -66,6 +66,8 @@ describe('d2l-manage-schedules', () => {
 				frequencyId: frequenciesEnum.weekly,
 				startDate: '09/01/2020',
 				endDate: '12/31/2020',
+				lastRunTime: '9/1/2020 12:00 AM',
+				nextRunTime: '12/31/2020 12:00 AM',
 				isEnabled: true,
 				statusId: 3
 			};
@@ -78,7 +80,8 @@ describe('d2l-manage-schedules', () => {
 			expect(rowData[0].innerText).to.contain(testSchedule.name);
 			expect(rowData[1].innerText).to.contain(translations[`schedule.type.${types[testSchedule.typeId]}`]);
 			expect(rowData[2].innerText).to.contain(translations[`schedule.frequency.${frequencies[testSchedule.frequencyId]}`]);
-			expect(rowData[3].innerText).to.contain('9/1/2020 12:00 AM - 12/31/2020 12:00 AM');
+			expect(rowData[3].innerText).to.contain(testSchedule.lastRunTime);
+			expect(rowData[3].innerText).to.contain(testSchedule.nextRunTime);
 			expect(rowData[4].innerText).to.contain(testSchedule.isEnabled ? translations[`schedule.status.${statuses[testSchedule.statusId]}`] : translations['disabled']);
 		});
 	});

@@ -109,7 +109,9 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 	}
 
 	_formatDateTime(dateTime) {
-		return formatDateTime(new Date(dateTime), { format: 'short' });
+		return dateTime === null
+			? this.localize('unavailableDate')
+			: formatDateTime(new Date(dateTime), { format: 'short' });
 	}
 
 	_getScheduleById(scheduleId) {
