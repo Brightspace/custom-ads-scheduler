@@ -282,7 +282,7 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 				</td>
 				<td>${ this.localize(`schedule.type.${types[schedule.typeId]}`) }</td>
 				<td>${ this.localize(`schedule.frequency.${frequencies[schedule.frequencyId]}`) }</td>
-				<td>${ this._formatDateTime(schedule.lastRunTime) }</td>
+				<td>${ this._formatDateTime(schedule.lastRunTime === schedule.nextRunTime ? null : schedule.lastRunTime) }</td>
 				<td>${ this._formatDateTime(schedule.nextRunTime) }</td>
 				<td>${ schedule.isEnabled ? this.localize(`schedule.status.${statuses[schedule.statusId]}`) : this.localize('disabled') }</td>
 			</tr>
