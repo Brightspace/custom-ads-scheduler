@@ -26,7 +26,7 @@
   "author": "D2L Corporation",
   "license": "Apache-2.0",
   "devDependencies": {
-    "@brightspace-ui/visual-diff": "^1",
+    "@brightspace-ui/visual-diff": "^2",
     "@open-wc/testing": "^2",
     "@open-wc/testing-karma": "^4",
     "babel-eslint": "^10",
