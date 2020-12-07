@@ -30,6 +30,14 @@ class WizardManager extends LocalizeMixin(LitElement) {
 			},
 			orgUnitId: {
 				type: String
+			},
+			brightspaceSftpConfigured: {
+				type: Boolean,
+				attribute: 'brightspace-sftp-configured'
+			},
+			customSftpConfigured: {
+				type: Boolean,
+				attribute: 'custom-sftp-configured'
 			}
 		};
 	}
@@ -77,6 +85,8 @@ class WizardManager extends LocalizeMixin(LitElement) {
 		};
 
 		this.selectedSchedule = '';
+		this.customSftpConfigured = false;
+		this.brightspaceSftpConfigured = false;
 
 		this.isLoading = true;
 	}
@@ -228,6 +238,8 @@ class WizardManager extends LocalizeMixin(LitElement) {
 					<d2l-delivery-method
 						id="delivery-method"
 						@commit-changes="${ this._handleDeliveryMethodCommitChanges }"
+						?brightspace-sftp-configured="${ this.brightspaceSftpConfigured }"
+						?custom-sftp-configured="${ this.customSftpConfigured }"
 						delivery-method="${ ifDefined(this._deliveryTypeId) }"
 						folder="${ ifDefined(this._filePath) }">
 					</d2l-delivery-method>
