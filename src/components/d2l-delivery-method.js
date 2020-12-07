@@ -30,11 +30,11 @@ class DeliveryMethod extends LocalizeMixin(LitElement) {
 			},
 			brightspaceSftpConfigured: {
 				type: Boolean,
-				attribute: "brightspace-sftp-configured"
+				attribute: 'brightspace-sftp-configured'
 			},
 			customSftpConfigured: {
 				type: Boolean,
-				attribute: "custom-sftp-configured"
+				attribute: 'custom-sftp-configured'
 			}
 		};
 	}
