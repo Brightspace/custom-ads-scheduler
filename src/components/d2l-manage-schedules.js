@@ -109,7 +109,9 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 	}
 
 	_formatDateTime(dateTime) {
-		return formatDateTime(dateTime, { format: 'short' });
+		return dateTime === null
+			? this.localize('unavailableDate')
+			: formatDateTime(new Date(dateTime), { format: 'short' });
 	}
 
 	_getScheduleById(scheduleId) {
@@ -280,7 +282,8 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 				</td>
 				<td>${ this.localize(`schedule.type.${types[schedule.typeId]}`) }</td>
 				<td>${ this.localize(`schedule.frequency.${frequencies[schedule.frequencyId]}`) }</td>
-				<td>${ this._formatDateTime(new Date(schedule.startDate))} - ${this._formatDateTime(new Date(schedule.endDate))}</td>
+				<td>${ this._formatDateTime(schedule.lastRunTime) }</td>
+				<td>${ this._formatDateTime(schedule.nextRunTime) }</td>
 				<td>${ schedule.isEnabled ? this.localize(`schedule.status.${statuses[schedule.statusId]}`) : this.localize('disabled') }</td>
 			</tr>
 		`;
@@ -293,7 +296,8 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 					<th>${ this.localize('scheduleName') }</th>
 					<th>${ this.localize('type') }</th>
 					<th>${ this.localize('frequency') }</th>
-					<th>${ this.localize('scheduleDates') }</th>
+					<th>${ this.localize('lastRunTime') }</th>
+					<th>${ this.localize('nextRunTime') }</th>
 					<th>${ this.localize('status') }</th>
 				</thead>
 				<tbody>
