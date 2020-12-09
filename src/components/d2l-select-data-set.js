@@ -198,7 +198,7 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 					required
 					@change='${ this._selectedDataSetChanged }'
 					aria-invalid='${ this.invalidDataSet }'>
-					<option disabled selected value=''>${ this.localize('step1.ads.placeholder') }</option>
+					<option aria-label="${ this.localize('step1.ads.placeholder') }" disabled selected value=''>${ this.localize('step1.ads.placeholder') }</option>
 					${ this.dataSetOptions.map(option => this._renderAdvancedDataSetOption(option)) }
 				</select>
 				${ this.invalidDataSet ? html`
@@ -210,7 +210,7 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 	}
 	_renderAdvancedDataSetOption(option) {
 		return html`
-			<option value=${ option.DataSetId } .selected='${ option.DataSetId === this.dataSet }'>${ option.Name }</option>
+			<option aria-label="${ option.Name }" value=${ option.DataSetId } .selected='${ option.DataSetId === this.dataSet }'>${ option.Name }</option>
 		`;
 	}
 

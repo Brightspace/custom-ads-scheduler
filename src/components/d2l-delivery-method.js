@@ -137,10 +137,10 @@ class DeliveryMethod extends LocalizeMixin(LitElement) {
 					required
 					@change="${ this._scheduleDeliveryMethodChanged }">
 
-					<option disabled selected value="">${ this.localize('step3.deliveryMethod.placeholder') }</option>
-					<option value='1' .selected="${ this.deliveryMethod === '1' }">${ this.localize('step3.deliveryType.BrightspaceFilePath') }</option>
-					${ this.brightspaceSftpConfigured ? html`<option value='2' .selected="${ this.deliveryMethod === '2' }">${ this.localize('step3.deliveryType.BrightspaceSFTP') }</option>` : html`` }
-					${ this.customSftpConfigured ? html`<option value='3' .selected="${ this.deliveryMethod === '3' }">${ this.localize('step3.deliveryType.CustomSFTP') }</option>` : html`` }
+					<option aria-label="${ this.localize('step3.deliveryMethod.placeholder') }" disabled selected value="">${ this.localize('step3.deliveryMethod.placeholder') }</option>
+					<option aria-label="${ this.localize('step3.deliveryType.BrightspaceFilePath') }" value='1' .selected="${ this.deliveryMethod === '1' }">${ this.localize('step3.deliveryType.BrightspaceFilePath') }</option>
+					${ this.brightspaceSftpConfigured ? html`<option aria-label="${ this.localize('step3.deliveryType.BrightspaceSFTP') }" value='2' .selected="${ this.deliveryMethod === '2' }">${ this.localize('step3.deliveryType.BrightspaceSFTP') }</option>` : html`` }
+					${ this.customSftpConfigured ? html`<option aria-label="${ this.localize('step3.deliveryType.CustomSFTP') }" value='3' .selected="${ this.deliveryMethod === '3' }">${ this.localize('step3.deliveryType.CustomSFTP') }</option>` : html`` }
 				</select>
 				${ this.invalidDeliveryMethod ? html`
 				<d2l-tooltip for="delivery-method" state="error" align="start" class="one-line-tooltip">

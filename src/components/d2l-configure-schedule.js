@@ -244,13 +244,13 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 				 	@change="${ this._selectedDayChanged }"
 					aria-invalid="${ this.invalidDay }"
 					title="${ this.localize('step2.day.tooltip') }">
-					<option value="0" .selected="${ this.day === 0 }">${ this.localize('step2.day.sunday') }</option>
-					<option value="1" .selected="${ this.day === 1 }">${ this.localize('step2.day.monday') }</option>
-					<option value="2" .selected="${ this.day === 2 }">${ this.localize('step2.day.tuesday') }</option>
-					<option value="3" .selected="${ this.day === 3 }">${ this.localize('step2.day.wednesday') }</option>
-					<option value="4" .selected="${ this.day === 4 }">${ this.localize('step2.day.thursday') }</option>
-					<option value="5" .selected="${ this.day === 5 }">${ this.localize('step2.day.friday') }</option>
-					<option value="6" .selected="${ this.day === 6 }">${ this.localize('step2.day.saturday') }</option>
+					<option value="0" aria-label="${ this.localize('step2.day.sunday') }" .selected="${ this.day === 0 }">${ this.localize('step2.day.sunday') }</option>
+					<option value="1" aria-label="${ this.localize('step2.day.monday') }" .selected="${ this.day === 1 }">${ this.localize('step2.day.monday') }</option>
+					<option value="2" aria-label="${ this.localize('step2.day.tuesday') }" .selected="${ this.day === 2 }">${ this.localize('step2.day.tuesday') }</option>
+					<option value="3" aria-label="${ this.localize('step2.day.wednesday') }" .selected="${ this.day === 3 }">${ this.localize('step2.day.wednesday') }</option>
+					<option value="4" aria-label="${ this.localize('step2.day.thursday') }" .selected="${ this.day === 4 }">${ this.localize('step2.day.thursday') }</option>
+					<option value="5" aria-label="${ this.localize('step2.day.friday') }" .selected="${ this.day === 5 }">${ this.localize('step2.day.friday') }</option>
+					<option value="6" aria-label="${ this.localize('step2.day.saturday') }" .selected="${ this.day === 6 }">${ this.localize('step2.day.saturday') }</option>
 				</select>
 				${ this.invalidDay ? html`
 				<d2l-tooltip for="day" state="error" align="start" class="one-line-tooltip">
@@ -289,11 +289,11 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 			this._commitChanges();
 		}
 		return html`
-			<option disabled selected value="">${ this.localize('step2.frequency.placeholder') }</option>
-			${ this._showFifteenMinFrequency ? html`<option value="${frequenciesEnum.mins15}" .selected="${ this.frequency === frequenciesEnum.mins15 }">${ this.localize('step2.frequency.15mins') }</option>` : ''}
-			${ this._showHourlyFrequency ? html`<option value="${frequenciesEnum.hourly}" .selected="${ this.frequency === frequenciesEnum.hourly }">${ this.localize('step2.frequency.hourly') }</option>` : ''}
-			<option value="${frequenciesEnum.daily}" .selected="${ this.frequency === frequenciesEnum.daily }">${ this.localize('step2.frequency.daily') }</option>
-			<option value="${frequenciesEnum.weekly}" .selected="${ this.frequency === frequenciesEnum.weekly }">${ this.localize('step2.frequency.weekly') }</option>
+			<option aria-label="${ this.localize('step2.frequency.placeholder') }" disabled selected value="">${ this.localize('step2.frequency.placeholder') }</option>
+			${ this._showFifteenMinFrequency ? html`<option aria-label="${ this.localize('step2.frequency.15mins') }" value="${frequenciesEnum.mins15}" .selected="${ this.frequency === frequenciesEnum.mins15 }">${ this.localize('step2.frequency.15mins') }</option>` : ''}
+			${ this._showHourlyFrequency ? html`<option aria-label="${ this.localize('step2.frequency.hourly') }" value="${frequenciesEnum.hourly}" .selected="${ this.frequency === frequenciesEnum.hourly }">${ this.localize('step2.frequency.hourly') }</option>` : ''}
+			<option aria-label="${ this.localize('step2.frequency.daily') }" value="${frequenciesEnum.daily}" .selected="${ this.frequency === frequenciesEnum.daily }">${ this.localize('step2.frequency.daily') }</option>
+			<option aria-label="${ this.localize('step2.frequency.weekly') }" value="${frequenciesEnum.weekly}" .selected="${ this.frequency === frequenciesEnum.weekly }">${ this.localize('step2.frequency.weekly') }</option>
 		`;
 	}
 
@@ -346,9 +346,9 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 					@change="${ this._selectedTypeChanged }"
 					aria-invalid="${ this.invalidType }"
 					title="${ this.localize('step2.type.tooltip') }">
-					<option disabled selected value="">${ this.localize('step2.type.placeholder') }</option>
-					<option value="${typesEnum.full}" .selected="${ this.type === typesEnum.full }">${ this.localize('step2.type.full') }</option>
-					<option value="${typesEnum.diff}" .selected="${ this.type === typesEnum.diff }">${ this.localize('step2.type.differential') }</option>
+					<option aria-label="${ this.localize('step2.type.placeholder') }" disabled selected value="">${ this.localize('step2.type.placeholder') }</option>
+					<option aria-label="${ this.localize('step2.type.full') }" value="${typesEnum.full}" .selected="${ this.type === typesEnum.full }">${ this.localize('step2.type.full') }</option>
+					<option aria-label="${ this.localize('step2.type.differential') }" value="${typesEnum.diff}" .selected="${ this.type === typesEnum.diff }">${ this.localize('step2.type.differential') }</option>
 				</select>
 				${ this.invalidType ? html`
 				<d2l-tooltip for="type" state="error" align="start" class="one-line-tooltip">
