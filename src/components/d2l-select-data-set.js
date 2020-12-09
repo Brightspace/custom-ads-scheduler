@@ -215,53 +215,16 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 	}
 
 	_renderFilters() {
-		if (this._showUserId && this._showOrgUnit && this._showRoles) {
-			return html`
-				${ this._renderUserId() }
-				${ this._renderOrgUnitId() }
-				${ this._renderSelectRoles() }
-			`;
-		}
-
-		if (this._showUserId && this._showOrgUnit) {
-			return html`
-				${ this._renderUserId() }
-				${ this._renderOrgUnitId() }
-			`;
-		}
-
-		if (this._showUserId && this._showRoles) {
-			return html`
-				${ this._renderUserId() }
-				${ this._renderSelectRoles() }
-			`;
-		}
-
-		if (this._showOrgUnit && this._showRoles) {
-			return html`
-				${ this._renderOrgUnitId() }
-				${ this._renderSelectRoles() }
-			`;
-		}
-
-		if (this._showUserId) {
-			return this._renderUserId();
-		}
-
-		if (this._showOrgUnit) {
-			return this._renderOrgUnitId();
-		}
-
-		if (this._showRoles) {
-			return this._renderSelectRoles();
-		}
-
-		return;
+		return html`
+			${ this._renderUserId() }
+			${ this._renderOrgUnitId() }
+			${ this._renderSelectRoles() }
+		`;
 	}
 
 	_renderOrgUnitId() {
 		return html`
-			<div class='sds-input-wrapper'>
+			<div style="${ this._showOrgUnit ? "display: auto;" : "display: none;" }" class='sds-input-wrapper'>
 				<d2l-input-text
 					title='${ this.localize('step1.orgUnitId.placeholder') }'
 					aria-invalid='${ this.invalidOrgUnitId }'
@@ -315,7 +278,7 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 		const roleList = this.rolesSelected.toString().split(',');
 
 		return html`
-			<d2l-labs-role-selector id='role-selector' title='${ this.localize('step1.role.selector.tooltip') }'
+			<d2l-labs-role-selector style="${ this._showRoles ? "display: auto;" : "display: none;" }" id='role-selector' title='${ this.localize('step1.role.selector.tooltip') }'
 				@d2l-labs-role-selected='${ this._selectedRolesChanged }'>
 				${ this.roleItems.map(role => this._renderRoleItems(role, roleList)) }
 			</d2l-labs-role-selector>
@@ -334,7 +297,7 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 
 	_renderUserId() {
 		return html`
-			<div class='sds-input-wrapper'>
+			<div style="${ this._showUserId ? "display: auto;" : "display: none;" }" class='sds-input-wrapper'>
 				<d2l-input-text
 					title='${ this.localize('step1.userId.placeholder') } '
 					aria-invalid='${ this.invalidUserId }'
