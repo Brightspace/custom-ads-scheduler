@@ -8,6 +8,7 @@ import { frequenciesEnum, statusesEnum, typesEnum } from '../constants';
 import { AddEditScheduleServiceFactory } from '../services/addEditScheduleServiceFactory';
 import { formatDate } from '@brightspace-ui/intl/lib/dateTime';
 import { getLocalizeResources } from '../localization.js';
+import { getUTCDateTimeStringFromLocalDateTime } from '../dateTime';
 import { ifDefined } from 'lit-html/directives/if-defined';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 import { ManageSchedulesServiceFactory } from '../services/manageSchedulesServiceFactory';
@@ -269,10 +270,19 @@ class WizardManager extends LocalizeMixin(LitElement) {
 	}
 
 	async _saveSchedule() {
+
+		// Copy the schedule cache we want to send, because we have to convert our local DateTime objects to UTC DateTime strings
+		// If the save fails, we don't want to keep the converted DateTimes in our cache
+		const lastRunTimeStr = getUTCDateTimeStringFromLocalDateTime(this.cachedSchedule.lastRunTime);
+		const nextRunTimeStr = getUTCDateTimeStringFromLocalDateTime(this.cachedSchedule.nextRunTime);
+		const copiedSchedule = JSON.parse(JSON.stringify(this.cachedSchedule));
+		copiedSchedule.lastRunTime = lastRunTimeStr;
+		copiedSchedule.nextRunTime = nextRunTimeStr;
+
 		if (this._editing) {
-			await this.manageSchedulesService.editSchedule(this.scheduleId, this.cachedSchedule);
+			await this.manageSchedulesService.editSchedule(this.scheduleId, copiedSchedule);
 		} else {
-			await this.manageSchedulesService.addSchedule(this.cachedSchedule);
+			await this.manageSchedulesService.addSchedule(copiedSchedule);
 		}
 	}
 

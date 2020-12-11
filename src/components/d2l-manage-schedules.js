@@ -14,6 +14,7 @@ import { frequencies, statuses, types } from '../constants';
 import { classMap } from 'lit-html/directives/class-map.js';
 import { d2lTableStyles } from '../styles/d2lTableStyles';
 import { formatDateTime } from '@brightspace-ui/intl/lib/dateTime';
+import { getLocalDateTimeFromUTCDateTimeString } from '../dateTime';
 import { getLocalizeResources } from '../localization.js';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 import { ManageSchedulesServiceFactory } from '../services/manageSchedulesServiceFactory';
@@ -102,6 +103,16 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 		this.dataHubAccess = false;
 	}
 
+	async connectedCallback() {
+		super.connectedCallback();
+
+		// UTC -> Local DateTime conversion
+		this.schedules.forEach(schedule => {
+			schedule.lastRunTime = getLocalDateTimeFromUTCDateTimeString(schedule.lastRunTime);
+			schedule.nextRunTime = getLocalDateTimeFromUTCDateTimeString(schedule.nextRunTime);
+		});
+	}
+
 	render() {
 		return html`
 			${ this._renderResults() }
@@ -111,7 +122,7 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 	_formatDateTime(dateTime) {
 		return dateTime === null || dateTime === undefined
 			? this.localize('unavailableDate')
-			: formatDateTime(new Date(dateTime), { format: 'short' });
+			: formatDateTime(dateTime, { format: 'short' });
 	}
 
 	_getScheduleById(scheduleId) {

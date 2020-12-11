@@ -5,6 +5,7 @@ import { bodyStandardStyles, heading2Styles } from '@brightspace-ui/core/compone
 import { css, html, LitElement } from 'lit-element/lit-element';
 import { d2lTableStyles } from '../styles/d2lTableStyles';
 import { formatDateTime } from '@brightspace-ui/intl/lib/dateTime';
+import { getLocalDateTimeFromUTCDateTimeString } from '../dateTime';
 import { getLocalizeResources } from '../localization.js';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 import { ScheduleLogsServiceFactory } from '../services/scheduleLogsServiceFactory';
@@ -132,7 +133,7 @@ class ScheduleLogs extends LocalizeMixin(LitElement) {
 	_formatDateTime(dateTime) {
 		return dateTime === null
 			? this.localize('unavailableDate')
-			: formatDateTime(new Date(dateTime), { format: 'short' });
+			: formatDateTime(dateTime, { format: 'short' });
 	}
 
 	async _handleItemsPerPageChange(event) {
@@ -173,6 +174,13 @@ class ScheduleLogs extends LocalizeMixin(LitElement) {
 		this.isQuerying = true;
 
 		const logs = await this.scheduleLogsService.getLogs(this.scheduleId, this.pageNumber, this.pageSize);
+
+		// UTC -> Local DateTime conversion
+		logs.forEach(log => {
+			log.runDate = getLocalDateTimeFromUTCDateTimeString(log.runDate);
+			log.endDate = getLocalDateTimeFromUTCDateTimeString(log.endDate);
+		});
+
 		this._mapLogsArray(logs);
 
 		this.isQuerying = false;
