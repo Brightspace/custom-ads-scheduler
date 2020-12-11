@@ -2,8 +2,8 @@ import '@brightspace-ui/core/components/inputs/input-date-range.js';
 import '@brightspace-ui/core/components/inputs/input-text.js';
 import '@brightspace-ui/core/components/inputs/input-time.js';
 import { css, html, LitElement } from 'lit-element/lit-element';
+import { formatDate, parseDate } from '@brightspace-ui/intl/lib/dateTime';
 import { frequenciesEnum, participationDataSetId, typesEnum } from '../constants';
-import { formatDate } from '@brightspace-ui/intl/lib/dateTime';
 import { getLocalizeResources } from '../localization.js';
 import { heading1Styles } from '@brightspace-ui/core/components/typography/styles.js';
 import { inputLabelStyles } from '@brightspace-ui/core/components/inputs/input-label-styles';
@@ -194,10 +194,17 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 	}
 
 	_commitChanges() {
+
+		// This is a bit ugly. Unfortunately, none of the Core Helpers can properly parse theDatePicker component output into a Date object
+		const startDateSplit = this.startDate.split('-');
+		const startDateObj = new Date(startDateSplit[0], startDateSplit[1] - 1, startDateSplit[2]);
+		const endDateSplit = this.endDate.split('-');
+		const endDateObj = new Date(endDateSplit[0], endDateSplit[1] - 1, endDateSplit[2]);
+
 		const event = new CustomEvent('commit-changes', {
 			detail: {
-				startDate: new Date(this.startDate),
-				endDate: new Date(this.endDate),
+				startDate: startDateObj,
+				endDate: endDateObj,
 				typeId: this.type,
 				frequencyId: this.frequency,
 				preferredTime: this.time,
