@@ -5,7 +5,7 @@
 */
 export function getLocalDateTimeFromUTCDateTimeString(utcDateTimeStr) {
 	if (utcDateTimeStr === undefined || utcDateTimeStr === null)
-		return null;
+		return utcDateTimeStr;
 
 	const localDateObj = new Date(utcDateTimeStr);
 	return localDateObj;
@@ -18,7 +18,7 @@ export function getLocalDateTimeFromUTCDateTimeString(utcDateTimeStr) {
 */
 export function getUTCDateTimeStringFromLocalDateTime(localDateObj) {
 	if (localDateObj === undefined || localDateObj === null)
-		return null;
+		return localDateObj;
 
 	const utcDateTimeStr = localDateObj.toISOString();
 	return utcDateTimeStr;

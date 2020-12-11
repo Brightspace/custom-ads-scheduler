@@ -177,8 +177,11 @@ class ScheduleLogs extends LocalizeMixin(LitElement) {
 
 		// UTC -> Local DateTime conversion
 		logs.forEach(log => {
-			log.runDate = getLocalDateTimeFromUTCDateTimeString(log.runDate);
-			log.endDate = getLocalDateTimeFromUTCDateTimeString(log.endDate);
+			if (log.runDate)
+				log.runDate = getLocalDateTimeFromUTCDateTimeString(log.runDate);
+
+			if (log.endDate)
+				log.endDate = getLocalDateTimeFromUTCDateTimeString(log.endDate);
 		});
 
 		this._mapLogsArray(logs);

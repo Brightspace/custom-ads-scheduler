@@ -108,8 +108,11 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 
 		// UTC -> Local DateTime conversion
 		this.schedules.forEach(schedule => {
-			schedule.lastRunTime = getLocalDateTimeFromUTCDateTimeString(schedule.lastRunTime);
-			schedule.nextRunTime = getLocalDateTimeFromUTCDateTimeString(schedule.nextRunTime);
+			if (schedule.lastRunTime)
+				schedule.lastRunTime = getLocalDateTimeFromUTCDateTimeString(schedule.lastRunTime);
+
+			if (schedule.nextRunTime)
+				schedule.nextRunTime = getLocalDateTimeFromUTCDateTimeString(schedule.nextRunTime);
 		});
 	}
 
