@@ -114,7 +114,7 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 	constructor() {
 		super();
 
-		const nowDate = formatDate(new Date(Date.now()), { format: 'yyyy-MM-dd' });
+		const nowDate = new Date(Date.now()).toString();
 		this.startDate = nowDate;
 		this.endDate = nowDate;
 		this.time = '00:00:00';
@@ -133,6 +133,15 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 		this.errorText = '';
 
 		this.firstRender = true;
+	}
+
+	async connectedCallback() {
+		super.connectedCallback();
+
+		// Incoming dateTime properties are now in a UTC DateTime string
+		// We only care about dates here, so a formatting step is necessary
+		this.startDate = formatDate(new Date(this.startDate), { format: 'yyyy-MM-dd' });
+		this.endDate = formatDate(new Date(this.endDate), { format: 'yyyy-MM-dd' });
 	}
 
 	render() {
@@ -187,8 +196,8 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 	_commitChanges() {
 		const event = new CustomEvent('commit-changes', {
 			detail: {
-				startDate: this.startDate,
-				endDate: this.endDate,
+				startDate: new Date(this.startDate),
+				endDate: new Date(this.endDate),
 				typeId: this.type,
 				frequencyId: this.frequency,
 				preferredTime: this.time,
