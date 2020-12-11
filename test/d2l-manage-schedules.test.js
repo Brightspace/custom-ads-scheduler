@@ -1,6 +1,7 @@
 import '../src/components/d2l-manage-schedules.js';
 import { expect, fixture, fixtureCleanup, html } from '@open-wc/testing';
 import { frequencies, frequenciesEnum, statuses, types, typesEnum } from '../src/constants';
+import { formatDateTime } from '@brightspace-ui/intl/lib/dateTime';
 import { ManageSchedulesServiceFactory } from '../src/services/manageSchedulesServiceFactory';
 import { ManageSchedulesTestService } from './utilities/manageSchedulesTestService';
 import { newRandomSchedule } from './utilities/scheduleGenerator';
@@ -60,18 +61,18 @@ describe('d2l-manage-schedules', () => {
 		});
 
 		it('binds correct values in table', async() => {
-
+			const dateTime = '2020-10-20T15:00:00.000Z';
 			const testSchedule = {
 				name: 'Schedule1',
 				typeId: typesEnum.full,
 				frequencyId: frequenciesEnum.weekly,
-				startDate: '2020-10-20T15:00:00.000Z',
-				endDate: '2020-10-20T15:00:00.000Z',
+				startDate: dateTime,
+				endDate: dateTime,
 				isEnabled: true,
 				scheduleId: 1,
 				statusId: 3,
-				lastRunTime: '2020-10-20T15:00:00.000Z',
-				nextRunTime: '2020-10-20T15:00:00.000Z'
+				lastRunTime: dateTime,
+				nextRunTime: dateTime
 			};
 
 			const el = await setFixtureSchedules(defaultFixture, [testSchedule]);
@@ -79,12 +80,11 @@ describe('d2l-manage-schedules', () => {
 			const rows = el.shadowRoot.querySelectorAll('tbody > tr');
 			expect(rows.length).to.equal(1);
 			const rowData = rows[0].querySelectorAll('td');
-
 			expect(rowData[0].innerText).to.contain(testSchedule.name);
 			expect(rowData[1].innerText).to.contain(translations[`schedule.type.${types[testSchedule.typeId]}`]);
 			expect(rowData[2].innerText).to.contain(translations[`schedule.frequency.${frequencies[testSchedule.frequencyId]}`]);
-			expect(rowData[3].innerText).to.contain('10/20/2020 11:00 AM');
-			expect(rowData[4].innerText).to.contain('10/20/2020 11:00 AM');
+			expect(rowData[3].innerText).to.contain(formatDateTime(new Date(dateTime), { format: 'short' }));
+			expect(rowData[4].innerText).to.contain(formatDateTime(new Date(dateTime), { format: 'short' }));
 			expect(rowData[5].innerText).to.contain(testSchedule.isEnabled ? translations[`schedule.status.${statuses[testSchedule.statusId]}`] : translations['disabled']);
 		});
 	});
