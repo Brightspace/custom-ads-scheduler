@@ -80,13 +80,6 @@ describe('d2l-manage-schedules', () => {
 			expect(rows.length).to.equal(1);
 			const rowData = rows[0].querySelectorAll('td');
 
-			// <th>${ this.localize('scheduleName') }</th>
-			// 		<th>${ this.localize('type') }</th>
-			// 		<th>${ this.localize('frequency') }</th>
-			// 		<th>${ this.localize('lastRunTime') }</th>
-			// 		<th>${ this.localize('nextRunTime') }</th>
-			// 		<th>${ this.localize('status') }</th>
-
 			expect(rowData[0].innerText).to.contain(testSchedule.name);
 			expect(rowData[1].innerText).to.contain(translations[`schedule.type.${types[testSchedule.typeId]}`]);
 			expect(rowData[2].innerText).to.contain(translations[`schedule.frequency.${frequencies[testSchedule.frequencyId]}`]);
