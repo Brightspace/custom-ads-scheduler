@@ -60,16 +60,18 @@ describe('d2l-manage-schedules', () => {
 		});
 
 		it('binds correct values in table', async() => {
+
 			const testSchedule = {
-				name: 'A',
+				name: 'Schedule1',
 				typeId: typesEnum.full,
 				frequencyId: frequenciesEnum.weekly,
-				startDate: '09/01/2020',
-				endDate: '12/31/2020',
-				lastRunTime: '9/1/2020 12:00 AM',
-				nextRunTime: '12/31/2020 12:00 AM',
+				startDate: '2020-10-20T15:00:00.000Z',
+				endDate: '2020-10-20T15:00:00.000Z',
 				isEnabled: true,
-				statusId: 3
+				scheduleId: 1,
+				statusId: 3,
+				lastRunTime: '2020-10-20T15:00:00.000Z',
+				nextRunTime: '2020-10-20T15:00:00.000Z'
 			};
 
 			const el = await setFixtureSchedules(defaultFixture, [testSchedule]);
@@ -77,11 +79,19 @@ describe('d2l-manage-schedules', () => {
 			const rows = el.shadowRoot.querySelectorAll('tbody > tr');
 			expect(rows.length).to.equal(1);
 			const rowData = rows[0].querySelectorAll('td');
+
+			// <th>${ this.localize('scheduleName') }</th>
+			// 		<th>${ this.localize('type') }</th>
+			// 		<th>${ this.localize('frequency') }</th>
+			// 		<th>${ this.localize('lastRunTime') }</th>
+			// 		<th>${ this.localize('nextRunTime') }</th>
+			// 		<th>${ this.localize('status') }</th>
+
 			expect(rowData[0].innerText).to.contain(testSchedule.name);
 			expect(rowData[1].innerText).to.contain(translations[`schedule.type.${types[testSchedule.typeId]}`]);
 			expect(rowData[2].innerText).to.contain(translations[`schedule.frequency.${frequencies[testSchedule.frequencyId]}`]);
-			expect(rowData[3].innerText).to.contain(testSchedule.lastRunTime);
-			expect(rowData[4].innerText).to.contain(testSchedule.nextRunTime);
+			expect(rowData[3].innerText).to.contain('10/20/2020 11:00 AM');
+			expect(rowData[4].innerText).to.contain('10/20/2020 11:00 AM');
 			expect(rowData[5].innerText).to.contain(testSchedule.isEnabled ? translations[`schedule.status.${statuses[testSchedule.statusId]}`] : translations['disabled']);
 		});
 	});
@@ -91,6 +101,7 @@ describe('d2l-manage-schedules', () => {
 async function setFixtureSchedules(givenFixture, schedules) {
 	const el = await fixture(givenFixture);
 	el.schedules = schedules;
+	el.connectedCallback();
 
 	await timeout(10);
 
