@@ -4,6 +4,9 @@
 	Returns a Javascript Date object
 */
 export function getLocalDateTimeFromUTCDateTimeString(utcDateTimeStr) {
+	if (utcDateTimeStr === undefined || utcDateTimeStr === null)
+		return null;
+
 	const localDateObj = new Date(utcDateTimeStr);
 	return localDateObj;
 }
@@ -14,6 +17,9 @@ export function getLocalDateTimeFromUTCDateTimeString(utcDateTimeStr) {
 	Returns a UTC DateTime string, in the ISO 8601 format (ex: 1994-11-05T13:15:30Z)
 */
 export function getUTCDateTimeStringFromLocalDateTime(localDateObj) {
+	if (localDateObj === undefined || localDateObj === null)
+		return null;
+
 	const utcDateTimeStr = localDateObj.toISOString();
 	return utcDateTimeStr;
 }
