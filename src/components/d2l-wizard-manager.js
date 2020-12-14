@@ -5,7 +5,7 @@ import './d2l-configure-schedule';
 import './d2l-delivery-method';
 import { css, html, LitElement } from 'lit-element/lit-element';
 import { frequenciesEnum, statusesEnum, typesEnum } from '../constants';
-import { getLocalDateTimeFromUTCDateTimeString, getUTCDateTimeStringFromLocalDateTime } from '../dateTime';
+import { getLocalDateTimeFromUTCDateTimeString, getLocalTimeStringFromUTCTime, getUTCDateTimeStringFromLocalDateTime } from '../dateTime';
 import { AddEditScheduleServiceFactory } from '../services/addEditScheduleServiceFactory';
 import { formatDate } from '@brightspace-ui/intl/lib/dateTime';
 import { getLocalizeResources } from '../localization.js';
@@ -161,6 +161,8 @@ class WizardManager extends LocalizeMixin(LitElement) {
 				this.schedule.nextRunTime = getLocalDateTimeFromUTCDateTimeString(this.schedule.nextRunTime);
 			if (this.schedule.createdDate)
 				this.schedule.createdDate = getLocalDateTimeFromUTCDateTimeString(this.schedule.createdDate);
+			if (this.schedule.preferredTime)
+				this.schedule.preferredTime = getLocalTimeStringFromUTCTime(this.schedule.preferredTime);
 
 			this._updateScheduleCache(this.schedule);
 		}

@@ -3,7 +3,7 @@ import '@brightspace-ui/core/components/inputs/input-text.js';
 import '@brightspace-ui/core/components/inputs/input-time.js';
 import { css, html, LitElement } from 'lit-element/lit-element';
 import { frequenciesEnum, participationDataSetId, typesEnum } from '../constants';
-import { formatDate } from '@brightspace-ui/intl/lib/dateTime';
+import { formatDate, parseTime } from '@brightspace-ui/intl/lib/dateTime';
 import { getLocalizeResources } from '../localization.js';
 import { heading1Styles } from '@brightspace-ui/core/components/typography/styles.js';
 import { inputLabelStyles } from '@brightspace-ui/core/components/inputs/input-label-styles';
