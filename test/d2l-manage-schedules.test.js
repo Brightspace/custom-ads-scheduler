@@ -1,6 +1,7 @@
 import '../src/components/d2l-manage-schedules.js';
 import { expect, fixture, fixtureCleanup, html } from '@open-wc/testing';
 import { frequencies, frequenciesEnum, statuses, types, typesEnum } from '../src/constants';
+import { formatDateTime } from '@brightspace-ui/intl/lib/dateTime';
 import { ManageSchedulesServiceFactory } from '../src/services/manageSchedulesServiceFactory';
 import { ManageSchedulesTestService } from './utilities/manageSchedulesTestService';
 import { newRandomSchedule } from './utilities/scheduleGenerator';
@@ -60,16 +61,18 @@ describe('d2l-manage-schedules', () => {
 		});
 
 		it('binds correct values in table', async() => {
+			const dateTime = '2020-10-20T15:00:00.000Z';
 			const testSchedule = {
-				name: 'A',
+				name: 'Schedule1',
 				typeId: typesEnum.full,
 				frequencyId: frequenciesEnum.weekly,
-				startDate: '09/01/2020',
-				endDate: '12/31/2020',
-				lastRunTime: '9/1/2020 12:00 AM',
-				nextRunTime: '12/31/2020 12:00 AM',
+				startDate: dateTime,
+				endDate: dateTime,
 				isEnabled: true,
-				statusId: 3
+				scheduleId: 1,
+				statusId: 3,
+				lastRunTime: dateTime,
+				nextRunTime: dateTime
 			};
 
 			const el = await setFixtureSchedules(defaultFixture, [testSchedule]);
@@ -80,8 +83,8 @@ describe('d2l-manage-schedules', () => {
 			expect(rowData[0].innerText).to.contain(testSchedule.name);
 			expect(rowData[1].innerText).to.contain(translations[`schedule.type.${types[testSchedule.typeId]}`]);
 			expect(rowData[2].innerText).to.contain(translations[`schedule.frequency.${frequencies[testSchedule.frequencyId]}`]);
-			expect(rowData[3].innerText).to.contain(testSchedule.lastRunTime);
-			expect(rowData[4].innerText).to.contain(testSchedule.nextRunTime);
+			expect(rowData[3].innerText).to.contain(formatDateTime(new Date(dateTime), { format: 'short' }));
+			expect(rowData[4].innerText).to.contain(formatDateTime(new Date(dateTime), { format: 'short' }));
 			expect(rowData[5].innerText).to.contain(testSchedule.isEnabled ? translations[`schedule.status.${statuses[testSchedule.statusId]}`] : translations['disabled']);
 		});
 	});
@@ -91,6 +94,7 @@ describe('d2l-manage-schedules', () => {
 async function setFixtureSchedules(givenFixture, schedules) {
 	const el = await fixture(givenFixture);
 	el.schedules = schedules;
+	el.connectedCallback();
 
 	await timeout(10);
 

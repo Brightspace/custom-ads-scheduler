@@ -114,7 +114,7 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 	constructor() {
 		super();
 
-		const nowDate = formatDate(new Date(Date.now()), { format: 'yyyy-MM-dd' });
+		const nowDate = new Date(Date.now()).toString();
 		this.startDate = nowDate;
 		this.endDate = nowDate;
 		this.time = '00:00:00';
@@ -133,6 +133,15 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 		this.errorText = '';
 
 		this.firstRender = true;
+	}
+
+	async connectedCallback() {
+		super.connectedCallback();
+
+		// Incoming dateTime properties are now in a UTC DateTime string
+		// We only care about dates here, so a formatting step is necessary
+		this.startDate = formatDate(new Date(this.startDate), { format: 'yyyy-MM-dd' });
+		this.endDate = formatDate(new Date(this.endDate), { format: 'yyyy-MM-dd' });
 	}
 
 	render() {
@@ -185,10 +194,17 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 	}
 
 	_commitChanges() {
+
+		// This is a bit ugly. Unfortunately, none of the Core Helpers can properly parse theDatePicker component output into a Date object
+		const startDateSplit = this.startDate.split('-');
+		const startDateObj = new Date(startDateSplit[0], startDateSplit[1] - 1, startDateSplit[2]);
+		const endDateSplit = this.endDate.split('-');
+		const endDateObj = new Date(endDateSplit[0], endDateSplit[1] - 1, endDateSplit[2]);
+
 		const event = new CustomEvent('commit-changes', {
 			detail: {
-				startDate: this.startDate,
-				endDate: this.endDate,
+				startDate: startDateObj,
+				endDate: endDateObj,
 				typeId: this.type,
 				frequencyId: this.frequency,
 				preferredTime: this.time,

@@ -5,6 +5,7 @@ import './d2l-configure-schedule';
 import './d2l-delivery-method';
 import { css, html, LitElement } from 'lit-element/lit-element';
 import { frequenciesEnum, statusesEnum, typesEnum } from '../constants';
+import { getLocalDateTimeFromUTCDateTimeString, getUTCDateTimeStringFromLocalDateTime } from '../dateTime';
 import { AddEditScheduleServiceFactory } from '../services/addEditScheduleServiceFactory';
 import { formatDate } from '@brightspace-ui/intl/lib/dateTime';
 import { getLocalizeResources } from '../localization.js';
@@ -148,6 +149,19 @@ class WizardManager extends LocalizeMixin(LitElement) {
 		if (this._editing) {
 			this.isLoading = true;
 			this.schedule = await this.manageSchedulesService.getSchedule(this.scheduleId);
+
+			// UTC string -> Local DateTime object conversion
+			if (this.schedule.startDate)
+				this.schedule.startDate = getLocalDateTimeFromUTCDateTimeString(this.schedule.startDate);
+			if (this.schedule.endDate)
+				this.schedule.endDate = getLocalDateTimeFromUTCDateTimeString(this.schedule.endDate);
+			if (this.schedule.lastRunTime)
+				this.schedule.lastRunTime = getLocalDateTimeFromUTCDateTimeString(this.schedule.lastRunTime);
+			if (this.schedule.nextRunTime)
+				this.schedule.nextRunTime = getLocalDateTimeFromUTCDateTimeString(this.schedule.nextRunTime);
+			if (this.schedule.createdDate)
+				this.schedule.createdDate = getLocalDateTimeFromUTCDateTimeString(this.schedule.createdDate);
+
 			this._updateScheduleCache(this.schedule);
 		}
 		this.isLoading = false;
@@ -269,10 +283,22 @@ class WizardManager extends LocalizeMixin(LitElement) {
 	}
 
 	async _saveSchedule() {
+
+		// Copy the schedule cache we want to send, because we have to convert our local DateTime objects to UTC DateTime strings
+		// If the save fails, we don't want to keep the converted DateTimes in our cache
+		const lastRunTimeStr = getUTCDateTimeStringFromLocalDateTime(this.cachedSchedule.lastRunTime);
+		const nextRunTimeStr = getUTCDateTimeStringFromLocalDateTime(this.cachedSchedule.nextRunTime);
+		const copiedSchedule = JSON.parse(JSON.stringify(this.cachedSchedule));
+
+		if (lastRunTimeStr)
+			copiedSchedule.lastRunTime = lastRunTimeStr;
+		if (nextRunTimeStr)
+			copiedSchedule.nextRunTime = nextRunTimeStr;
+
 		if (this._editing) {
-			await this.manageSchedulesService.editSchedule(this.scheduleId, this.cachedSchedule);
+			await this.manageSchedulesService.editSchedule(this.scheduleId, copiedSchedule);
 		} else {
-			await this.manageSchedulesService.addSchedule(this.cachedSchedule);
+			await this.manageSchedulesService.addSchedule(copiedSchedule);
 		}
 	}
 
