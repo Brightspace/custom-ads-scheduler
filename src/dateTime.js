@@ -15,7 +15,7 @@ export function getLocalDateTimeFromUTCDateTimeString(utcDateTimeStr) {
 	const hours = utcDateTimeStrSplit[3];
 	const minutes = utcDateTimeStrSplit[4];
 	const seconds = utcDateTimeStrSplit[5];
-	const milliseconds = utcDateTimeStrSplit[5];
+	const milliseconds = utcDateTimeStrSplit[6];
 
 	const localDateObj = new Date(year, month, date, hours, minutes, seconds, milliseconds);
 
