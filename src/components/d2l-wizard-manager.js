@@ -291,7 +291,6 @@ class WizardManager extends LocalizeMixin(LitElement) {
 		const endDateStr = getUTCDateTimeStringFromLocalDateTime(this.cachedSchedule.endDate);
 		const lastRunTimeStr = getUTCDateTimeStringFromLocalDateTime(this.cachedSchedule.lastRunTime);
 		const nextRunTimeStr = getUTCDateTimeStringFromLocalDateTime(this.cachedSchedule.nextRunTime);
-		const createdDateStr = getUTCDateTimeStringFromLocalDateTime(this.cachedSchedule.createdDate);
 		const preferredTime = getUTCTimeStringFromLocalTime(this.cachedSchedule.preferredTime);
 
 		const copiedSchedule = JSON.parse(JSON.stringify(this.cachedSchedule));
@@ -304,14 +303,13 @@ class WizardManager extends LocalizeMixin(LitElement) {
 			copiedSchedule.lastRunTime = lastRunTimeStr;
 		if (nextRunTimeStr)
 			copiedSchedule.nextRunTime = nextRunTimeStr;
-		if (createdDateStr)
-			copiedSchedule.createdDate = createdDateStr;
 		if (preferredTime)
 			copiedSchedule.preferredTime = preferredTime;
 
 		if (this._editing) {
 			await this.manageSchedulesService.editSchedule(this.scheduleId, copiedSchedule);
 		} else {
+			copiedSchedule.createdDate = getUTCDateTimeStringFromLocalDateTime(new Date());
 			await this.manageSchedulesService.addSchedule(copiedSchedule);
 		}
 	}
