@@ -7,7 +7,6 @@ import { css, html, LitElement } from 'lit-element/lit-element';
 import { frequenciesEnum, statusesEnum, typesEnum } from '../constants';
 import { getLocalDateTimeFromUTCDateTimeString, getLocalTimeStringFromUTCTime, getUTCDateTimeStringFromLocalDateTime, getUTCTimeStringFromLocalTime } from '../dateTime';
 import { AddEditScheduleServiceFactory } from '../services/addEditScheduleServiceFactory';
-import { formatDate } from '@brightspace-ui/intl/lib/dateTime';
 import { getLocalizeResources } from '../localization.js';
 import { ifDefined } from 'lit-html/directives/if-defined';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';

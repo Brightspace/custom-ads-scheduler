@@ -1,6 +1,5 @@
 
 import { formatDate, formatTime, parseTime } from '@brightspace-ui/intl/lib/dateTime';
-import moment from 'moment/src/moment';
 
 /*
 	Logic for UTC -> Local DateTime conversion goes here
