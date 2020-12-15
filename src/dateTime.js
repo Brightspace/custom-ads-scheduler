@@ -31,13 +31,19 @@ export function getUTCDateTimeStringFromLocalDateTime(localDateObj) {
 export function getUTCTimeStringFromLocalTime(localTimeStr) {
 	if (localTimeStr === undefined || localTimeStr === null)
 		return localTimeStr;
-		
-	// TODO: Manually parse the pattern "HH:mm:ss", and use the Hours/Minutes to create something liek new Date("2020-11-14T10:00").toISOString()
-	// Then, take the substring from 'T' to 'z', non-inclusive
-	// Thats our UTC time string? WTF
 
-	const localDateTimeObj = parseTime(localTimeStr);
-	return `${localDateTimeObj.getHours()}:${localDateTimeObj.getMinutes()}:${localDateTimeObj.getSeconds()}.${localDateTimeObj.getMilliseconds()}`;
+	const today = new Date();
+	const splitLocalTime = localTimeStr.split(':');
+	const localHours = splitLocalTime[0];
+	const localMinutes = splitLocalTime[1];
+
+	const localDateObj = new Date(today.getFullYear(), today.getMonth(), today.getDate(), localHours, localMinutes);
+	const utcDateTimeStr = localDateObj.toISOString();
+	const startIndex = utcDateTimeStr.indexOf('T') + 1;
+	const endIndex = utcDateTimeStr.indexOf('Z');
+	const utcTimeStr = utcDateTimeStr.substring(startIndex, endIndex);
+
+	return utcTimeStr;
 }
 
 export function getLocalTimeStringFromUTCTime(utcTimeStr) {
