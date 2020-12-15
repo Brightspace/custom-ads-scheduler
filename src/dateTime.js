@@ -7,7 +7,16 @@ export function getLocalDateTimeFromUTCDateTimeString(utcDateTimeStr) {
 	if (utcDateTimeStr === undefined || utcDateTimeStr === null)
 		return utcDateTimeStr;
 
-	const localDateObj = new Date(utcDateTimeStr);
+	const utcDateTimeStrSplit = utcDateTimeStr.match(/\d+/g);
+
+	const localDateObj = new Date(
+		+utcDateTimeStrSplit[0],
+		+utcDateTimeStrSplit[1] - 1,
+		+utcDateTimeStrSplit[2],
+		+utcDateTimeStrSplit[3],
+		+utcDateTimeStrSplit[4],
+		+utcDateTimeStrSplit[5]);
+
 	return localDateObj;
 }
 
