@@ -9,13 +9,15 @@ export function getLocalDateTimeFromUTCDateTimeString(utcDateTimeStr) {
 
 	const utcDateTimeStrSplit = utcDateTimeStr.match(/\d+/g);
 
-	const localDateObj = new Date(
-		+utcDateTimeStrSplit[0],
-		+utcDateTimeStrSplit[1] - 1,
-		+utcDateTimeStrSplit[2],
-		+utcDateTimeStrSplit[3],
-		+utcDateTimeStrSplit[4],
-		+utcDateTimeStrSplit[5]);
+	const year = utcDateTimeStrSplit[0];
+	const month = utcDateTimeStrSplit[1] - 1;
+	const date = utcDateTimeStrSplit[2];
+	const hours = utcDateTimeStrSplit[3];
+	const minutes = utcDateTimeStrSplit[4];
+	const seconds = utcDateTimeStrSplit[5];
+	const milliseconds = utcDateTimeStrSplit[5];
+
+	const localDateObj = new Date(year, month, date, hours, minutes, seconds, milliseconds);
 
 	return localDateObj;
 }
