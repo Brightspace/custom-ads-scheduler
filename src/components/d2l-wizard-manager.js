@@ -163,7 +163,7 @@ class WizardManager extends LocalizeMixin(LitElement) {
 			// Adjust preferredDay based on UTC -> Local Conversion
 			const localDateTime = new Date();
 			const dayModifier = localDateTime.getUTCDate() - localDateTime.getDate();
-			const modifiedDay = this.day - dayModifier;
+			const modifiedDay = this.schedule.preferredDay - dayModifier;
 			this.schedule.preferredDay = modifiedDay < 0 ? 6 : modifiedDay % 7;
 
 			this._updateScheduleCache(this.schedule);
@@ -312,8 +312,8 @@ class WizardManager extends LocalizeMixin(LitElement) {
 		// Adjust preferredDay based on Local -> UTC Conversion
 		const localDateTime = new Date();
 		const dayModifier = localDateTime.getUTCDate() - localDateTime.getDate();
-		const modifiedDay = this.day + dayModifier;
-		this.copiedSchedule.preferredDay = modifiedDay < 0 ? 6 : modifiedDay % 7;
+		const modifiedDay = copiedSchedule.preferredDay + dayModifier;
+		copiedSchedule.preferredDay = modifiedDay < 0 ? 6 : modifiedDay % 7;
 
 		if (this._editing) {
 			await this.manageSchedulesService.editSchedule(this.scheduleId, copiedSchedule);
