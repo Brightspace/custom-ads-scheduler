@@ -59,3 +59,14 @@ export function getLocalTimeStringFromUTCTime(utcTimeStr) {
 function buildTimeString(dateTimeObj, utc = false) {
 	return `${formatTime(dateTimeObj, { format: 'HH:mm' })}:00${ utc ? 'z' : '' }`;
 }
+
+export function convertDayOfWeek(dayOfWeek, toUTC = true) {
+	if (dayOfWeek === undefined || dayOfWeek === null)
+		return dayOfWeek;
+
+	const localDateTime = new Date();
+	const dayModifier = localDateTime.getUTCDate() - localDateTime.getDate();
+	const modifiedDay = dayOfWeek + (toUTC ? dayModifier : -dayModifier);
+	const newDayOfWeek = modifiedDay < 0 ? 6 : modifiedDay % 7;
+	return newDayOfWeek;
+}

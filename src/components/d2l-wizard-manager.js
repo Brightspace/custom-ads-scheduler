@@ -5,7 +5,7 @@ import './d2l-configure-schedule';
 import './d2l-delivery-method';
 import { css, html, LitElement } from 'lit-element/lit-element';
 import { frequenciesEnum, statusesEnum, typesEnum } from '../constants';
-import { getLocalDateTimeFromUTCDateTimeString, getLocalTimeStringFromUTCTime, getUTCDateTimeStringFromLocalDateTime, getUTCTimeStringFromLocalTime } from '../dateTime';
+import { convertDayOfWeek, getLocalDateTimeFromUTCDateTimeString, getLocalTimeStringFromUTCTime, getUTCDateTimeStringFromLocalDateTime, getUTCTimeStringFromLocalTime} from '../dateTime';
 import { AddEditScheduleServiceFactory } from '../services/addEditScheduleServiceFactory';
 import { getLocalizeResources } from '../localization.js';
 import { ifDefined } from 'lit-html/directives/if-defined';
@@ -161,10 +161,7 @@ class WizardManager extends LocalizeMixin(LitElement) {
 				this.schedule.preferredTime = getLocalTimeStringFromUTCTime(this.schedule.preferredTime);
 
 			// Adjust preferredDay based on UTC -> Local Conversion
-			const localDateTime = new Date();
-			const dayModifier = localDateTime.getUTCDate() - localDateTime.getDate();
-			const modifiedDay = this.schedule.preferredDay - dayModifier;
-			this.schedule.preferredDay = modifiedDay < 0 ? 6 : modifiedDay % 7;
+			this.schedule.preferredDay = convertDayOfWeek(this.schedule.preferredDay, false);
 
 			this._updateScheduleCache(this.schedule);
 		}
@@ -310,10 +307,7 @@ class WizardManager extends LocalizeMixin(LitElement) {
 			copiedSchedule.preferredTime = preferredTime;
 
 		// Adjust preferredDay based on Local -> UTC Conversion
-		const localDateTime = new Date();
-		const dayModifier = localDateTime.getUTCDate() - localDateTime.getDate();
-		const modifiedDay = copiedSchedule.preferredDay + dayModifier;
-		copiedSchedule.preferredDay = modifiedDay < 0 ? 6 : modifiedDay % 7;
+		copiedSchedule.preferredDay = convertDayOfWeek(copiedSchedule.preferredDay, true);
 
 		if (this._editing) {
 			await this.manageSchedulesService.editSchedule(this.scheduleId, copiedSchedule);
