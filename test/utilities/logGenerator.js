@@ -10,8 +10,8 @@ export function newRandomLog() {
 
 	return {
 		scheduleId: scheduleId,
-		runDate: startDate.toISOString(),
-		endDate: endDate.toISOString(),
+		runDate: startDate,
+		endDate: endDate,
 		statusId: status
 	};
 }
