@@ -3,11 +3,10 @@ import '@brightspace-ui-labs/wizard/d2l-step.js';
 import './d2l-select-data-set';
 import './d2l-configure-schedule';
 import './d2l-delivery-method';
+import { convertDayOfWeek, getLocalDateTimeFromUTCDateTimeString, getLocalTimeStringFromUTCTime, getUTCDateTimeStringFromLocalDateTime, getUTCTimeStringFromLocalTime } from '../dateTime';
 import { css, html, LitElement } from 'lit-element/lit-element';
 import { frequenciesEnum, statusesEnum, typesEnum } from '../constants';
-import { getLocalDateTimeFromUTCDateTimeString, getUTCDateTimeStringFromLocalDateTime } from '../dateTime';
 import { AddEditScheduleServiceFactory } from '../services/addEditScheduleServiceFactory';
-import { formatDate } from '@brightspace-ui/intl/lib/dateTime';
 import { getLocalizeResources } from '../localization.js';
 import { ifDefined } from 'lit-html/directives/if-defined';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
@@ -66,7 +65,7 @@ class WizardManager extends LocalizeMixin(LitElement) {
 		this.addEditScheduleService = AddEditScheduleServiceFactory.getAddEditScheduleService();
 
 		// TODO: Remove these default values when the wizard is complete - we need these for now, in order to pass validation
-		const nowDate = formatDate(new Date(Date.now()), { format: 'yyyy-MM-dd' });
+		const nowDate = new Date().toISOString();
 		this.cachedSchedule = {
 			name: '',
 			typeId: typesEnum.full,
@@ -77,7 +76,6 @@ class WizardManager extends LocalizeMixin(LitElement) {
 			dataSetId: 'a0e3aca7-3bf2-4400-b831-9fdce98469b1',
 			orgId: 1,
 			createdBy: 1,
-			createdDate: nowDate,
 			statusId: statusesEnum.queued,
 			preferredDay: 1,
 			preferredTime: '00:00:00',
@@ -159,8 +157,11 @@ class WizardManager extends LocalizeMixin(LitElement) {
 				this.schedule.lastRunTime = getLocalDateTimeFromUTCDateTimeString(this.schedule.lastRunTime);
 			if (this.schedule.nextRunTime)
 				this.schedule.nextRunTime = getLocalDateTimeFromUTCDateTimeString(this.schedule.nextRunTime);
-			if (this.schedule.createdDate)
-				this.schedule.createdDate = getLocalDateTimeFromUTCDateTimeString(this.schedule.createdDate);
+			if (this.schedule.preferredTime)
+				this.schedule.preferredTime = getLocalTimeStringFromUTCTime(this.schedule.preferredTime);
+
+			// Adjust preferredDay based on UTC -> Local Conversion
+			this.schedule.preferredDay = convertDayOfWeek(this.schedule.preferredDay, false);
 
 			this._updateScheduleCache(this.schedule);
 		}
@@ -286,14 +287,27 @@ class WizardManager extends LocalizeMixin(LitElement) {
 
 		// Copy the schedule cache we want to send, because we have to convert our local DateTime objects to UTC DateTime strings
 		// If the save fails, we don't want to keep the converted DateTimes in our cache
+		const startDateStr = getUTCDateTimeStringFromLocalDateTime(this.cachedSchedule.startDate);
+		const endDateStr = getUTCDateTimeStringFromLocalDateTime(this.cachedSchedule.endDate);
 		const lastRunTimeStr = getUTCDateTimeStringFromLocalDateTime(this.cachedSchedule.lastRunTime);
 		const nextRunTimeStr = getUTCDateTimeStringFromLocalDateTime(this.cachedSchedule.nextRunTime);
+		const preferredTime = getUTCTimeStringFromLocalTime(this.cachedSchedule.preferredTime);
+
 		const copiedSchedule = JSON.parse(JSON.stringify(this.cachedSchedule));
 
+		if (startDateStr)
+			copiedSchedule.startDate = startDateStr;
+		if (endDateStr)
+			copiedSchedule.endDate = endDateStr;
 		if (lastRunTimeStr)
 			copiedSchedule.lastRunTime = lastRunTimeStr;
 		if (nextRunTimeStr)
 			copiedSchedule.nextRunTime = nextRunTimeStr;
+		if (preferredTime)
+			copiedSchedule.preferredTime = preferredTime;
+
+		// Adjust preferredDay based on Local -> UTC Conversion
+		copiedSchedule.preferredDay = convertDayOfWeek(copiedSchedule.preferredDay, true);
 
 		if (this._editing) {
 			await this.manageSchedulesService.editSchedule(this.scheduleId, copiedSchedule);
