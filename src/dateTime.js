@@ -57,7 +57,7 @@ export function getLocalTimeStringFromUTCTime(utcTimeStr) {
 }
 
 function buildTimeString(dateTimeObj, utc = false) {
-	return `${formatTime(dateTimeObj, { format: 'HH:mm' })}:00${ utc ? 'z' : '' }`;
+	return `${formatTime(dateTimeObj, { format: 'HH:mm' })}:00${ utc ? 'Z' : '' }`;
 }
 
 export function convertDayOfWeek(dayOfWeek, toUTC = true) {
