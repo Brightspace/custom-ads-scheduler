@@ -53,8 +53,8 @@ describe('d2l-schedules-log', () => {
 		it('binds correct values in logs table', async() => {
 			const testLog = {
 				scheduleId: 1,
-				runDate: '2020-10-11T05:02:03.000Z',
-				endDate: '2020-10-15T05:04:17.000Z',
+				runDate: new Date(2020, 9, 11, 1, 2, 3),
+				endDate: new Date(2020, 9, 15, 1, 4, 17),
 				statusId: 3
 			};
 
@@ -64,8 +64,8 @@ describe('d2l-schedules-log', () => {
 			const rows = el.shadowRoot.querySelectorAll('tbody > tr');
 			expect(rows.length).to.equal(1);
 			const rowData = rows[0].querySelectorAll('td');
-			expect(rowData[0].innerText).to.equal('10/11/2020 5:02 AM'); // intl converted DateTime
-			expect(rowData[1].innerText).to.equal('10/15/2020 5:04 AM'); // intl converted DateTime
+			expect(rowData[0].innerText).to.equal('10/11/2020 1:02 AM'); // intl converted DateTime
+			expect(rowData[1].innerText).to.equal('10/15/2020 1:04 AM'); // intl converted DateTime
 			expect(rowData[2].innerText).to.equal('Completed');
 		});
 
