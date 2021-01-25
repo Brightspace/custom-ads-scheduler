@@ -14,7 +14,6 @@
     "lint": "npm run lint:eslint && npm run lint:lit",
     "lint:eslint": "eslint . --ext .js,.html",
     "lint:lit": "lit-analyzer custom-ads-scheduler.js demo test",
-    "lint:style": "stylelint \"**/*.js\"",
     "start": "es-dev-server --app-index demo/index.html --node-resolve --dedupe --open --watch",
     "test": "npm run lint && npm run test:headless && npm run test:diff",
     "test:headless": "karma start",
