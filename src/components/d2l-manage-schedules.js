@@ -24,8 +24,8 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 	static get properties() {
 		return {
 			dataHubAccess: {
-				type: Boolean,
-				attribute: 'data-hub-access'
+				attribute: 'data-hub-access',
+				type: Boolean
 			},
 			schedules: {
 				type: Array
@@ -39,48 +39,49 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 	static get styles() {
 		const manageSchedulesStyles = css`
 			:host {
-				width: 100%;
 				display: inline-block;
+				width: 100%;
 			}
 
 			:host([hidden]) {
 				display: none;
 			}
 
-			.add-new-button {
-				padding: 6px 0px;
+			.d2l-add-new-button {
+				padding: 6px 0;
 			}
 
-			.spinner {
+			.d2l-spinner {
 				display: flex;
 				margin: 48px;
 			}
 
-			.description-text {
-				margin-bottom: 0px;
+			.d2l-description-text {
+				margin-bottom: 0;
 			}
 
-			.no-data-hub-access {
+			.d2l-no-data-hub-access {
 				margin-bottom: 18px;
 			}
 
-			.message--empty-table {
+			.d2l-message--empty-table {
 				text-align: center;
 			}
 
-			.d2l-heading-2.nothing-title {
-				margin-top: 0;
+			.d2l-heading-2
+			.d2l-nothing-title {
 				margin-bottom: 18px;
+				margin-top: 0;
 			}
 
-			.empty-table-wrapper {
+			.d2l-empty-table-wrapper {
 				display: flex;
 				flex-direction: column;
 			}
 
-			.get-started-button {
-				margin: 12px;
+			.d2l-get-started-button {
 				align-self: center;
+				margin: 12px;
 			}
 		`;
 		return [
@@ -211,7 +212,7 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 			return html`
 				<d2l-button-subtle
 					id="add-new"
-					class="add-new-button"
+					class="d2l-add-new-button"
 					icon="tier1:plus-large-thick"
 					text="${ this.localize('actionNew') }"
 					@click=${ this._handleNew }>
@@ -235,10 +236,10 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 
 	_renderEmptyIllustration() {
 		return html`
-			<div class="message--empty-table">
+			<div class="d2l-message--empty-table">
 				<nothing-here-illustration>
 				</nothing-here-illustration>
-				<h1 class="d2l-heading-2 nothing-title">
+				<h1 class="d2l-heading-2 d2l-nothing-title">
 					${ this.localize('schedulerNothingTitle') }
 				</h1>
 				<div class="d2l-body-standard">
@@ -252,7 +253,7 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 		const isEmpty = this.schedules.length === 0;
 
 		const baseTemplate = html`
-			<div class="description-text d2l-body-standard ${classMap({ 'no-data-hub-access': !this.dataHubAccess })}">
+			<div class="d2l-description-text d2l-body-standard ${classMap({ 'd2l-no-data-hub-access': !this.dataHubAccess })}">
 				${ this.localize('schedulerDesc') }
 			</div>
 			<d2l-alert-toast id="errorStatusToggleFailed" type="critical">
@@ -265,14 +266,14 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 
 		if (isEmpty) {
 			return html`
-				<div class='empty-table-wrapper'>
+				<div class='d2l-empty-table-wrapper'>
 					${ baseTemplate }
 					${ this._renderEmptyIllustration() }
 					<d2l-button
 						id="get-started"
 						primary
 						?disabled="${!this.dataHubAccess}"
-						class="get-started-button"
+						class="d2l-get-started-button"
 						@click=${ this._handleNew }>
 							${ this.localize('actionStart') }
 					</d2l-button>

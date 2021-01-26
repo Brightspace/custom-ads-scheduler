@@ -50,36 +50,36 @@ class ScheduleLogs extends LocalizeMixin(LitElement) {
 	static get styles() {
 		const scheduleLogsStyles = css`
 			:host {
-				width: 100%;
 				display: inline-block;
+				width: 100%;
 			}
 
 			:host([hidden]) {
 				display: none;
 			}
 
-			.spinner {
+			.d2l-spinner {
 				display: flex;
 				margin: 48px;
 			}
 
-			.table-wrapper {
+			.d2l-table-wrapper {
 				position: relative;
 			}
 
-			.dimmed {
+			.d2l-dimmed {
 				opacity: 0.6;
 			}
 
-			.query-spinner {
-				position: absolute;
+			.d2l-query-spinner {
 				left: 0px;
-				width: 100%;
 				margin: 0px auto;
+				position: absolute;
 				top: calc(50% - 50px);
+				width: 100%;
 			}
 
-			.description-text {
+			.d2l-description-text {
 				margin-bottom: 18px;
 			}
 		`;
@@ -213,7 +213,7 @@ class ScheduleLogs extends LocalizeMixin(LitElement) {
 	_renderLogs() {
 		const baseTemplate = html`
 
-			<div class="description-text d2l-body-standard">
+			<div class="d2l-description-text d2l-body-standard">
 				${ this.localize('logs.desc', { scheduleId:`${this.scheduleId}` }) }
 			</div>
 		`;
@@ -242,7 +242,7 @@ class ScheduleLogs extends LocalizeMixin(LitElement) {
 	_renderQuerySpinner() {
 		return html`
 			<d2l-loading-spinner
-				class="query-spinner"
+				class="d2l-query-spinner"
 				size=100>
 			</d2l-loading-spinner>
 		`;
@@ -251,7 +251,7 @@ class ScheduleLogs extends LocalizeMixin(LitElement) {
 	_renderSpinner() {
 		return html`
 			<d2l-loading-spinner
-				class="spinner"
+				class="d2l-spinner"
 				size=100>
 			</d2l-loading-spinner>
 		`;
@@ -259,7 +259,7 @@ class ScheduleLogs extends LocalizeMixin(LitElement) {
 
 	_renderTable() {
 		return html`
-			<div class="table-wrapper ${ this.isQuerying ? 'dimmed' : '' }">
+			<div class="d2l-table-wrapper ${ this.isQuerying ? 'd2l-dimmed' : '' }">
 				<table>
 					<thead>
 						<th>${ this.localize('logs.runDate') }</th>

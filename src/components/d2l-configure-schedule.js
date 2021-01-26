@@ -73,28 +73,28 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 	static get styles() {
 		const selectDataSetStyles = css`
 
-			.step {
-				margin: 20px 0px 60px 0;
+			.d2l-step {
+				margin: 20px 0 60px 0;
 			}
 
-			.property-wrapper {
-				width: 500px;
+			.d2l-property-wrapper {
 				margin-bottom: 20px;
+				width: 500px;
 			}
 
-			.property-wrapper > .d2l-input-select {
+			.d2l-property-wrapper > .d2l-input-select {
 				width: 100%;
 			}
 
-			.dates-wrapper {
+			.d2l-dates-wrapper {
 				display: flex;
 			}
 
-			.date-wrapper {
+			.d2l-date-wrapper {
 				flex: 1;
 			}
 
-			.one-line-tooltip {
+			.d2l-one-line-tooltip {
 				white-space: nowrap;
 			}
 		`;
@@ -228,7 +228,7 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 
 	_renderDates() {
 		return html`
-			<div class="property-wrapper dates-wrapper">
+			<div class="d2l-property-wrapper d2l-dates-wrapper">
 
 				<div>
 					<!-- This component handles its own validation tooltips -->
@@ -253,7 +253,7 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 
 	_renderDay() {
 		return html`
-			<div class="property-wrapper">
+			<div class="d2l-property-wrapper">
 				<label for="day" class="d2l-input-label d2l-input-label-required">${ this.localize('step2.day.label') }</label>
 				<select id="day" class="d2l-input-select"
 					required
@@ -269,7 +269,7 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 					<option value="6" aria-label="${ this.localize('step2.day.saturday') }" .selected="${ this.day === 6 }">${ this.localize('step2.day.saturday') }</option>
 				</select>
 				${ this.invalidDay ? html`
-				<d2l-tooltip for="day" state="error" align="start" class="one-line-tooltip">
+				<d2l-tooltip for="day" state="error" align="start" class="d2l-one-line-tooltip">
 					${ this.localize('step2.day.errorMessage') }
 				</d2l-tooltip>` : null }
 			</div>
@@ -278,7 +278,7 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 
 	_renderFrequency() {
 		return html`
-			<div class="property-wrapper">
+			<div class="d2l-property-wrapper">
 				<label for="frequency" class="d2l-input-label d2l-input-label-required">${ this.localize('step2.frequency.label') }</label>
 				<select id="frequency" class="d2l-input-select"
 					required
@@ -288,7 +288,7 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 					${ this._renderFrequencyOptions() }
 				</select>
 				${ this.invalidFrequency ? html`
-				<d2l-tooltip for="frequency" state="error" align="start" class="one-line-tooltip">
+				<d2l-tooltip for="frequency" state="error" align="start" class="d2l-one-line-tooltip">
 					${ this.localize('step2.frequency.errorMessage') }
 				</d2l-tooltip>` : null }
 			</div>
@@ -315,7 +315,7 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 
 	_renderStep() {
 		return html`
-			<div class="step">
+			<div class="d2l-step">
 				${ this._renderDates() }
 				${ this._renderType() }
 				${ this._renderFrequency() }
@@ -326,7 +326,7 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 
 	_renderTime() {
 		return html`
-			<div class="property-wrapper">
+			<div class="d2l-property-wrapper">
 				<d2l-input-time
 					id="time"
 					label="${ this.localize('step2.time.label') }"
@@ -337,7 +337,7 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 					title="${ this.localize('step2.time.tooltip') }">
 				</d2l-input-time>
 				${ this.invalidTime ? html`
-				<d2l-tooltip for="time" state="error" align="start" class="one-line-tooltip">
+				<d2l-tooltip for="time" state="error" align="start" class="d2l-one-line-tooltip">
 					${ this.localize('step2.time.errorMessage') }
 				</d2l-tooltip>` : null }
 			</div>
@@ -355,7 +355,7 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 
 	_renderType() {
 		return html`
-			<div class="property-wrapper">
+			<div class="d2l-property-wrapper">
 				<label for="type" class="d2l-input-label d2l-input-label-required">${ this.localize('step2.type.label') }</label>
 				<select id="type" class="d2l-input-select"
 					required
@@ -367,7 +367,7 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 					<option aria-label="${ this.localize('step2.type.differential') }" value="${typesEnum.diff}" .selected="${ this.type === typesEnum.diff }">${ this.localize('step2.type.differential') }</option>
 				</select>
 				${ this.invalidType ? html`
-				<d2l-tooltip for="type" state="error" align="start" class="one-line-tooltip">
+				<d2l-tooltip for="type" state="error" align="start" class="d2l-one-line-tooltip">
 					${ this.localize('step2.type.errorMessage') }
 				</d2l-tooltip>` : null }
 			</div>
