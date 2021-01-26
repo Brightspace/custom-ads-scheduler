@@ -44,10 +44,10 @@ class WizardManager extends LocalizeMixin(LitElement) {
 
 	static get styles() {
 		const wizardManageStyles = css`
-			.wizard {
+			.d2l-wizard {
 				font-size: 16px;
 			}
-			.spinner {
+			.d2l-spinner {
 				width: 100%;
 			}
 		`;
@@ -220,7 +220,7 @@ class WizardManager extends LocalizeMixin(LitElement) {
 
 	_renderPage() {
 		return html`
-			<d2l-labs-wizard id="wizard" class="wizard" @stepper-restart="${ this._handleRestart }">
+			<d2l-labs-wizard id="wizard" class="d2l-wizard" @stepper-restart="${ this._handleRestart }">
 				<d2l-labs-step title="${ this.localize('add.SelectDataSet')}" hide-restart-button="true" @stepper-next="${ this._handleStepOneNext }">
 					<d2l-select-data-set
 						id="select-data-set"
@@ -269,7 +269,7 @@ class WizardManager extends LocalizeMixin(LitElement) {
 	_renderSpinner() {
 		return html`
 			<d2l-loading-spinner
-				class="spinner"
+				class="d2l-spinner"
 				size=100>
 			</d2l-loading-spinner>
 		`;
