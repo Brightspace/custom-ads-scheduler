@@ -79,6 +79,8 @@ mocha './test/**/*.visual-diff.js' -t 10000 --golden
 
 The [sematic-release GitHub Action](https://github.com/BrightspaceUI/actions/tree/master/semantic-release) is called from the `release.yml` GitHub Action workflow to handle version changes and releasing.
 
+This is a change that I can commit to test that the `fix:` prefix properly increments the version!
+
 ### Version Changes
 
 All version changes should obey [semantic versioning](https://semver.org/) rules:
