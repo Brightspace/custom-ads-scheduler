@@ -24,8 +24,8 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 	static get properties() {
 		return {
 			dataHubAccess: {
-				attribute: 'data-hub-access',
-				type: Boolean
+				type: Boolean,
+				attribute: 'data-hub-access'
 			},
 			schedules: {
 				type: Array

@@ -11,7 +11,7 @@
     "lang/**"
   ],
   "scripts": {
-    "lint": "npm run lint:eslint && npm run lint:lit",
+    "lint": "npm run lint:eslint && npm run lint:lit && npm run lint:style",
     "lint:eslint": "eslint . --ext .js,.html",
     "lint:lit": "lit-analyzer custom-ads-scheduler.js demo test",
     "lint:style": "stylelint \"**/*.js\"",
