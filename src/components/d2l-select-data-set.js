@@ -65,20 +65,20 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 
 	static get styles() {
 		const selectDataSetStyles = css`
-			.step {
-				margin: 20px 0px 60px 0;
+			.d2l-step {
+				margin: 20px 0 60px 0;
 			}
 
-			.sds-input-wrapper {
-				width: 500px;
+			.d2l-sds-input-wrapper {
 				margin-bottom: 20px;
+				width: 500px;
 			}
 
 			#advanced-data-set {
 				width: 100%;
 			}
 
-			.one-line-tooltip {
+			.d2l-one-line-tooltip {
 				white-space: nowrap;
 			}
 		`;
@@ -189,7 +189,7 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 
 	_renderAdvancedDataSet() {
 		return html`
-			<div class='sds-input-wrapper'>
+			<div class='d2l-sds-input-wrapper'>
 				<label for='advanced-data-set' class='d2l-input-label d2l-input-label-required'>${ this.localize('step1.ads.label') }</label>
 				<select
 					title='${ this.localize('step1.ads.tooltip') }'
@@ -202,7 +202,7 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 					${ this.dataSetOptions.map(option => this._renderAdvancedDataSetOption(option)) }
 				</select>
 				${ this.invalidDataSet ? html`
-				<d2l-tooltip for="advanced-data-set" state="error" align="start" class="one-line-tooltip">
+				<d2l-tooltip for="advanced-data-set" state="error" align="start" class="d2l-one-line-tooltip">
 					${ this.localize('step1.ads.errorMessage') }
 				</d2l-tooltip>` : null }
 			</div>
@@ -224,7 +224,7 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 
 	_renderOrgUnitId() {
 		return html`
-			<div style="${ this._showOrgUnit ? 'display: auto;' : 'display: none;' }" class='sds-input-wrapper'>
+			<div style="${ this._showOrgUnit ? 'display: auto;' : 'display: none;' }" class='d2l-sds-input-wrapper'>
 				<d2l-input-text
 					title='${ this.localize('step1.orgUnitId.placeholder') }'
 					aria-invalid='${ this.invalidOrgUnitId }'
@@ -254,7 +254,7 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 
 	_renderScheduleName() {
 		return html`
-			<div class='sds-input-wrapper'>
+			<div class='d2l-sds-input-wrapper'>
 				<d2l-input-text
 					title='${ this.localize('step1.scheduleName.tooltip') }'
 					id="schedule-name"
@@ -267,7 +267,7 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 					@change='${ this._scheduleNameChanged }'>
 				</d2l-input-text>
 				${ this.invalidScheduleName ? html`
-				<d2l-tooltip for="schedule-name" state="error" align="start" class="one-line-tooltip">
+				<d2l-tooltip for="schedule-name" state="error" align="start" class="d2l-one-line-tooltip">
 					${ this.localize('step1.scheduleName.errorMessage') }
 				</d2l-tooltip>` : null }
 			</div>
@@ -287,7 +287,7 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 
 	_renderStep() {
 		return html`
-			<div class='step'>
+			<div class='d2l-step'>
 				${ this._renderScheduleName()}
 				${ this._renderAdvancedDataSet()}
 				${ this._renderFilters()}
@@ -297,7 +297,7 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 
 	_renderUserId() {
 		return html`
-			<div style="${ this._showUserId ? 'display: auto;' : 'display: none;' }" class='sds-input-wrapper'>
+			<div style="${ this._showUserId ? 'display: auto;' : 'display: none;' }" class='d2l-sds-input-wrapper'>
 				<d2l-input-text
 					title='${ this.localize('step1.userId.placeholder') } '
 					aria-invalid='${ this.invalidUserId }'

@@ -41,16 +41,16 @@ class DeliveryMethod extends LocalizeMixin(LitElement) {
 
 	static get styles() {
 		const selectDeliveryStyles = css`
-			.step {
-				margin: 20px 0px 60px 0;
+			.d2l-step {
+				margin: 20px 0 60px 0;
 			}
 
-			.dm-input-wrapper {
-				width: 500px;
+			.d2l-dm-input-wrapper {
 				margin-bottom: 20px;
+				width: 500px;
 			}
 
-			.one-line-tooltip {
+			.d2l-one-line-tooltip {
 				white-space: nowrap;
 			}
 
@@ -128,7 +128,7 @@ class DeliveryMethod extends LocalizeMixin(LitElement) {
 
 	_renderDeliveryMethod() {
 		return html`
-			<div class="dm-input-wrapper">
+			<div class="d2l-dm-input-wrapper">
 				<label for="delivery-method" class="d2l-input-label d2l-input-label-required">${ this.localize('step3.deliveryMethod.label') }</label>
 				<select
 					id="delivery-method"
@@ -143,7 +143,7 @@ class DeliveryMethod extends LocalizeMixin(LitElement) {
 					${ this.customSftpConfigured ? html`<option aria-label="${ this.localize('step3.deliveryType.CustomSFTP') }" value='3' .selected="${ this.deliveryMethod === '3' }">${ this.localize('step3.deliveryType.CustomSFTP') }</option>` : html`` }
 				</select>
 				${ this.invalidDeliveryMethod ? html`
-				<d2l-tooltip for="delivery-method" state="error" align="start" class="one-line-tooltip">
+				<d2l-tooltip for="delivery-method" state="error" align="start" class="d2l-one-line-tooltip">
 					${ this.localize('step3.deliveryMethod.errorMessage') }
 				</d2l-tooltip>` : null }
 			</div>
@@ -152,7 +152,7 @@ class DeliveryMethod extends LocalizeMixin(LitElement) {
 
 	_renderFolder() {
 		return html`
-			<div class="dm-input-wrapper">
+			<div class="d2l-dm-input-wrapper">
 				<label for='folder' class='d2l-input-label'>${ this.localize('step3.folder.label') }</label>
 				<input
 					class="d2l-input"
@@ -164,7 +164,7 @@ class DeliveryMethod extends LocalizeMixin(LitElement) {
 					@change="${ this._scheduleFolderChanged }">
 				</input>
 				${ this.invalidFolder ? html`
-				<d2l-tooltip aria-label="${ this.localize('step3.folder.errorMessage') + this.localize('step3.folder.invalidCharactersAria') }" for="folder" state="error" align="start" class="one-line-tooltip">
+				<d2l-tooltip aria-label="${ this.localize('step3.folder.errorMessage') + this.localize('step3.folder.invalidCharactersAria') }" for="folder" state="error" align="start" class="d2l-one-line-tooltip">
 					${ this.localize('step3.folder.errorMessage') } <br/>
 					${ this.localize('step3.folder.invalidCharacters') }
 				</d2l-tooltip>` : null }
@@ -174,7 +174,7 @@ class DeliveryMethod extends LocalizeMixin(LitElement) {
 
 	_renderStep() {
 		return html`
-			<div class="step">
+			<div class="d2l-step">
 				${ this._renderDeliveryMethod() }
 				${ this._renderFolder() }
 			</div>
