@@ -79,7 +79,7 @@ mocha './test/**/*.visual-diff.js' -t 10000 --golden
 
 The [sematic-release GitHub Action](https://github.com/BrightspaceUI/actions/tree/master/semantic-release) is called from the `release.yml` GitHub Action workflow to handle version changes and releasing.
 
-Testing minor version change.
+Testing minor version change again.
 
 ### Version Changes
 
