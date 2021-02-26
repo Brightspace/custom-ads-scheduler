@@ -25,6 +25,9 @@ class WizardManager extends LocalizeMixin(LitElement) {
 			isLoading: {
 				type: Boolean
 			},
+			isSaving: {
+				type: Boolean
+			},
 			selectedSchedule: {
 				type: String
 			},
@@ -88,6 +91,7 @@ class WizardManager extends LocalizeMixin(LitElement) {
 		this.brightspaceSftpConfigured = false;
 
 		this.isLoading = true;
+		this.isSaving = false;
 	}
 
 	async connectedCallback() {
@@ -199,8 +203,10 @@ class WizardManager extends LocalizeMixin(LitElement) {
 	async _handleStepThreeDone() {
 		if (this.deliveryMethod.validate()) {
 			try {
+				this.isSaving = true;
 				await this._saveSchedule();
 			} catch (e) {
+				this.isSaving = false;
 				this.shadowRoot.getElementById('failed-to-save').setAttribute('open', '');
 				return;
 			}
@@ -249,7 +255,7 @@ class WizardManager extends LocalizeMixin(LitElement) {
 					</d2l-configure-schedule>
 				</d2l-labs-step>
 
-				<d2l-labs-step title="${ this.localize('add.DeliveryMethod')}" next-button-tooltip="${ this.localize('done.button.tooltip') }" next-button-title="${this.localize('add.Done')}" @stepper-next="${this._handleStepThreeDone }">
+				<d2l-labs-step title="${ this.localize('add.DeliveryMethod')}" next-button-tooltip="${ this.localize('done.button.tooltip') }" next-button-title="${this.localize('add.Done')}" @stepper-next="${this._handleStepThreeDone }" ?disable-next-button="${ this.isSaving }">
 					<d2l-delivery-method
 						id="delivery-method"
 						@commit-changes="${ this._handleDeliveryMethodCommitChanges }"
