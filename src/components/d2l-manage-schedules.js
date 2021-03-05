@@ -160,7 +160,7 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 		const response = await this.manageSchedulesService.runNow(schedule.scheduleId);
 		if (response.status === 200) {
 			// Update Schedule status to Queued and nextRunTime to Now.
-			schedule.statusId = 1;  
+			schedule.statusId = 1;
 			schedule.nextRunTime = new Date();
 			this.requestUpdate();
 		} else {
