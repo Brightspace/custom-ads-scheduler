@@ -159,6 +159,9 @@ class ManagerSchedules extends LocalizeMixin(LitElement) {
 
 		const response = await this.manageSchedulesService.runNow(schedule.scheduleId);
 		if (response.status === 200) {
+			const updatedSchedule = await this.manageSchedulesService.getSchedule(schedule.scheduleId);
+			schedule.statusId = updatedSchedule.statusId;
+			schedule.nextRunTime = getLocalDateTimeFromUTCDateTimeString(updatedSchedule.nextRunTime);
 			this.requestUpdate();
 		} else {
 			this.shadowRoot.getElementById('errorRunNowFailed').setAttribute('open', '');
