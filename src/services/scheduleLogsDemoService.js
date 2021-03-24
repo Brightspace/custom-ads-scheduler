@@ -75,7 +75,7 @@ export class ScheduleLogsDemoService {
 			scheduleId: '12',
 			runDate: '2020-09-13T00:00:00.000Z',
 			endDate: '2020-09-13T00:00:00.000Z',
-			statusId: 3
+			statusId: 6
 		}
 	];
 

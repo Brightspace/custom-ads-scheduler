@@ -33,6 +33,7 @@ export default {
 	'schedule.status.Completed': 'Completed',
 	'schedule.status.Failed - Delivery': 'Failed - Delivery',
 	'schedule.status.Failed - Data Set': 'Failed - Data Set',
+	'schedule.status.Retrying Delivery': 'Retrying Delivery',
 	'add.SelectDataSet': 'Select Your Advanced Data Set',
 	'add.ConfigureSchedule': 'Configure Your Schedule',
 	'add.DeliveryMethod': 'Choose Your Delivery Method',
