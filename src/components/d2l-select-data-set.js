@@ -168,6 +168,18 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 		return !invalid;
 	}
 
+	get _showOrgUnit() {
+		return this.filters.includes('parentOrgUnitId');
+	}
+
+	get _showRoles() {
+		return this.filters.includes('roles');
+	}
+
+	get _showUserId() {
+		return this.filters.includes('userId');
+	}
+
 	_commitChanges() {
 		const event = new CustomEvent('commit-changes', {
 			detail: {
@@ -329,18 +341,6 @@ class SelectDataSet extends LocalizeMixin(LitElement) {
 	_selectedRolesChanged(event) {
 		this.rolesSelected = event.detail.rolesSelected.join();
 		this._commitChanges();
-	}
-
-	get _showOrgUnit() {
-		return this.filters.includes('parentOrgUnitId');
-	}
-
-	get _showRoles() {
-		return this.filters.includes('roles');
-	}
-
-	get _showUserId() {
-		return this.filters.includes('userId');
 	}
 
 	_updateFilters() {

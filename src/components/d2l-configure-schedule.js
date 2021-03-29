@@ -193,6 +193,36 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 		return !invalid;
 	}
 
+	get _isDifferential() {
+		return this.type === typesEnum.diff;
+	}
+
+	get _isParticipationDataSet() {
+		return this.dataSetId === participationDataSetId;
+	}
+
+	get _showDay() {
+		return this.frequency === frequenciesEnum.weekly;
+	}
+
+	get _showFifteenMinFrequency() {
+		if (this.firstRender) {
+			return true;
+		}
+		return this._isDifferential && this._isParticipationDataSet;
+	}
+
+	get _showHourlyFrequency() {
+		if (this.firstRender) {
+			return true;
+		}
+		return this._isDifferential;
+	}
+
+	get _showTime() {
+		return this.frequency === frequenciesEnum.daily;
+	}
+
 	_commitChanges() {
 
 		// This is a bit ugly. Unfortunately, none of the Core Helpers can properly parse theDatePicker component output into a Date object
@@ -216,14 +246,6 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 
 	_formatDate(date) {
 		return date || formatDate(new Date(Date.now()), { format: 'yyyy-MM-dd' });
-	}
-
-	get _isDifferential() {
-		return this.type === typesEnum.diff;
-	}
-
-	get _isParticipationDataSet() {
-		return this.dataSetId === participationDataSetId;
 	}
 
 	_renderDates() {
@@ -407,28 +429,6 @@ class ConfigureSchedule extends LocalizeMixin(LitElement) {
 		this.type = Number(event.target.value);
 		this._validateType();
 		this._commitChanges();
-	}
-
-	get _showDay() {
-		return this.frequency === frequenciesEnum.weekly;
-	}
-
-	get _showFifteenMinFrequency() {
-		if (this.firstRender) {
-			return true;
-		}
-		return this._isDifferential && this._isParticipationDataSet;
-	}
-
-	get _showHourlyFrequency() {
-		if (this.firstRender) {
-			return true;
-		}
-		return this._isDifferential;
-	}
-
-	get _showTime() {
-		return this.frequency === frequenciesEnum.daily;
 	}
 
 	_validateDay() {
