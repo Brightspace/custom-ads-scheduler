@@ -123,10 +123,6 @@ class WizardManager extends LocalizeMixin(LitElement) {
 		this.deliveryMethod = this.shadowRoot.getElementById('delivery-method');
 	}
 
-	async _cacheCommit(commit) {
-		this._updateScheduleCache(commit);
-	}
-
 	get _dataSetId() {
 		return this.schedule ? this.schedule.dataSetId : undefined;
 	}
@@ -145,6 +141,30 @@ class WizardManager extends LocalizeMixin(LitElement) {
 
 	get _filePath() {
 		return this.schedule ? this.schedule.filePath : undefined;
+	}
+
+	get _orgUnitId() {
+		return this.schedule ? this.schedule.orgUnitId : undefined;
+	}
+
+	get _roleIds() {
+		return this.schedule ? JSON.stringify(this.schedule.roleIds) : undefined;
+	}
+
+	get _roleItems() {
+		return JSON.stringify(this.roleItems);
+	}
+
+	get _scheduleName() {
+		return this.schedule?.name || undefined;
+	}
+
+	get _userId() {
+		return this.schedule ? this.schedule.userId : undefined;
+	}
+
+	async _cacheCommit(commit) {
+		this._updateScheduleCache(commit);
 	}
 
 	async _getSchedule() {
@@ -220,10 +240,6 @@ class WizardManager extends LocalizeMixin(LitElement) {
 		}
 	}
 
-	get _orgUnitId() {
-		return this.schedule ? this.schedule.orgUnitId : undefined;
-	}
-
 	_renderPage() {
 		return html`
 			<d2l-labs-wizard id="wizard" class="d2l-wizard" @stepper-restart="${ this._handleRestart }">
@@ -281,14 +297,6 @@ class WizardManager extends LocalizeMixin(LitElement) {
 		`;
 	}
 
-	get _roleIds() {
-		return this.schedule ? JSON.stringify(this.schedule.roleIds) : undefined;
-	}
-
-	get _roleItems() {
-		return JSON.stringify(this.roleItems);
-	}
-
 	async _saveSchedule() {
 
 		// Copy the schedule cache we want to send, because we have to convert our local DateTime objects to UTC DateTime strings
@@ -322,10 +330,6 @@ class WizardManager extends LocalizeMixin(LitElement) {
 		}
 	}
 
-	get _scheduleName() {
-		return this.schedule?.name || undefined;
-	}
-
 	_updateScheduleCache(commit) {
 		const props = Object.keys(commit);
 		props.forEach(p => {
@@ -338,8 +342,5 @@ class WizardManager extends LocalizeMixin(LitElement) {
 		this.selectedSchedule = this.cachedSchedule.dataSetId;
 	}
 
-	get _userId() {
-		return this.schedule ? this.schedule.userId : undefined;
-	}
 }
 customElements.define('d2l-wizard-manager', WizardManager);
