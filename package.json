@@ -28,7 +28,7 @@
     "@babel/eslint-parser": "^7.13.8",
     "@babel/eslint-plugin": "^7.13.0",
     "@babel/plugin-proposal-class-properties": "^7.13.0",
-    "@brightspace-ui/stylelint-config": "^0.1.0",
+    "@brightspace-ui/stylelint-config": "^0.2.0",
     "@open-wc/testing": "^2",
     "@open-wc/testing-karma": "^4",
     "@webcomponents/webcomponentsjs": "^2",
