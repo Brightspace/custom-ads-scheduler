@@ -7,6 +7,10 @@
 			import '../src/components/d2l-manage-schedules.js';
 			import '../src/components/d2l-schedule-logs.js';
 			import '../src/components/d2l-wizard-manager.js';
+			import sinon from 'sinon';
+
+			const newToday = new Date('2021-05-25T12:00Z');
+			sinon.useFakeTimers({ now: newToday.getTime(), toFake: ['Date'] });
 		</script>
 		<script>
 			window.demo = true;
